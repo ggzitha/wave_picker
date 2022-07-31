@@ -1,0 +1,230 @@
+@charset "UTF-8";
+
+/*!
+ * Material Design for Bootstrap 4
+ *   Version: MDB PRO 4.20.0
+ *
+ *
+ *   Copyright: Material Design for Bootstrap
+ *   https://mdbootstrap.com/
+ *
+ *   Read the license: https://mdbootstrap.com/general/license/
+ *
+ *
+ *   Documentation: https://mdbootstrap.com/
+ *
+ *   Getting started: https://mdbootstrap.com/docs/jquery/getting-started/download/
+ *
+ *   Tutorials: https://mdbootstrap.com/education/bootstrap/
+ *
+ *   Templates: https://mdbootstrap.com/templates/
+ *
+ *   Support: https://mdbootstrap.com/support/
+ *
+ *   Contact: office@mdbootstrap.com
+ *
+ *   Attribution: Animate CSS, Twitter Bootstrap, Materialize CSS, Normalize CSS, Waves JS, WOW JS, Toastr, Chart.js
+ */
+
+
+ .dark-theme {
+    background-color: #181C30; }
+  /*   .dark-theme.fixed-sn .double-nav,
+    .dark-theme.fixed-sn main,
+    .dark-theme.fixed-sn footer {
+      padding-left: 15rem; } */
+    .dark-theme.fixed-sn main {
+      margin-left: 1rem;
+      margin-right: 1rem; }
+    @media (max-width: 1289px) {
+      .dark-theme.fixed-sn .double-nav,
+      .dark-theme.fixed-sn main,
+      .dark-theme.fixed-sn footer {
+        padding-left: 0; } }
+    @media (min-width: 1289px) {
+      .dark-theme.fixed-sn .double-nav .button-collapse {
+        display: none; } }
+    @media (max-width: 1289px) {
+      .dark-theme.fixed-sn .double-nav .button-collapse {
+        display: block;
+        position: relative;
+        font-size: 1.4rem;
+        margin-right: 10px;
+        margin-left: 10px; } }
+    .dark-theme header {
+      border-top: 2px solid #1d8cf8; }
+      .dark-theme header .navbar {
+        box-shadow: none;
+        background-color: #181C30; }
+    .dark-theme .card {
+      background-color: #27293d; }
+      .dark-theme .card .card-header {
+        background-color: #27293d; }
+      .dark-theme .card.card-table .card-header {
+        border-bottom: none; }
+    .dark-theme .btn.btn-sm {
+      padding: .4rem 1.5rem .25rem;
+      font-size: .75rem;
+      font-weight: 500; }
+    .dark-theme i.icon {
+      font-size: 1.1rem; }
+      .dark-theme i.icon.icon-blue {
+        color: #36A2EB; }
+  .cell-small {
+    width: 1rem;
+  }
+  .dark-skin .side-nav .sidenav-bg:after, .dark-skin .side-nav .sidenav-bg.mask-strong:after {
+      background: rgba(29, 140, 248, 0.8); }
+  .dark-skin .side-nav .collapsible li .collapsible-header.active {
+          background-color: rgba(24, 28, 48, 0.8); }
+        .dark-skin .side-nav .collapsible li .collapsible-header:hover {
+          background-color: rgba(24, 28, 48, 0.8); }
+  .dark-skin .side-nav .collapsible li a:not(.collapsible-header):hover, .dark-skin .side-nav .collapsible li a:not(.collapsible-header).active, .dark-skin .side-nav .collapsible li a:not(.collapsible-header):active {
+          color: #67d5ff !important; }
+
+/* SVG Backgrounds */
+
+
+
+#bg_jumbotron_headers
+{
+
+    background-color: #6e728e !important;
+
+}
+
+.curved-border::after {
+  background-image: url(../../Porto_V8/img/curved-border-dark.svg)!important;
+}
+
+
+#bg_panels_cuaca_eq
+{
+
+    background-color: #6e728e !important;
+
+}
+#svg_2{
+fill: #6e728e !important;
+stroke-width: 0 !important;
+ stroke:#000 !important;
+}
+#bg_berita_terbaru
+{
+    background-color: #6e728e !important;
+}
+
+.custom-section-curved-top-2 {
+  top: -295px !important;
+}
+
+#svg_3{
+  fill: #42455b !important;
+  stroke-width: 0 !important;
+   stroke:#000 !important;
+  }
+#bg_news_sliders
+{
+
+    background-color: #42455b !important;
+
+}
+
+
+
+
+
+#svg_4{
+fill: #42455b !important;
+stroke-width: 0 !important;
+ stroke:#000 !important;
+}
+#bg_sosmed_list
+{
+
+    background-color: #42455b !important;
+
+}
+
+
+
+#svg_9{
+    fill: #4d5068 !important;
+    stroke-width: 0 !important;
+     stroke:#000 !important;
+     stroke-opacity: unset !important;
+    }
+#svg_10{
+    fill: #6e728e !important;
+    stroke-width: 0 !important;
+     stroke:#000 !important;
+     stroke-opacity: unset !important;
+    }
+#svg_11{
+    fill: #626682 !important;
+    stroke-width: 0 !important;
+     stroke:#000 !important;
+     stroke-opacity: unset !important;
+    }
+    #full_width_containers
+  {
+      background-color: #42455b !important;
+  }
+
+
+
+
+
+
+
+
+
+#svg_5{
+  fill: #525673 !important;
+  stroke-width: 0 !important;
+   stroke:#000 !important;
+   stroke-opacity: unset !important;
+  }
+
+#svg_6{
+fill: #4e5166 !important;
+stroke-width: 0 !important;
+ stroke:#000 !important;
+ stroke-opacity: unset !important;
+}
+
+#svg_7{
+fill: #42455b !important;
+stroke-width: 0 !important;
+ stroke:#000 !important;
+ stroke-opacity: unset !important;
+}
+#bg_footer1_paralaxs
+{
+    background-color: #6e728e !important;
+}
+
+#svg_8{
+  fill: #222 !important;
+  stroke-width: 0 !important;
+   stroke:#000 !important;
+   stroke-opacity: unset !important;
+  }
+  #footer
+{
+    background-color: #222 !important;
+}
+  #footer_copyright
+{
+    background-color: #222 !important;
+}
+
+
+
+
+
+
+@media (prefers-color-scheme: dark) {
+
+
+          }

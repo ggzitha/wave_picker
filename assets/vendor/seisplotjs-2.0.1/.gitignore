@@ -1,0 +1,16 @@
+dist
+seisplotjs_1.2.0_standalone.js
+node_modules
+example/**/seisplotjs_*_standalone.js
+web_modules
+docs/api/assets/fonts
+pkg
+test/xseed/reference-data
+example/huddle
+example/simpleHttp.sh
+jsonSchema
+es6example
+docs/**/seisplotjs_*_standalone.js
+README_part.md
+__pycache__
+.DS_Store
