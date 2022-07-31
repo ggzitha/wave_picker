@@ -26,13 +26,19 @@ services:
   php:
     image: kenconex/picker_mseed_web:v666
     restart: always
-    build: 
-      context: ./
-      dockerfile: Dockerfile
+    #build: 
+      #context: ./
+      #dockerfile: Dockerfile
     ports:
       - 5000:80
 ```
-Dockerfile:
+
+ build: 
+      context: ./
+      dockerfile: Dockerfile
+      
+      Uncomment that Line And Added :
+Dockerfile if needed, but use only docker-compose is enough:
 
 ```console
 FROM ubuntu:20.04
