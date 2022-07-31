@@ -26,18 +26,15 @@ services:
   php:
     image: kenconex/picker_mseed_web:v666
     restart: always
-    #build: 
-      #context: ./
-      #dockerfile: Dockerfile
+    #build: #Uncoment TO add Dockerfile
+      #context: ./ #Uncoment TO add Dockerfile
+      #dockerfile: Dockerfile #Uncoment TO add Dockerfile
     ports:
-      - 5000:80
+      - 5000:80 #costumized Port
 ```
 
- build: 
-      context: ./
-      dockerfile: Dockerfile
-      
-      Uncomment that Line And Added :
+Uncomment that Line And Added :
+
 Dockerfile if needed, but use only docker-compose is enough:
 
 ```console
