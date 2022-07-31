@@ -94,7 +94,9 @@ RUN echo "test" > /var/www/html/index.html
 RUN rm /var/www/html/index.html 
 
 RUN cd /var/www/html
+WORKDIR /var/www/html
 RUN git clone https://github.com/ggzitha/wave_picker.git
+RUN ls -lah /var/www/html
 RUN mv /var/www/html/wave_picker/* /var/www/html/
 RUN rm -rf /var/www/html/wave_picker
 
