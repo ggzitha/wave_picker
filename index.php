@@ -11,9 +11,11 @@ session_start();
 $random1 = 'secret_key1';
 $random2 = 'secret_key2';
 
-$logins_usr_PW_pairs = array('inskal' => '@dmin_inskal',
-                              'admin' => '@dmin_inskal',
-                              'mee' => 'qwertyuiop');
+$logins_usr_PW_pairs = array(
+  'inskal' => '@dmin_inskal',
+  'admin' => '@dmin_inskal',
+  'mee' => 'qwertyuiop'
+);
 
 $hash = md5($random1  . $random2);
 
@@ -25,7 +27,7 @@ $self_url = $_SERVER['PHP_SELF'];
 // ************************************ //
 
 if (isset($_GET['logout'])) {
-  unset($_SESSION['Logged_Datas']); 
+  unset($_SESSION['Logged_Datas']);
   header("Location: $self_url");
 }
 
@@ -104,13 +106,40 @@ if (isset($_GET['logout'])) {
     .scrollbar-light-blue {
       scrollbar-color: #82B1FF #F5F5F5;
     }
+
+
+    .chromeframe {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      background: #00000099;
+    }
+    #loader-wrapper2 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      background: #00000099;
+    }
   </style>
   <link href="images/icon/favicon.png" rel="shortcut icon">
 
 
 
 
-		<link rel="stylesheet" href="assets/vendor/lightbox2/css/lightbox.css">
+  <link rel="stylesheet" href="assets/vendor/lightbox2/css/lightbox.css">
 
 
 
@@ -118,10 +147,44 @@ if (isset($_GET['logout'])) {
   <script src="assets/vendor/modernizr/modernizr.min.js"></script>
 
 
-
+  <link rel="stylesheet" href="assets/vendor/mee_loader/loader_rocket.css">
+  <link rel="stylesheet" href="assets/vendor/mee_loader/loader_bear.css">
 </head>
 
 <body>
+
+
+
+
+  <div id="loader-wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
+        <span class="loader_rockets"></span>
+        <div class="mt-3 text-center">
+          <h1 class=" display-3 white-text lighten-5 animated heartBeat slow infinite">Uploading Mseed</h1>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border  text-info" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+  </div>
+  <div id="loader-wrapper2" style="z-index:999999 !important" hidden aria-hidden="true">
+        <span class="loader_bear"></span>
+        <div class="mt-3 text-center">
+          <h1 class=" display-3 grey-text lighten-5 animated flipInY slower infinite">Sa BEAR, Lagi Picking</h1>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border  text-light" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+  </div>
+
+
+
+
+
 
   <?php
   if (isset($_SESSION['Logged_Datas']) && $_SESSION['Logged_Datas'] == $hash) {
@@ -131,14 +194,14 @@ if (isset($_GET['logout'])) {
 
 
     <div id="home" class="viewss  bg_globs">
-  
+
       <div class="container h-100 d-flex justify-content-center align-items-center">
 
-      <div class="butt_logout_containers" style="position: absolute; top: 0px; right: 0px; display: block;">
-<a href="?logout=true" type="button" class="btn btn-outline-danger btn-rounded waves-effect btn-sm"><i class="fas fa-power-off mr-2 fa-2x white-text"></i> Log-Out</a>
-</div>
+        <div class="butt_logout_containers" style="position: absolute; top: 0px; right: 0px; display: block;">
+          <a href="?logout=true" type="button" class="btn btn-outline-danger btn-rounded waves-effect btn-sm"><i class="fas fa-power-off mr-2 fa-2x white-text"></i> Log-Out</a>
+        </div>
 
-      
+
         <div class="row smooth-scroll">
           <div class="col-md-12 white-text text-center">
 
@@ -424,50 +487,50 @@ if (isset($_GET['logout'])) {
     <div id="home" class="viewss  bg_globs">
 
       <div class="container h-100 d-flex justify-content-center align-items-center">
-       
 
 
-            <!--Form with header-->
-            <div class="card" style="background-color: #ffffff6b !important; width:40% !important;">
 
-              <!--Header-->
-              <div class="header  blue lighten-2 ">
+        <!--Form with header-->
+        <div class="card" style="background-color: #ffffff6b !important; width:40% !important;">
 
-                <div class="row d-flex justify-content-center">
-                  <h2 class=" white-text mt-4 mb-4 ">Log-in </h2>
-                </div>
+          <!--Header-->
+          <div class="header  blue lighten-2 ">
 
-              </div>
-              <!--Header-->
-
-              <div class="card-body mx-4 mt-4">
-              <form action="<?php echo $self_url; ?>" method='post'>
-                <!--Body-->
-                <div class="md-form">
-                  <input type="text" id="username" name="username" class="form-control">
-                  <label for="username">UserName</label>
-                </div>
-
-                <div class="md-form pb-3">
-                  <input type="password" id="password" name="password"  class="form-control">
-                  <label for="password">Password</label>
-                </div>
-
-                <div class="text-center mb-4">
-                <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
-                </div>
-
-
-              </form>
-              </div>
-
+            <div class="row d-flex justify-content-center">
+              <h2 class=" white-text mt-4 mb-4 ">Log-in </h2>
             </div>
 
+          </div>
+          <!--Header-->
+
+          <div class="card-body mx-4 mt-4">
+            <form action="<?php echo $self_url; ?>" method='post'>
+              <!--Body-->
+              <div class="md-form">
+                <input type="text" id="username" name="username" class="form-control">
+                <label for="username">UserName</label>
+              </div>
+
+              <div class="md-form pb-3">
+                <input type="password" id="password" name="password" class="form-control">
+                <label for="password">Password</label>
+              </div>
+
+              <div class="text-center mb-4">
+                <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
+              </div>
+
+
+            </form>
+          </div>
+
+        </div>
 
 
 
 
-        
+
+
       </div>
 
     </div>
@@ -475,20 +538,20 @@ if (isset($_GET['logout'])) {
 
 
     <script>
-  function OOOOPS() {
-    Swal.fire({
-  position: 'top-end',
-  toast: true,
-  icon: 'error',
-  title: 'Log-In Gagal, Coba Periksa Akun dan Password',
-  showConfirmButton: false,
-  timer: 2500,
-  timerProgressBar: true,
-})
-  }
-</script>
-    
- 
+      function OOOOPS() {
+        Swal.fire({
+          position: 'top-end',
+          toast: true,
+          icon: 'error',
+          title: 'Log-In Gagal, Coba Periksa Akun dan Password',
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        })
+      }
+    </script>
+
+
 
   <?php } ?>
 
@@ -520,7 +583,7 @@ if (isset($_GET['logout'])) {
       'resizeDuration': 200,
       'wrapAround': true
     })
-</script>
+  </script>
 
 
   <?php
@@ -564,7 +627,7 @@ if (isset($_GET['logout'])) {
             cache: false,
             processData: false,
             beforeSend: function() {
-              //$("#preview").fadeOut();
+              document.getElementById('loader-wrapper').hidden=false;
               $("#err").fadeOut();
             },
             success: function(datas) {
@@ -585,6 +648,10 @@ if (isset($_GET['logout'])) {
 
 
               $("#ch_selectors").append(`<option value="" disabled >Pilih....</option>`);
+
+              
+              document.getElementById('loader-wrapper').hidden=true;
+
               $('#Wave_containerModal').modal('show');
 
               channels_stream.forEach(function(ch_stream) {
@@ -694,6 +761,10 @@ if (isset($_GET['logout'])) {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function() {
+              document.getElementById('loader-wrapper2').hidden=false;
+              $("#err").fadeOut();
+            },
             success: function(result_finale) {
               $("#append_final_results").html('');
               // console.log(result_finale);
@@ -794,7 +865,7 @@ if (isset($_GET['logout'])) {
 
 
 
-
+              document.getElementById('loader-wrapper2').hidden=true;
               $('#Final_rslt_Modal').modal('show');
 
             }
@@ -969,14 +1040,14 @@ if (isset($_GET['logout'])) {
 
   else if (isset($_POST['submit'])) {
 
- 
 
-/* Check and assign submitted Username and Password to new variable */
-$Usernames= isset($_POST['username']) ? $_POST['username'] : '';
-$Passwords = isset($_POST['password']) ? $_POST['password'] : '';
+
+    /* Check and assign submitted Username and Password to new variable */
+    $Usernames = isset($_POST['username']) ? $_POST['username'] : '';
+    $Passwords = isset($_POST['password']) ? $_POST['password'] : '';
 
     // if ($_POST['username'] == $username && $_POST['password'] == $password) {
-      if (isset($logins_usr_PW_pairs[$Usernames]) && $logins_usr_PW_pairs[$Usernames] == $Passwords){
+    if (isset($logins_usr_PW_pairs[$Usernames]) && $logins_usr_PW_pairs[$Usernames] == $Passwords) {
 
       //IF USERNAME AND PASSWORD ARE CORRECT SET THE LOG-IN SESSION
       $_SESSION['Logged_Datas'] = $hash;
@@ -986,7 +1057,6 @@ $Passwords = isset($_POST['password']) ? $_POST['password'] : '';
       // DISPLAY FORM WITH ERROR
       display_login_form();
       echo "<script> OOOOPS(); </script>";
-
     }
   }
 
