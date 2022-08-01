@@ -214,6 +214,9 @@ const_number = float(sys.argv[6])
 input_starttime_frmt = sys.argv[7]
 input_endtime_frmt = sys.argv[8]
 
+# fmin=.01,fmax=50 defaults === fmin=1.0, fmax=10.0
+freq_input_min_to_plt = 0.01
+freq_input_max_to_plt = 10.0
 
 times = UTCDateTime(input_starttime_frmt)
 endtimes = UTCDateTime(input_endtime_frmt)
@@ -271,7 +274,7 @@ for d_p, d_v in zip(data_peaks, data_valleys):
 ####################################################################
 
 # PLOT SPECTOGRAM
-png_base64_data_spectogrm = custom_MEE_plot_tfr(data_0, dt=deltas_data_0, fmin=.01,fmax=50., w0=8., nf=64, fft_zero_pad_fac=4 )
+png_base64_data_spectogrm = custom_MEE_plot_tfr(data_0, dt=deltas_data_0, fmin=freq_input_min_to_plt,fmax=freq_input_max_to_plt, w0=8., nf=64, fft_zero_pad_fac=4 )
 
 
 plt.scatter(df.index, df['max'], marker='o', linestyle='dashed', color='green', label="Peaks (tMax)")

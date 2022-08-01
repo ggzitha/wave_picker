@@ -42,7 +42,8 @@ if (isset($_GET['logout'])) {
   <meta charset="UTF-8">
   <title>The Wave</title>
   <meta name="author" content="ggzitha">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
 
 
 
@@ -105,6 +106,19 @@ if (isset($_GET['logout'])) {
     }
   </style>
   <link href="images/icon/favicon.png" rel="shortcut icon">
+
+
+
+
+		<link rel="stylesheet" href="assets/vendor/lightbox2/css/lightbox.css">
+
+
+
+  <!-- Head Libs -->
+  <script src="assets/vendor/modernizr/modernizr.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -282,7 +296,7 @@ if (isset($_GET['logout'])) {
                               <i class="green-text text-muted fa-regular fa-messages-question"></i>
                             </a>
                           </div>
-                          <input type="number" id="const_number" name="const_number" class="form-control" step="0.0000000000000001">
+                          <input type="number" id="const_number" name="const_number" class="form-control" step="0.00001">
                           <label for="const_number">Konstanta Perhitungan</label>
 
                         </div>
@@ -491,11 +505,22 @@ if (isset($_GET['logout'])) {
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/plugins/MDB-File-Upload/js/addons/mdb-file-upload.min.js"></script>
 
 
+  <script type="text/javascript" src="assets/vendor/lightbox2/js/lightbox.js"></script>
+
 
   <script type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
   <script type="text/javascript" src="assets/vendor/roundSlider-1.6.1/roundslider.js"></script>
 
   <script type="text/javascript" src="assets/vendor/sweetalert2-11.4.24/sweetalert2.js"></script>
+
+
+
+  <script>
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    })
+</script>
 
 
   <?php
@@ -690,13 +715,20 @@ if (isset($_GET['logout'])) {
 
                 var itemHtml = `<div class="col">
                                   <div class="row">
-                                      <div class="col">
-                                          <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `" />
-                                      </div>
-                                      <div class="col">
-                                          <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `" />
-                                      </div>
+                                        <div class="col">
+                                            <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
+                                              <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `"  >
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
+                                              <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `"  >
+                                            </a>
+                                        </div>
                                   </div>
+
+                              
+
                                   <div class="row">
                                       <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
                                           <center>
