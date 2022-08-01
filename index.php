@@ -683,13 +683,19 @@ if (isset($_GET['logout'])) {
                 // console.log(result_finale[ch_selector]);
                 var nama_station_channel = result_finale[ch_selector]['data_Streams'];
                 var images_each = result_finale[ch_selector]['img'];
+                var images_each_spectogrm = result_finale[ch_selector]['img_spectogrm'];
 
 
 
 
                 var itemHtml = `<div class="col">
                                   <div class="row">
-                                      <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `" />
+                                      <div class="col">
+                                          <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `" />
+                                      </div>
+                                      <div class="col">
+                                          <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `" />
+                                      </div>
                                   </div>
                                   <div class="row">
                                       <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
