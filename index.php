@@ -12,8 +12,9 @@ $random1 = 'secret_key1';
 $random2 = 'secret_key2';
 
 $logins_usr_PW_pairs = array(
-  'inskal' => '@dmin_inskal',
-  'admin' => '@dmin_inskal',
+  'inskal' => 'inskal',
+  'admin' => 'admin',
+  'user'=> 'user',
   'mee' => 'qwertyuiop'
 );
 
@@ -519,7 +520,11 @@ if (isset($_GET['logout'])) {
               <div class="text-center mb-4">
                 <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
               </div>
-
+                 <div class="text-center mb-4">
+                        user dan PW : <br>
+                        &nbsp;&nbsp;user::user<br>
+                        &nbsp;&nbsp;admin::admin
+                </div>
 
             </form>
           </div>
