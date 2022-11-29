@@ -41,13 +41,19 @@ for i, tr in enumerate(stream_mseed):
    timestamp= np.around(np.array(tr.times("timestamp")), decimals=4)
    trace_data= np.around(np.array(tr.data), decimals=1)
    sample_rate= tr.stats.sampling_rate
+   
+   sample_delta= tr.stats.delta
+   sample_npts= tr.stats.npts
+   
+   
    start_time= tr.stats.starttime
+   end_time= tr.stats.endtime
    # combined_array= np.stack((timestamp, trace_data), axis=1)
    # np.savetxt(file_open, combined_array, fmt='%.3f', delimiter=',',newline='\n')
    # file_open.close()
   
    channels += [str(channel_name)]
-   datas_dict[str(channel_name)] = {'sample_rate': sample_rate, 'start_time': str(start_time), 'sta_names': station_name, 'trace_data':trace_data.tolist()}
+   datas_dict[str(channel_name)] = {'sample_rate': sample_rate, 'sample_npts': sample_npts,'sample_delta': sample_delta,'start_time': str(start_time), 'end_time': str(end_time), 'sta_names': station_name, 'trace_data':trace_data.tolist()}
    
    # datas_dict["%s_%s" % ("startTime",  tr.stats.channel)] = str(start_time)
    # datas_dict["%s_%s" % ("timestamp",  tr.stats.channel)] = timestamp.tolist()

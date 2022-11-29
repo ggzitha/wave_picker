@@ -88,7 +88,6 @@ if (isset($_GET['logout'])) {
 
 
     .scrollbar-light-blue::-webkit-scrollbar-track {
-
       background-color: #F5F5F5;
       border-radius: 10px;
     }
@@ -99,9 +98,11 @@ if (isset($_GET['logout'])) {
     }
 
     .scrollbar-light-blue::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-
       background-color: #82B1FF;
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+      background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
     }
 
     .scrollbar-light-blue {
@@ -134,6 +135,18 @@ if (isset($_GET['logout'])) {
       z-index: 2000;
       background: #00000099;
     }
+
+    /* Tick Dark Themess Fixxx */
+  .darktheme .picker__box .picker__calendar-container .clockpicker-plate .clockpicker-tick.grey-text.disabled {
+  color: #535353 !important;
+}
+
+.scroll-content {
+    position: relative;
+    overflow-y: scroll;
+    height: 200px;
+}
+
   </style>
   <link href="images/icon/favicon.png" rel="shortcut icon">
 
@@ -246,25 +259,24 @@ if (isset($_GET['logout'])) {
           </div>
           <div class="modal-body">
 
-            <div class="row">
+            <div class="row no-gutters">
 
               <div class="col-7">
 
-                <section class="scrollbar-light-blue">
-                  <div class="card">
-                    <div class="card-body  w-100" id="append_data_stream">
+              
+                <div class="card scroll-content scrollbar-light-blue bolds" style="min-height: 100%;" >
+                    <div class="card-body " >
 
-
+                    <div class=" w-100" id="append_data_stream"></div>
 
 
                     </div>
                   </div>
 
-                </section>
 
               </div>
 
-              <div class="col">
+              <div class="col px-2">
 
                 <div class="card " style="position: sticky !important; top: 0px;">
 
@@ -273,8 +285,9 @@ if (isset($_GET['logout'])) {
                   </h5>
 
 
-                  <div class="card-body px-lg-5 pt-0">
-
+                  <div class="card-body px-lg-4 pt-2">
+                  <form style="color: #757575;" id="form_time_param" name="form_time_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+                  </form>
 
                     <form style="color: #757575;" id="form_pickers_param_id" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
 
@@ -290,16 +303,16 @@ if (isset($_GET['logout'])) {
 
                       <div class="row">
                         <div class="col">
-                          <div class="md-form">
-                            <input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" class="form-control timepicker">
+                          <div class="md-form" id="input_starttime_container">
+                            <input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker">
                             <label for="input_starttime">Start Time</label>
                           </div>
                         </div>
 
 
                         <div class="col">
-                          <div class="md-form">
-                            <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" class="form-control timepicker">
+                          <div class="md-form" id="input_endtime_container">
+                            <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker">
                             <label for="input_endtime">End Time</label>
                           </div>
                         </div>
@@ -354,6 +367,7 @@ if (isset($_GET['logout'])) {
 
 
                       <div class="row">
+                      <div class="col">
                         <div class="md-form input-group">
                           <div class="input-group-prepend">
                             <a data-toggle="tooltip" data-html="true" title="Di Excel(Rumus Sensitivitas)<br>contoh: 0.0000161935461400047 <br> 0.000788081020399124">
@@ -364,17 +378,20 @@ if (isset($_GET['logout'])) {
                           <label for="const_number">Konstanta Perhitungan</label>
 
                         </div>
+                        </div>
                       </div>
+
+                      <input type="hidden" id="current_date" name="current_date">
+
+                      <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 py-2 mt-3 waves-effect " type="submit">Send</button>
+
+                      </form>
                   </div>
 
 
 
 
-                  <input type="hidden" id="current_date" name="current_date">
-
-                  <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Send</button>
-
-                  </form>
+                  
 
 
                 </div>
@@ -442,7 +459,7 @@ if (isset($_GET['logout'])) {
     <!-- ====================================
             SECOND ON START Times 
 ========================================== -->
-    <div class="modal fade" id="strtime_second_modal" tabindex="-1" role="dialog" aria-labelledby="strtime_second_modalLabel" aria-hidden="true">
+    <div class="modal fade" id="strtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strtime_second_modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
         <div class="modal-content">
 
@@ -460,7 +477,7 @@ if (isset($_GET['logout'])) {
     <!-- ====================================
             SECOND ON END Times 
 ========================================== -->
-    <div class="modal fade" id="endtime_second_modal" tabindex="-1" role="dialog" aria-labelledby="endtime_second_modalLabel" aria-hidden="true">
+    <div class="modal fade" id="endtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="endtime_second_modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
         <div class="modal-content">
 
@@ -595,412 +612,376 @@ if (isset($_GET['logout'])) {
   if (isset($_SESSION['Logged_Datas']) && $_SESSION['Logged_Datas'] == $hash) {
   ?>
     <script type="text/javascript">
-      $(document).ready(function() {
-
-        function timeConverter(UNIX_timestamp) {
-
-          // var a = new Date(UNIX_timestamp * 1000 ); //Kalau belum milisecond
-          var a = new Date(UNIX_timestamp);
-          var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          var year = a.getFullYear();
-          var month = months[a.getMonth()];
-          var date = a.getDate();
-          var hour = a.getHours();
-          var min = a.getMinutes();
-          var sec = a.getSeconds();
-          // var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-          var time = date + '-' + month + '-' + year;
-          return time;
-        };
-
-        file_mseed.onchange = function(event) {
-          var formData = new FormData();
-          formData.append('file_mseed', $('#file_mseed')[0].files[0]);
-
-
-
-
-
-
-
-          $.ajax({
-            url: "script/mseed_upload.php",
-            type: "POST",
-            data: formData,
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-              document.getElementById('loader-wrapper').hidden=false;
-              $("#err").fadeOut();
-            },
-            success: function(datas) {
-              // console.log(datas);
-              // console.log(datas.channels);
-
-
-              document.getElementById('append_data_stream').innerHTML = "";
-              document.getElementById('ch_selectors').innerHTML = "";
-
-
-
-
-
-              var channels_stream = datas.channels;
-              var idx_stream = (datas.channels.length) - 1; // -1 buat manggil array, kalau rawnya nda perlu -1
-
-
-
-              $("#ch_selectors").append(`<option value="" disabled >Pilih....</option>`);
-
-              
-              document.getElementById('loader-wrapper').hidden=true;
-
-              $('#Wave_containerModal').modal('show');
-
-              channels_stream.forEach(function(ch_stream) {
-                // console.log(datas[ch_stream].sample_rate);
-
-                document.forms['pickers_param']['current_date'].value = datas[ch_stream].start_time;
-
-
-                var itemHtml = `<div class="seismograph" id="sinewave_` + ch_stream + `"></div>`;
-                $("#append_data_stream").append(itemHtml);
-
-                var ch_selectors_id_html = `<option value="` + ch_stream + `">` + ch_stream + `</option>`;
-                $("#ch_selectors").append(ch_selectors_id_html);
-
-
-
-
-
-
-                sampleRate = datas[ch_stream].sample_rate;
-                start = seisplotjs.moment.utc(datas[ch_stream].start_time);
-
-
-
-
-                seismogram = seisplotjs.seismogram.Seismogram.createFromContiguousData(datas[ch_stream].trace_data, sampleRate, start);
-
-
-                div = seisplotjs.d3.select('div#sinewave_' + ch_stream);
-                seisConfig = new seisplotjs.seismographconfig.SeismographConfig();
-                seisConfig.title = datas[ch_stream].sta_names + '_' + ch_stream + ' ' + timeConverter(start);
-                seisConfig.margin.top = 25;
-                seisConfig.maxWidth = 1080;
-                seisConfig.minWidth = 900;
-
-                seisConfig.maxHeight = 600;
-                seisConfig.minHeight = 250;
-
-                // seisConfig.margin.bottom = 0;
-                // seisConfig.margin.left = 0;
-                // seisConfig.margin.right = 0;
-                seisData = seisplotjs.seismogram.SeismogramDisplayData.fromSeismogram(seismogram);
-                graph = new seisplotjs.seismograph.Seismograph(div, seisConfig, seisData);
-                graph.draw();
-
-
-
-              });
-
-              // document.getElementById('append_data_stream').innerHTML = document.getElementById('data_stream_temp_pushed').innerHTML;
-              // document.getElementById('data_stream_temp_pushed').innerHTML ='';
-
-              $('.mdb-select').materialSelect({
-                destroy: true
-              });
-
-
-              $('#Wave_containerModal').data('bs.modal').handleUpdate();
-
-
-            },
-            error: function(e) {
-              $("#err").html(e).fadeIn();
-            }
-          });
-
-
-        };
-
-        var valuesd = [];
-
-        $('#ch_selectors').on('change', function() {
-          var $selectedOptions = $(this).find('option:selected');
-          valuesd = [];
-          $selectedOptions.each(function() {
-            valuesd.push($(this).text());
-          });
-
-          // console.log(valuesd);
-        });
-
-        $('#form_pickers_param_id').submit(function(evnt) {
-          evnt.preventDefault();
-
-          var formData_params = new FormData($('#form_pickers_param_id')[0]);
-          formData_params.append('current_mseed_file', $('#file_mseed')[0].files[0]);
-
-          var selected_chs = [];
-
-          var dat_selected_chs = JSON.stringify(valuesd);
-          formData_params.append('ch_selectors', dat_selected_chs);
-
-
-
-          $.ajax({
-
-            type: "POST",
-
-            url: "script/mseed_process.php",
-
-            data: formData_params, // get all form field value in serialize form
-            // data: {
-            //                 channels: dat_selected_chs,
-            //                 forms: formData_params,
-            //             },
-
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-              document.getElementById('loader-wrapper2').hidden=false;
-              $("#err").fadeOut();
-            },
-            success: function(result_finale) {
-              $("#append_final_results").html('');
-              // console.log(result_finale);
-
-
-              var channels_to_stream = result_finale.channels;
-
-
-
-              channels_to_stream.forEach(function(ch_selector) {
-                // console.log(ch_selector);
-                // console.log(result_finale[ch_selector]);
-                var nama_station_channel = result_finale[ch_selector]['data_Streams'];
-                var images_each = result_finale[ch_selector]['img'];
-                var images_each_spectogrm = result_finale[ch_selector]['img_spectogrm'];
-
-
-
-
-                var itemHtml = `<div class="col">
-                                  <div class="row">
-                                        <div class="col">
-                                            <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
-                                              <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `"  >
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
-                                              <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `"  >
-                                            </a>
-                                        </div>
-                                  </div>
-
+     
+                    var seisData;
+                    var graph;
+                    var MseedValues;
+                    var MseedValues_Cross = [];
+                    var selected_chann = [];
+                    var graphList = [];
+                    var seisDataList = [];
+                    var streamList = [];
+                    var value_cahnnel = [];
+                
+
+
+                    function get_pickertimess(which_to_init) {
+                      
+                      MseedValues_Cross = [];
+
+                     
+                      selected_chann.forEach((item, index) => {
+                                MseedValues_Cross.push(MseedValues[item]);
+                          })
+
+                          
+                        Object.entries(MseedValues_Cross).forEach(([key, valuess]) => {
+                          if(valuess.start_time){
+                              Datetimes_selectors = valuess.start_time;
+                              times_selectors = (Datetimes_selectors.split('T')[1]).split('.')[0]; 
+
+                              Datetimes_selectorsEND = valuess.end_time;
+                              times_selectorsEND = (Datetimes_selectorsEND.split('T')[1]).split('.')[0]; 
                               
-
-                                  <div class="row">
-                                      <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
-                                          <center>
-                                              <table class="table table-striped" id="table_` + ch_selector + `" style="width: 80%;">
-
-                                                  <thead class="black white-text">
-                                                      <tr>
-                                                          <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
-                                                      </tr>
-                                                      <tr>
-                                                          <th scope="col">Peak</th>
-                                                          <th scope="col">Valley</th>
-                                                          <th scope="col">Sensitivitas</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-
-                                                  </tbody>
-                                              </table>
-                                          </center>
-                                      </div>
-                                  </div>
-                              </div> `;
-                $("#append_final_results").append(itemHtml);
-
-                table_tbody_ref = document.getElementById("table_" + ch_selector + "").getElementsByTagName('tbody')[0];
-
-                // console.log(table_ids);
-
-                // var arr_dat2 = data_peaks.map((element, indx) => ({ element,  x:data_valleys[indx], z:data_sensitivity[indx]  }));
-                //             console.log(arr_dat2);
-
-                var data_peaks = result_finale[ch_selector]['data_peaks'];
-                var data_valleys = result_finale[ch_selector]['data_valleys'];
-                var data_sensitivity = result_finale[ch_selector]['data_sensitivity'];
-
-                var array_to_three_col = data_sensitivity.map(function(element, indx) {
-                  return [data_peaks[indx], data_valleys[indx], data_sensitivity[indx]]
-                });
-                // console.log(array_to_three_col);
-
-                for (var idx = 0; idx < data_sensitivity.length; idx++) {
-                  // create a new row
-                  var newRow = table_tbody_ref.insertRow(table_tbody_ref.length);
-                  for (var j = 0; j < array_to_three_col[idx].length; j++) {
-                    // create a new cell
-                    var cell = newRow.insertCell(j);
-
-                    // add value to the cell
-                    cell.innerHTML = array_to_three_col[idx][j];
-                  }
-                }
+                              
+                              
+                             
+                              if(which_to_init == 'start_times_init'){
+                              document.getElementById('input_starttime_container').innerHTML = "";
+                              document.getElementById('input_starttime_container').innerHTML = `<input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker">
+                                                                                                 <label for="input_starttime">Start Time</label>`;
 
 
+                                          $('#input_starttime').pickatime({
+                                                    // Light or Dark theme
+                                                    twelvehour: false,
+                                                    darktheme: false,
+                                                    autoclose: true,
+                                                    closeOnClear: false,
+                                                    min:  twenty_to_twelve_Convert(times_selectors),
+                                                    max:  twenty_to_twelve_Convert(times_selectorsEND),
+                                                    afterDone: seconds_starttime
+                                                  });
+                                                  
+                                            $("#input_starttime").prop("disabled", false);
+
+                                    
+                                            marker_remove("Start");
+
+                                    }
 
 
+                                    if(which_to_init == 'end_times_init'){
+                                      picker_start_datesss = document.getElementById('input_starttime').value;
 
+                                      document.getElementById('input_endtime_container').innerHTML = "";
+                                      document.getElementById('input_endtime_container').innerHTML = `<input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker">
+                                                                                                        <label for="input_endtime">End Time</label>`;
+                                            $('#input_endtime').pickatime({
+                                                        // Light or Dark theme
+                                                        twelvehour: false,
+                                                        darktheme: true,
+                                                        autoclose: true,
+                                                        closeOnClear: false,
+                                                        min:  twenty_to_twelve_Convert(picker_start_datesss),
+                                                        max:  twenty_to_twelve_Convert(times_selectorsEND),
+                                                        afterDone: seconds_endtime
+                                                      });
 
-
-
-              });
+                                                      $("#input_endtime").prop("disabled", false);
+                                                      marker_remove("Ends");
+                                    }
+                      
+                                  
+                          }else{
+                            
+                          }
+                        })
+                      
+                      // console.log(times_selectors);
+                    }
 
 
 
+                    
+                    function timeConverter(UNIX_timestamp) {
 
-              document.getElementById('loader-wrapper2').hidden=true;
-              $('#Final_rslt_Modal').modal('show');
-
-            }
-
-
-
-          });
-        });
-      });
-
-
-      function addZero(number) {
-        if (number < 10)
-          return "0" + number;
-        else
-          return number;
-      }
-
-      function seconds_starttime() {
-        var start_hr_minutes = document.getElementById('input_starttime').value;
-
-        $('#strtime_second_modal').on('show.bs.modal', function(e) {
-          document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZero(0);
-          var seconds_Html = ` <center> <input type="range" id="seconds_range" value="0" max="59"> </center>`;
-          document.getElementById('append_round_slider_seconds').innerHTML = seconds_Html;
-        });
-
-        $('#strtime_second_modal').modal('show');
-
-        $("#seconds_range").roundSlider({
-          sliderType: "default",
-          handleShape: "dot",
-          startAngle: 90,
-          mouseScrollAction: true,
-          endAngle: "+360",
-          min: 0,
-          value: 0,
-          max: 59,
-          value: 0,
-          width: 10, // width of outer line
-          radius: 125, // radius size
-          handleSize: "+16",
-          svgMode: true,
-          pathColor: "#58a79c",
-          rangeColor: "#fff",
-          borderWidth: 0,
-          handleColor: "#07786d",
-          tooltipColor: "#000",
-          tooltipFormat: function(args) {
-            return addZero(args.value);
-          },
-          create: function() {
-            document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZero(0);
-          },
-          beforeCreate: function() {
-            document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZero(0);
-          },
-          drag: function(args) {
-            document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZero(args.value);
-            document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZero(args.value);
-          },
-          stop: function(args) {
-            document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZero(args.value);
-            $('#strtime_second_modal').modal('hide');
-            $("#seconds_range").roundSlider("destroy");
-            document.getElementById('append_round_slider_seconds').innerHTML = "";
-          },
-        });
-
-      };
+                      // var a = new Date(UNIX_timestamp * 1000 ); //Kalau belum milisecond
+                      var a = new Date(UNIX_timestamp);
+                      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                      var year = a.getFullYear();
+                      var month = months[a.getMonth()];
+                      var date = a.getDate();
+                      var hour = a.getHours();
+                      var min = a.getMinutes();
+                      var sec = a.getSeconds();
+                      // var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+                      var time = date + '-' + month + '-' + year;
+                      return time;
+                    };
 
 
+                    function twenty_to_twelve_Convert (timeX) {
+                      var [hourString, minute] = timeX.split(":");
+                      var hour = +hourString % 24;
+                      return (hour % 12 || 12) + ":" + minute + (hour < 12 ? "am" : "pm");
+                      }
 
 
-      function seconds_endtime() {
-        var start_hr_minutes = document.getElementById('input_endtime').value;
+                    function addZeroSecond(number) {
+                      if (number < 10)
+                        return "0" + number;
+                      else
+                        return number;
+                    }
 
-        $('#endtime_second_modal').on('show.bs.modal', function(e) {
-          document.getElementById('endtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZero(0);
-          var seconds_Html = ` <center> <input type="range" id="seconds_end_range" value="0" max="59"> </center>`;
-          document.getElementById('append_round_slider_end_seconds').innerHTML = seconds_Html;
-        });
 
-        $('#endtime_second_modal').modal('show');
+                    function seconds_starttime() {
+                      var start_hr_minutes = document.getElementById('input_starttime').value;  
+                      
+                      
+                      var start_dat = document.getElementById('current_date').value;
+                      var AAstart_datess = start_dat.substr(0, start_dat.indexOf('T'));
+                      var AAstart_hr_minutes = document.getElementById('input_starttime').value;
 
-        $("#seconds_end_range").roundSlider({
-          sliderType: "default",
-          handleShape: "dot",
-          startAngle: 90,
-          mouseScrollAction: true,
-          endAngle: "+360",
-          min: 0,
-          value: 0,
-          max: 59,
-          value: 0,
-          width: 10, // width of outer line
-          radius: 125, // radius size
-          handleSize: "+16",
-          svgMode: true,
-          pathColor: "#a1a1a1",
-          rangeColor: "#fff",
-          borderWidth: 0,
-          handleColor: "#ffffff",
-          tooltipColor: "#a1a1a1",
-          tooltipFormat: function(args) {
-            return addZero(args.value);
-          },
-          create: function() {
-            document.getElementById('input_endtime').value = start_hr_minutes + ':' + addZero(0);
-          },
-          beforeCreate: function() {
-            document.getElementById('input_endtime').value = start_hr_minutes + ':' + addZero(0);
-          },
-          drag: function(args) {
-            document.getElementById('endtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZero(args.value);
-            document.getElementById('input_endtime').value = start_hr_minutes + ':' + addZero(args.value);
-          },
-          stop: function(args) {
-            document.getElementById('input_endtime').value = start_hr_minutes + ':' + addZero(args.value);
-            $('#endtime_second_modal').modal('hide');
-            $("#seconds_end_range").roundSlider("destroy");
-            document.getElementById('append_round_slider_end_seconds').innerHTML = "";
-          },
-        });
+                      $('#strtime_second_modal').on('show.bs.modal', function (e) {
+                        document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(0);
+                        var seconds_Html = ` <center> <input type="range" id="seconds_range" value="0" max="59"> </center>`;
+                        document.getElementById('append_round_slider_seconds').innerHTML = seconds_Html;
+                      });
 
-      };
+                      $('#strtime_second_modal').modal('show');
+
+                      $("#seconds_range").roundSlider({
+                        sliderType: "default",
+                        handleShape: "dot",
+                        startAngle: 90,
+                        mouseScrollAction: true,
+                        endAngle: "+360",
+                        min: 0,
+                        value: 0,
+                        max: 59,
+                        value: 0,
+                        width: 10, // width of outer line
+                        radius: 125, // radius size
+                        handleSize: "+16",
+                        svgMode: true,
+                        pathColor: "#58a79c",
+                        rangeColor: "#fff",
+                        borderWidth: 0,
+                        handleColor: "#07786d",
+                        tooltipColor: "#000",
+                        tooltipFormat: function (args) {
+                          return addZeroSecond(args.value);
+                        },
+                        create: function () {
+                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
+                        },
+                        beforeCreate: function () {
+                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
+                        },
+                        drag: function (args) {
+                          document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(args.value);
+                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
+                        },
+                        stop: function (args) {
+                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
+                          $('#strtime_second_modal').modal('hide');
+                          $("#seconds_range").roundSlider("destroy");
+                          document.getElementById('append_round_slider_seconds').innerHTML = "";
+                          get_pickertimess("end_times_init");
+
+
+                        
+
+                          // Formatted to 2022-10-15T01:30:00.000000Z
+                          datesto_moment = AAstart_datess + 'T' + AAstart_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
+                          marker_remove("Start");
+                          markers_Adds('add', 'Start', 'Start-Type', datesto_moment);
 
 
 
 
+                        },
+                      });
+
+                    };
+
+
+
+
+                    function seconds_endtime() {
+                      var start_dat = document.getElementById('current_date').value;
+                      var start_datess = start_dat.substr(0, start_dat.indexOf('T'));
+
+
+
+                      
+                      var start_hr_minutes = document.getElementById('input_starttime').value;  
+
+                      var end_hr_minutes = document.getElementById('input_endtime').value;
+                      
+
+                      $('#endtime_second_modal').on('show.bs.modal', function (e) {
+                        document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(0);
+                        var seconds_Html = ` <center> <input type="range" id="seconds_end_range" value="0" max="59"> </center>`;
+                        document.getElementById('append_round_slider_end_seconds').innerHTML = seconds_Html;
+                      });
+
+                      $('#endtime_second_modal').modal('show');
+
+                      $("#seconds_end_range").roundSlider({
+                        sliderType: "default",
+                        handleShape: "dot",
+                        startAngle: 90,
+                        mouseScrollAction: true,
+                        endAngle: "+360",
+                        min: 0,
+                        value: 0,
+                        max: 59,
+                        value: 0,
+                        width: 10, // width of outer line
+                        radius: 125, // radius size
+                        handleSize: "+16",
+                        svgMode: true,
+                        pathColor: "#a1a1a1",
+                        rangeColor: "#fff",
+                        borderWidth: 0,
+                        handleColor: "#ffffff",
+                        tooltipColor: "#a1a1a1",
+                        tooltipFormat: function (args) {
+                          return addZeroSecond(args.value);
+                        },
+                        create: function () {
+                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
+                        },
+                        beforeCreate: function () {
+                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
+                        },
+                        drag: function (args) {
+                          document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(args.value);
+                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
+                        },
+                        stop: function (args) {
+                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
+                          $('#endtime_second_modal').modal('hide');
+                          $("#seconds_end_range").roundSlider("destroy");
+                          document.getElementById('append_round_slider_end_seconds').innerHTML = "";
+
+
+
+                          // Formatted to 2022-10-15T01:30:00.000000Z
+                          datesEND_to_moment = start_datess + 'T' + end_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
+                          marker_remove("Ends");
+                          markers_Adds('add', 'Ends', 'End-Type', datesEND_to_moment);
+
+
+                            //ambil value atau update duluuuk 
+                          // var start_hr_minutes = document.getElementById('input_starttime').value;
+                          var end_hr_minutessss = end_hr_minutes + ':' + addZeroSecond(args.value);
+
+                          if(start_hr_minutes && end_hr_minutessss){
+                            get_domain_freq(start_hr_minutes , end_hr_minutessss);
+                          }
+
+
+                          // console.log(seisplotjs.moment.utc(datesEND_to_moment));
+                          // console.log(datesEND_to_moment);
+
+                        },
+                      });
+
+                    };
+
+
+
+                    function markers_Adds(add_or_rem, str_label, str_type, time_moment) {
+                      if (add_or_rem == 'add') {
+                        seisDataList.forEach(seisData => seisData.addMarkers({
+                          name: str_label,
+                          type: str_type,
+                          description: 'Mee Time',
+                          time: seisplotjs.moment.utc(time_moment)
+                        }));
+                        graphList.forEach(g => g.drawMarkers());
+                      }
+                    };
+
+
+                    function marker_remove(name_of_marker) {
+                      seisDataList.forEach(seisData => 
+                      seisData['markerList'].forEach((item, index) => {
+                                if (item.name == name_of_marker){
+                                  seisData['markerList'].splice(index, 1);
+                                }
+                               
+                          })
+                      
+                      
+                      )
+
+                      graphList.forEach(g => g.drawMarkers());
+                    }
+
+
+                    // function marker_remove() {
+                    //   seisDataList.forEach(seisData => seisData['markerList'] = []
+                    //   );
+
+                    //   graphList.forEach(g => g.drawMarkers());
+                    // }
+
+
+
+
+                    function meeee_cust_file_reset() {
+                      window.location.reload(true);
+                    };
+
+
+
+
+                    // Langkah proses 1 freq domain freq_domain frekuensi pick frequency domain
+                    function get_domain_freq(startssss, endsss){
+                     
+
+                      // console.log(MseedValues_Cross);
+                      var data_freq_domains = new FormData($('#form_time_param')[0]);
+                      data_freq_domains.append('thisss_mseed', $('#file_mseed')[0].files[0]);
+
+                      var start_dat = document.getElementById('current_date').value;
+                        data_freq_domains.append('thisss_current_date', start_dat);
+
+
+                        var hmmm_channs = JSON.stringify(value_cahnnel);
+                        data_freq_domains.append('ch_selectorsssss', hmmm_channs);
+
+                       
+                        var timsess_deltass = JSON.stringify({"starts" : startssss , "ends" : endsss});
+                        data_freq_domains.append('times_deltas', timsess_deltass);
+
+                        console.log(data_freq_domains);
+                      $.ajax({
+                          url: "script/get_freq_domain_mseed.php",
+                          type: "POST",
+                          data: data_freq_domains,
+                          dataType: 'json',
+                          contentType: false,
+                          cache: false,
+                          processData: false,
+                          beforeSend: function () {
+                            document.getElementById('loader-wrapper').hidden = false;
+                            $("#err").fadeOut();
+                          },
+                          success: function (datas) {
+                            console.log(datas);
+                            // console.log(datas.channels);
+                           },
+                          error: function (e) {
+                            $("#err").html(e).fadeIn();
+                          }
+                        });
+                    }
 
 
 
@@ -1008,32 +989,387 @@ if (isset($_GET['logout'])) {
 
 
 
-      function meeee_cust_file_reset() {
-        window.location.reload(true);
-      };
 
 
-      $(document).ready(() => {
-        new WOW().init();
 
 
-        $('[data-toggle="tooltip"]').tooltip();
-        $('.mdb-select').materialSelect();
-        $('.file-upload').file_upload();
-        $('#input_starttime').pickatime({
-          // Light or Dark theme
-          darktheme: false,
-          autoclose: true,
-          afterDone: seconds_starttime
-        });
-        $('#input_endtime').pickatime({
-          // Light or Dark theme
-          darktheme: true,
-          autoclose: true,
-          afterDone: seconds_endtime
-        });
+                    
+                      file_mseed.onchange = function (event) {
+                        var formData = new FormData();
+                        formData.append('file_mseed', $('#file_mseed')[0].files[0]);
 
-      });
+                        $.ajax({
+                          url: "script/mseed_upload.php",
+                          type: "POST",
+                          data: formData,
+                          dataType: 'json',
+                          contentType: false,
+                          cache: false,
+                          processData: false,
+                          beforeSend: function () {
+                            document.getElementById('loader-wrapper').hidden = false;
+                            $("#err").fadeOut();
+                          },
+                          success: function (datas) {
+                            // console.log(datas);
+                            // console.log(datas.channels);
+                            MseedValues = datas;
+
+
+                            document.getElementById('append_data_stream').innerHTML = "";
+                            document.getElementById('ch_selectors').innerHTML = "";
+
+                            document.getElementById('loader-wrapper').hidden = true;
+
+
+
+                            var channels_stream = datas.channels;
+                            var idx_stream = (datas.channels.length) - 1; // -1 buat manggil array, kalau rawnya nda perlu -1
+
+
+
+                            $("#ch_selectors").append(`<option value="" disabled >Pilih....</option>`);
+
+
+
+
+
+
+                            channels_stream.forEach(function (ch_stream) {
+                              // console.log(datas[ch_stream].sample_rate);
+
+                              document.forms['pickers_param']['current_date'].value = datas[ch_stream].start_time;
+
+
+                              var itemHtml = `<div class="seismograph" id="Each_stream_` + ch_stream + `" style="display:none"></div>`;
+                              $("#append_data_stream").append(itemHtml);
+
+                              var ch_selectors_id_html = `<option value="` + ch_stream + `">` + ch_stream + `</option>`;
+                              $("#ch_selectors").append(ch_selectors_id_html);
+
+
+
+                              sampleRate = datas[ch_stream].sample_rate;
+                              start = seisplotjs.moment.utc(datas[ch_stream].start_time);
+
+                              Seismo_segment = new seisplotjs.seismogram.SeismogramSegment(datas[ch_stream].trace_data, sampleRate, start);
+                              // seismogram=  new seisplotjs.seismogram.Seismogram(Seismo_segment);
+                              seismogram = seisplotjs.seismogram.Seismogram.createFromContiguousData(datas[ch_stream].trace_data, sampleRate, start);
+
+
+                              element_sel = seisplotjs.d3.select('div#Each_stream_' + ch_stream);
+
+                              seisConfig = new seisplotjs.seismographconfig.SeismographConfig();
+                              seisConfig.title = datas[ch_stream].sta_names + '_' + ch_stream + ' ' + timeConverter(start);
+                              seisConfig.margin.top = 25;
+                              seisConfig.maxWidth = 1080;
+                              seisConfig.minWidth = 900;
+
+                              seisConfig.maxHeight = 600;
+                              seisConfig.minHeight = 250;
+                              seisConfig.wheelZoom = true;
+                              seisConfig.doGain = true;
+
+
+
+                              // seisConfig.margin.bottom = 0;
+                              // seisConfig.margin.left = 0;
+                              // seisConfig.margin.right = 0;
+                              seisData = seisplotjs.seismogram.SeismogramDisplayData.fromSeismogram(seismogram);
+                              sdd = seisplotjs.seismogram.SeismogramDisplayData.fromSeismogram(seismogram);
+
+
+
+
+                              graph = new seisplotjs.seismograph.Seismograph(element_sel, seisConfig, seisData);
+
+                              graphList.forEach(g => graph);
+                              graphList.push(graph);
+
+                              seisDataList.push(seisData);
+                              streamList.push(ch_stream);
+
+
+                              graph.calcScaleAndZoom();
+                              graph.draw();
+                              graph.drawSeismogramsSvg();
+
+
+                            });
+
+
+
+
+                            // document.getElementById('append_data_stream').innerHTML = document.getElementById('data_stream_temp_pushed').innerHTML;
+                            // document.getElementById('data_stream_temp_pushed').innerHTML ='';
+
+                            $('#Wave_containerModal').modal('show');
+                            $('.mdb-select').materialSelect({
+                              destroy: true
+                            });
+
+
+                            $('#Wave_containerModal').data('bs.modal').handleUpdate();
+
+
+                          },
+                          error: function (e) {
+                            $("#err").html(e).fadeIn();
+                          }
+                        });
+
+
+                      };
+
+                      
+
+                      $('#ch_selectors').on('change', function () {
+                        var $selectedOptions = $(this).find('option:selected');
+                        value_cahnnel = [];
+                        $selectedOptions.each(function () {
+                          value_cahnnel.push($(this).text());
+                        });
+
+                        // console.log(value_cahnnel);
+                      });
+
+
+
+
+
+
+
+                      
+
+                      $('#form_pickers_param_id').submit(function (evnt) {
+                        evnt.preventDefault();
+
+                        var formData_params = new FormData($('#form_pickers_param_id')[0]);
+                        formData_params.append('current_mseed_file', $('#file_mseed')[0].files[0]);
+
+                       
+
+                        var dat_selected_chs = JSON.stringify(value_cahnnel);
+                        formData_params.append('ch_selectors', dat_selected_chs);
+
+
+
+                        $.ajax({
+
+                          type: "POST",
+
+                          url: "script/mseed_process.php",
+
+                          data: formData_params, // get all form field value in serialize form
+                          // data: {
+                          //                 channels: dat_selected_chs,
+                          //                 forms: formData_params,
+                          //             },
+
+                          contentType: false,
+                          cache: false,
+                          processData: false,
+                          beforeSend: function () {
+                            document.getElementById('loader-wrapper2').hidden = false;
+                            $("#err").fadeOut();
+                          },
+                          success: function (result_finale) {
+                            $("#append_final_results").html('');
+                            // console.log(result_finale);
+
+
+                            var channels_to_stream = result_finale.channels;
+
+
+
+                            channels_to_stream.forEach(function (ch_selector) {
+                              // console.log(ch_selector);
+                              // console.log(result_finale[ch_selector]);
+                              var nama_station_channel = result_finale[ch_selector]['data_Streams'];
+                              var images_each = result_finale[ch_selector]['img'];
+                              var images_each_spectogrm = result_finale[ch_selector]['img_spectogrm'];
+
+
+
+
+                              var itemHtml = `<div class="col">
+                                                      <div class="row">
+                                                            <div class="col">
+                                                                <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
+                                                                  <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `"  >
+                                                                </a>
+                                                            </div>
+                                                            <div class="col">
+                                                                <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
+                                                                  <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `"  >
+                                                                </a>
+                                                            </div>
+                                                      </div>
+
+                                                  
+
+                                                      <div class="row">
+                                                          <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
+                                                              <center>
+                                                                  <table class="table table-striped" id="table_` + ch_selector + `" style="width: 80%;">
+
+                                                                      <thead class="black white-text">
+                                                                          <tr>
+                                                                              <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
+                                                                          </tr>
+                                                                          <tr>
+                                                                              <th scope="col">Peak</th>
+                                                                              <th scope="col">Valley</th>
+                                                                              <th scope="col">Sensitivitas</th>
+                                                                          </tr>
+                                                                      </thead>
+                                                                      <tbody>
+
+                                                                      </tbody>
+                                                                  </table>
+                                                              </center>
+                                                          </div>
+                                                      </div>
+                                                  </div> `;
+                              $("#append_final_results").append(itemHtml);
+
+                              table_tbody_ref = document.getElementById("table_" + ch_selector + "").getElementsByTagName('tbody')[0];
+
+                              // console.log(table_ids);
+
+                              // var arr_dat2 = data_peaks.map((element, indx) => ({ element,  x:data_valleys[indx], z:data_sensitivity[indx]  }));
+                              //             console.log(arr_dat2);
+
+                              var data_peaks = result_finale[ch_selector]['data_peaks'];
+                              var data_valleys = result_finale[ch_selector]['data_valleys'];
+                              var data_sensitivity = result_finale[ch_selector]['data_sensitivity'];
+
+                              var array_to_three_col = data_sensitivity.map(function (element, indx) {
+                                return [data_peaks[indx], data_valleys[indx], data_sensitivity[indx]]
+                              });
+                              // console.log(array_to_three_col);
+
+                              for (var idx = 0; idx < data_sensitivity.length; idx++) {
+                                // create a new row
+                                var newRow = table_tbody_ref.insertRow(table_tbody_ref.length);
+                                for (var j = 0; j < array_to_three_col[idx].length; j++) {
+                                  // create a new cell
+                                  var cell = newRow.insertCell(j);
+
+                                  // add value to the cell
+                                  cell.innerHTML = array_to_three_col[idx][j];
+                                }
+                              }
+
+
+
+
+
+
+
+
+                            });
+
+
+
+
+                            document.getElementById('loader-wrapper2').hidden = true;
+                            $('#Final_rslt_Modal').modal('show');
+
+                          }
+
+
+
+                        });
+                      });
+
+
+                      
+                      $('.mdb-select').change(function () {
+                        var selss = [];
+                        selected_chann = [];
+                        selected_chann_id = [];
+                        selss = $('.mdb-select option:selected');
+                        if(selss.length > 0){
+                          for (loops = 0; loops < selss.length; loops++) {
+                              if(selss[loops]){
+                                selected_chann.push(selss[loops].value);
+                                selected_chann_id.push('Each_stream_'+selss[loops].value);
+                              }
+                              else{
+                                selected_chann = [];
+                                $("#input_starttime").prop("disabled", true);
+                                $("#input_endtime").prop("disabled", true);
+                              }
+                            }
+
+                            // selected_chann.forEach((item) => {
+                            //   $('#Each_stream_'+item).show();
+                            //   })
+
+                              $("div[id^='Each_stream_']").each(function() {
+                                //get id
+                                  var id_ = $(this).attr("id")
+                                  //check if not in array
+                                  if (selected_chann_id.indexOf(id_) == -1) {
+                                    $(this).hide(); //hide it
+                                  }else{
+                                    $(this).show();
+                                  }
+                                // console.log($(this));
+                                    // $(this).toggleClass("shown", !selected_chann_id.includes(this.id));
+                                });
+
+
+
+                            get_pickertimess('start_times_init');
+                            get_pickertimess('end_times_init');
+                            
+                        }
+                        else{
+                          $("div[id^='Each_stream_']").hide();
+                          
+                          selected_chann = [];
+                          $("#input_starttime").prop("disabled", true);
+                          $("#input_endtime").prop("disabled", true);
+                        }
+                      });
+                      
+
+                      $(document).ready(function () {
+                        
+                      new WOW().init();
+
+                      $('[data-toggle="tooltip"]').tooltip();
+                      $('.mdb-select').materialSelect();
+                      $('.file-upload').file_upload();
+
+                      // $('#input_starttime').pickatime({
+                      //   // Light or Dark theme
+                      //   twelvehour: false,
+                      //   darktheme: false,
+                      //   autoclose: true,
+                      //   closeOnClear: false,
+                      //   beforeShow: get_pickertimess,
+                       
+                      //   afterDone: seconds_starttime
+                      // });
+                      
+                      // $('#input_endtime').pickatime({
+                      //   // Light or Dark theme
+                      //   twelvehour: false,
+                      //   darktheme: true,
+                      //   autoclose: true,
+                      //   closeOnClear: false,
+                      //   // min: "8:20am",
+                      //   // max: "5:15pm"
+                      //   afterDone: seconds_endtime
+                      // });
+
+                    });
+
+
+  
     </script>
 
   <?php
