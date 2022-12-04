@@ -1,6 +1,6 @@
 <?php
+ob_start();
 session_start();
-
 // ***************************************** //
 // **********	DECLARE VARIABLES  ********** //
 // ***************************************** //
@@ -407,7 +407,7 @@ input[type=radio]:checked + label::after {
 
             <div class="wow fadeInUp" data-wow-delay="0.5s">
               <div class="file-upload-wrapper">
-                <input type="file" id="file_mseed" name="mseed" class="file-upload" data-max-file-size="20M" />
+                <input type="file" id="file_mseed" name="mseed" class="file-upload" data-max-file-size="200M"  style="display:none"/>
               </div>
             </div>
 
@@ -949,7 +949,12 @@ input[type=radio]:checked + label::after {
 
 
 
-                   
+                    $('#Wave_containerModal').on('hidden.bs.modal', function (e) {
+                      if ( window.history.replaceState ) {
+                            window.history.replaceState( null, null, window.location.href );
+                        }
+                        window.location = window.location.href;
+                      });
                       
                       function Radio_Got_Selected(e) {
                           if (this.checked) {
@@ -1346,7 +1351,11 @@ input[type=radio]:checked + label::after {
                     // }
 
                     function meeee_cust_file_reset() {
-                      window.location.reload(true);
+                      // window.location.reload(true);
+                      if ( window.history.replaceState ) {
+                            window.history.replaceState( null, null, window.location.href );
+                        }
+                        window.location = window.location.href;
                     };
 
 
@@ -2003,6 +2012,7 @@ input[type=radio]:checked + label::after {
                       $('[data-toggle="tooltip"]').tooltip();
                       $('.mdb-select').materialSelect();
                       $('.file-upload').file_upload();
+                      $('.file-upload').show();
 
                       // $('#input_starttime').pickatime({
                       //   // Light or Dark theme
