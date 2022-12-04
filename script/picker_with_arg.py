@@ -254,9 +254,6 @@ data_peaks = round((df['max'].dropna()))
 data_valleys = round((df['min'].dropna()))
 
 
-datas_dict = {} #dictionary
-data_img = {} #dictionary
-data_img_spectogrm = {} #dictionary
 
 
 data_sensss = [] #list
@@ -277,8 +274,8 @@ for d_p, d_v in zip(data_peaks, data_valleys):
 png_base64_data_spectogrm = custom_MEE_plot_tfr(data_0, dt=deltas_data_0, fmin=freq_input_min_to_plt,fmax=freq_input_max_to_plt, w0=8., nf=64, fft_zero_pad_fac=4 )
 
 
-plt.scatter(df.index, df['max'], marker='o', linestyle='dashed', color='green', label="Peaks (tMax)")
-plt.scatter(df.index, df['min'], marker='o', linestyle='dashed', color='red', label="Valleys (tMin)")
+plt.scatter(df.index, df['max'], marker='^', linestyle='dashed', color='green',alpha=0.4, label="Peaks (tMax)")
+plt.scatter(df.index, df['min'], marker='v', linestyle='dashed', color='red', alpha=0.4, label="Valleys (tMin)")
 plt.plot(df.index, df['data'])
 plt.legend()
 plt.title("%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel))
@@ -294,15 +291,30 @@ plt.close()
 
 # print(png_base64_data)
 
+
+# datas_dict = {} #dictionary
+# data_img = {} #dictionary
+# data_img_spectogrm = {} #dictionary
+
+
+datas_dict = {   "data_Streams": None,
+                 "data_peaks": None,
+                 "data_valleys": None,
+                 "data_sensitivity": None,
+                 "img": None,
+                 "img_spectogrm": None
+            }
+
+
 datas_dict["data_Streams"] = "%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel)
 datas_dict["data_peaks"] = data_peaks.tolist()
 datas_dict["data_valleys"] = data_valleys.tolist()
 datas_dict["data_sensitivity"] = data_sensss
-data_img["img"] = png_base64_data.decode()
-data_img_spectogrm["img_spectogrm"] = png_base64_data_spectogrm.decode()
+datas_dict["img"] = png_base64_data.decode()
+datas_dict["img_spectogrm"] = png_base64_data_spectogrm.decode()
 # option 2:
-final_data = {**datas_dict, **data_img, **data_img_spectogrm}
-print(json.dumps(final_data))
+# final_data = {**datas_dict, **data_img, **data_img_spectogrm}
+print(json.dumps(datas_dict))
 
 
 sys.exit()

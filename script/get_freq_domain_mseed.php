@@ -40,7 +40,7 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     {
    
 
-   $command = escapeshellcmd('python3 get_freq_domain_mseed.py '.$mseed_Content.' '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+   $command = escapeshellcmd('python3 get_freq_domain.py '.$mseed_Content.' '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
     $output = shell_exec($command);
     $json = json_decode($output);
 
@@ -49,7 +49,7 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     
     
     $resultss = json_encode(array_merge($fetched_ch, $fetched_rslt));
-    header("Content-Type: application/json");
+    // header("Content-Type: application/json");
     // print_r ($json);
     print_r ($resultss);
     // echo json_encode($resultss);

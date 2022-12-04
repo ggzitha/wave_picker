@@ -7,6 +7,8 @@ import pprint
 import obspy
 import io
 import base64
+import math
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,15 +21,20 @@ from obspy import read
 from obspy import UTCDateTime
 import pandas as pd
 
-#  python3 F:\laragon6\www\html\wave_picker\script\get_freq_dominan.py  MBPI.seed BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
+def num_of_zeros(n):
+  s = '{:.16f}'.format(n).split('.')[1]
+  ss = len(s) - len(s.lstrip('0'))
+  if ss > 0 :
+      ss = ss+1
+  elif len(s.rstrip('0')) > 0:
+      ss = ss+1
+  return ss
+
+#  python3 F:\laragon6\www\html\wave_picker\script\get_freq_domain.py  MBPI.seed BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
 # $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$ch_selectors.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
 
 mseed_file = sys.argv[1]
 ch_selectors = sys.argv[2]
-# number_checked = int(sys.argv[3])
-# freq_number = float(sys.argv[4])
-# volt_number = float(sys.argv[5])
-# const_number = float(sys.argv[6])
 input_starttime_frmt = sys.argv[3]
 input_endtime_frmt = sys.argv[4]
 
@@ -54,6 +61,12 @@ freq_data_0 = current_stream[0].stats.sampling_rate #sampling rate buat per gelo
 len_data_0 = current_stream[0].stats.npts #Banyaknya data di dalam signal Atau dengan ==> len(data_0) 
 deltas_data_0 = current_stream[0].stats.delta #delta 1/frequensi sampling dalam signal
 
+
+
+
+
+
+
 # Menghitung rentang frequency (untuk plot sumbu x)
 Freqqss = 1. / (2. * deltas_data_0)                     
 freqsssss = np.linspace(0, Freqqss, len_data_0 // 2 + 1)
@@ -65,15 +78,48 @@ fdom_Amplitude = np.fft.rfft(data_0)
 max_y = max(fdom_Amplitude)  # Find the maximum y value
 max_x = freqsssss[fdom_Amplitude.argmax()]  # Find the x value corresponding to the maximum y value
 
+
+
+
+
+
+
+# cari Jumlah 0 di belakang koma
+numberOfZeros = num_of_zeros(max_x)
+
+
+Rounded_max_x = round(max_x, numberOfZeros)
+# Rounded_max_x = math.ceil(max_x*pow(10,numberOfZeros))/pow(10,numberOfZeros)
+
+
+
 # Plotting
 plt.plot(freqsssss, abs(fdom_Amplitude),   color='green', label="Peaks (tMax)")
-plt.title('frequency-domain data \n amplitude spectrum')
+plt.axvline(x=max_x,   color='blue', linestyle='dashed')
+plt.title('frequency-domain %s_%s' % (current_stream[0].stats.station, current_stream[0].stats.channel))
 plt.ylabel('amplitude')
-# plt.xlim(0,0.12)
 
-if max_x < 1 and max_x > 0:
-    plt.xlim(left=0, right=(max_x*1.5))
+
+# plt.xlim(0,0.12)
+if max_x < 0.02 and max_x >= 0: 
+    plt.xlim(left=(max_x*0.5), right=(max_x*1.5))
+elif max_x < 0.1 and max_x >= 0.02:
+    plt.xlim(left=(max_x*0.5), right=(max_x*1.5))
+elif max_x < 0.5 and max_x >= 0.1:
+    plt.xlim(left=(max_x*0.75), right=(max_x*1.2))
+elif max_x < 2 and max_x >= 0.5:
+    plt.xlim(left=(max_x*0.7), right=(max_x*1.3))
+elif max_x < 5 and max_x >= 2:
+    plt.xlim(left=(max_x*0.85), right=(max_x*1.15))
+elif max_x < 7 and max_x >= 5:
+    plt.xlim(left=(max_x*0.95), right=(max_x*1.05))
+elif max_x < 10 and max_x >= 7:
+    plt.xlim(left=(max_x*0.9), right=(max_x*1.15))
+elif  max_x >= 10:
+    plt.xlim(left=(max_x*0.9), right=(max_x*1.1))
+     
     
+
 
 io_container_bytes = io.BytesIO()
 plt.savefig(io_container_bytes, format='png', transparent=True)
@@ -87,11 +133,14 @@ plt.close()
 
 
 
-
-datas_dict = {} #dictionary
-data_img = {} #dictionary
-
-
+# Dictionary ternyata seperti Json, Hanya butuh intialisasi saja
+aDict = {   "data_Streams": None,
+            "data_freqs_domain": {
+                "raw": None,
+                "rounded": None
+            },
+            "img": None
+            }
 
 
 
@@ -100,13 +149,11 @@ data_img = {} #dictionary
 ####################################################################
 
 
-datas_dict["data_Streams"] = "%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel)
-# datas_dict["data_peaks"] = max_y #ERROR Object of type complex128 is not JSON serializable
-datas_dict["data_freqs_domain"] = max_x
-data_img["img"] = png_base64_data.decode()
-# option 2:
-final_data = {**datas_dict, **data_img}
-print(json.dumps(final_data))
+aDict["data_Streams"] = "%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel)
+aDict["data_freqs_domain"]["raw"] = max_x
+aDict["data_freqs_domain"]["rounded"] = Rounded_max_x
+aDict["img"] = png_base64_data.decode()
+print(json.dumps(aDict))
 
 
 sys.exit()
