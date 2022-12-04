@@ -30,7 +30,7 @@ if(!empty($_POST) && !empty($_FILES['current_mseed_file']))
     {
    
 
-   $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt );
+   $command = escapeshellcmd('python3 03_get_final_proccessed_mseed.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt );
     $output = shell_exec($command);
     $json = json_decode($output);
 

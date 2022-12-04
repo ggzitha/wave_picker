@@ -7,7 +7,7 @@
     $mseed_Content = $_FILES['file_mseed']['tmp_name'];
 
 
-    $command = escapeshellcmd('python3 parse_mseed_to_array.py '.$mseed_Content );
+    $command = escapeshellcmd('python3 01_mseed_upload_to_array.py '.$mseed_Content );
     $output = shell_exec($command);
     // print $output;
     $json = utf8_encode($output);

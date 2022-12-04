@@ -40,7 +40,7 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     {
    
 
-   $command = escapeshellcmd('python3 get_freq_domain.py '.$mseed_Content.' '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+   $command = escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
     $output = shell_exec($command);
     $json = json_decode($output);
 

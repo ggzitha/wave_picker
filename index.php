@@ -899,7 +899,7 @@ input[type=radio]:checked + label::after {
                                 $("#input_starttime").prop("disabled", false);
 
                                 
-                              console.log("st"+seism_selected_start_inMS);
+                              // console.log("st"+seism_selected_start_inMS);
                               current_picks = "end_pick_time";
                             };
                             if( time_selector == "end_time_hr" && current_picks == "end_pick_time"){
@@ -914,7 +914,7 @@ input[type=radio]:checked + label::after {
                                 
                                 document.getElementById('input_endtime').value= this_hour;
                                 $("#input_endtime").prop("disabled", false);
-                              console.log("end"+seism_selected_end_inMS);
+                              // console.log("end"+seism_selected_end_inMS);
                               current_picks = "start_pick_time";
                             };
 
@@ -1379,7 +1379,7 @@ input[type=radio]:checked + label::after {
 
                         // console.log(data_freq_domains);
                       $.ajax({
-                          url: "script/get_freq_domain_mseed.php",
+                          url: "script/02_get_freq_domain_mseed.php",
                           type: "POST",
                           data: data_freq_domains,
                           dataType: 'json',
@@ -1492,7 +1492,7 @@ input[type=radio]:checked + label::after {
                         formData.append('file_mseed', $('#file_mseed')[0].files[0]);
 
                         $.ajax({
-                          url: "script/mseed_upload.php",
+                          url: "script/01_mseed_upload_to_array.php",
                           type: "POST",
                           data: formData,
                           dataType: 'json',
@@ -1763,7 +1763,7 @@ input[type=radio]:checked + label::after {
 
                           type: "POST",
 
-                          url: "script/mseed_process.php",
+                          url: "script/03_get_final_proccessed_mseed.php",
 
                           data: formData_params, // get all form field value in serialize form
                           // data: {
@@ -1897,11 +1897,13 @@ input[type=radio]:checked + label::after {
                       $('#input_ms').click(function () {
                         var ms_true = $(this).is(':checked');
                         if(!ms_true){
-                          console.log('1111111');
+                          // console.log('1111111');
                         }else{
-                          console.log('222222');
+                          // console.log('222222');
                         }
                       });
+
+
 
                       $('.mdb-select').change(function () {
                         

@@ -30,7 +30,7 @@ def num_of_zeros(n):
       ss = ss+1
   return ss
 
-#  python3 F:\laragon6\www\html\wave_picker\script\get_freq_domain.py  MBPI.seed BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
+#  python3 F:\laragon6\www\html\wave_picker\script\02_get_freq_domain_mseed.py  MBPI.seed BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
 # $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$ch_selectors.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
 
 mseed_file = sys.argv[1]
