@@ -110,6 +110,7 @@ if (isset($_GET['logout'])) {
     .scrollbar-light-blue::-webkit-scrollbar-thumb {
       background-color: #82B1FF;
       border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
       background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
       background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
