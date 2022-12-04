@@ -73,8 +73,6 @@ final_data = {**channel_dict, **datas_dict}
 print(json.dumps(final_data))
 
 
-
-
 sys.exit()
 
 

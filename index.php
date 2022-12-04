@@ -235,6 +235,47 @@ if (isset($_GET['logout'])) {
 }
 
 
+.swall_borders {
+ border: 2px solid red;
+ --borderWidth: 3px;
+  background: #1D1F20;
+  position: relative;
+  border-radius: 1em;
+ 
+}
+.swall_borders::after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.swall_borders_timers {
+  height: 0.25em;
+  background: rgba(255, 0, 0, 1);
+}
+
+
 .mee_offside_footer {
 	position: fixed;
 	bottom: -45px;
@@ -305,9 +346,17 @@ input[type=radio]:checked + label::after {
     cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' width='30' height='30' %3E%3Cg%3E%3Cpolygon fill='%2300FF00' points='14.76,22.5 14.76,9.5 6.239,9.5 15,1.054 23.761,9.5 15.24,9.5 15.24,22.5 '/%3E%3Cpath fill='%2329A329' d='M15,1.749L22.522,9H15.74h-1h-0.48H7.478L15,1.749 M15,0.36L5,10h9.26v12H1v1h28v-1H15.74V10H25L15,0.36 L15,0.36z'/%3E%3C/g%3E%3Cg%3E%3Cpath fill='%2339B54A' d='M4.575,28.751c0.351,0.188,0.862,0.346,1.402,0.346c0.8,0,1.267-0.369,1.267-0.903 c0-0.495-0.323-0.778-1.141-1.054c-0.989-0.306-1.6-0.754-1.6-1.501c0-0.824,0.782-1.438,1.959-1.438 c0.62,0,1.069,0.126,1.339,0.259l-0.216,0.559c-0.197-0.095-0.603-0.252-1.15-0.252c-0.827,0-1.142,0.433-1.142,0.794 c0,0.495,0.369,0.738,1.204,1.021c1.025,0.346,1.546,0.778,1.546,1.556c0,0.817-0.691,1.524-2.121,1.524 c-0.584,0-1.222-0.148-1.545-0.338L4.575,28.751z'/%3E%3Cpath fill='%2339B54A' d='M10.267,24.869H8.425v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3Cpath fill='%2339B54A' d='M13.892,27.918l-0.63,1.666h-0.809l2.059-5.297h0.943l2.067,5.297h-0.836l-0.647-1.666H13.892z M15.877,27.384l-0.593-1.524c-0.135-0.346-0.225-0.66-0.314-0.967h-0.018c-0.09,0.314-0.189,0.637-0.306,0.959l-0.594,1.532 H15.877z'/%3E%3Cpath fill='%2339B54A' d='M18.414,24.358c0.396-0.071,0.962-0.11,1.501-0.11c0.836,0,1.375,0.134,1.753,0.433 c0.306,0.235,0.477,0.597,0.477,1.006c0,0.699-0.504,1.163-1.142,1.352v0.023c0.468,0.142,0.746,0.519,0.89,1.068 c0.198,0.739,0.342,1.25,0.468,1.454h-0.81c-0.099-0.149-0.233-0.605-0.404-1.266c-0.18-0.73-0.503-1.006-1.213-1.029h-0.737v2.295 h-0.782V24.358z M19.196,26.771h0.8c0.836,0,1.366-0.4,1.366-1.006c0-0.684-0.566-0.982-1.393-0.99 c-0.378,0-0.647,0.032-0.773,0.063V26.771z'/%3E%3Cpath fill='%2339B54A' d='M24.483,24.869h-1.842v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3C/g%3E%3C/svg%3E%0A") 16 16, crosshair;
     color: #39B54A;
 }
+.timestamp_hovers_lock{
+  color: #39B54A;
+  font-weight: 700;
+}
 .timestamp_hovers_END{
     cursor:url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' width='30' height='30' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg%3E%3Cpolygon fill='%23FF1D25' points='14.76,22.5 14.76,9.5 6.239,9.5 15,1.054 23.761,9.5 15.24,9.5 15.24,22.5 '/%3E%3Cpath fill='%239C272D' d='M15,1.749L22.522,9H15.74h-1h-0.48H7.478L15,1.749 M15,0.36L5,10h9.26v12H1v1h28v-1H15.74V10H25L15,0.36 L15,0.36z'/%3E%3C/g%3E%3Cg%3E%3Cpath fill='%239C272D' d='M10.819,27.101H8.465v1.91h2.624v0.573H7.683v-5.297h3.271v0.574H8.465v1.674h2.354V27.101z'/%3E%3Cpath fill='%239C272D' d='M12.106,29.584v-5.297h0.854l1.941,2.68c0.449,0.621,0.8,1.179,1.087,1.722l0.019-0.008 c-0.072-0.708-0.09-1.352-0.09-2.177v-2.217h0.736v5.297h-0.791l-1.923-2.688c-0.423-0.59-0.827-1.194-1.133-1.769l-0.026,0.008 c0.045,0.668,0.062,1.305,0.062,2.185v2.264H12.106z'/%3E%3Cpath fill='%239C272D' d='M18.023,24.358c0.477-0.063,1.043-0.11,1.663-0.11c1.123,0,1.923,0.229,2.453,0.66 c0.54,0.433,0.854,1.045,0.854,1.901c0,0.865-0.306,1.572-0.872,2.06c-0.566,0.495-1.501,0.762-2.678,0.762 c-0.558,0-1.025-0.023-1.421-0.062V24.358z M18.806,29.042c0.198,0.031,0.485,0.039,0.791,0.039c1.672,0,2.579-0.817,2.579-2.247 c0.009-1.25-0.8-2.044-2.453-2.044c-0.404,0-0.71,0.032-0.917,0.071V29.042z'/%3E%3C/g%3E%3C/svg%3E%0A") 16 16, crosshair;
     color: #FF1D25;
+}
+.timestamp_hovers_END_lock{
+  color: #FF1D25;
+  font-weight: 700;
 }
 .mee_clear_pickings {
 	position: absolute;
@@ -798,6 +847,7 @@ input[type=radio]:checked + label::after {
           timerProgressBar: true,
         })
       }
+      
     </script>
 
 
@@ -862,6 +912,54 @@ input[type=radio]:checked + label::after {
                     var value_cahnnel = [];
                 
 
+                    function OOOOPS_picking(title_msg, html_msg) {
+                      Swal.fire({
+                        position: 'top-end',
+                        toast: true,
+                        icon: 'error',
+                        title: title_msg,
+                        html: html_msg,
+                        footer: '<a href="https://github.com/ggzitha/wave_picker">What Kind Of Black Magic Is Thiss ?</a>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        stopKeydownPropagation: false,
+                        timer: 3500,
+                        showCloseButton: true,
+                        timerProgressBar: true,
+                        width: '35em',
+                        background: '#f1d8f4ff',
+                        didOpen: ($this) => {
+                                    $this.addEventListener('mouseenter', Swal.stopTimer)
+                                    $this.addEventListener('mouseleave', Swal.resumeTimer)
+                                  },
+                        didClose: () => {
+                                      $('#erase_pickings').click();
+                                  },
+                        customClass: {
+                                  // container: '',
+                                  popup: 'swall_borders',
+                                  // header: '...',
+                                  // title: '...',
+                                  // closeButton: '...',
+                                  // icon: '...',
+                                  // image: '...',
+                                  // htmlContainer: '...',
+                                  // input: '...',
+                                  // inputLabel: '...',
+                                  // validationMessage: '...',
+                                  // actions: '...',
+                                  // confirmButton: '...',
+                                  // denyButton: '...',
+                                  // cancelButton: '...',
+                                  // loader: '...',
+                                  // footer: '....',
+                                  timerProgressBar: 'swall_borders_timers',
+                                }
+                      })
+                    };
+
                     $('#erase_pickings').click(function () {
                         // samaain sama initial di paling atas
                         current_picks = "start_pick_time";
@@ -877,6 +975,13 @@ input[type=radio]:checked + label::after {
                         document.getElementById('input_endtime').value= "";
 
                         $("#input_endtime").prop("disabled", true);
+
+                        st_lockeds = document.querySelectorAll('.timestamp_hovers_lock, .timestamp_hovers_END_lock');
+                                  st_lockeds.forEach(st_locked => {
+                                    st_locked.classList.remove('timestamp_hovers_lock');
+                                    st_locked.classList.remove('timestamp_hovers_END_lock');
+                                    });
+                        reset_window_freq_ampli();
                       });
 
                     function  append_from_Timestamp_picker(time_selector, this_hour) {
@@ -901,6 +1006,13 @@ input[type=radio]:checked + label::after {
                                 
                               // console.log("st"+seism_selected_start_inMS);
                               current_picks = "end_pick_time";
+
+                                  st_lockeds = document.querySelectorAll('.timestamp_hovers_lock');
+                                  st_lockeds.forEach(st_locked => {
+                                    st_locked.classList.remove('timestamp_hovers_lock');
+                                    });
+                              
+                                start_time_class_locked = 'locked';
                             };
                             if( time_selector == "end_time_hr" && current_picks == "end_pick_time"){
                               seism_selected_end = this_hour;
@@ -916,6 +1028,13 @@ input[type=radio]:checked + label::after {
                                 $("#input_endtime").prop("disabled", false);
                               // console.log("end"+seism_selected_end_inMS);
                               current_picks = "start_pick_time";
+
+                                  end_lockeds = document.querySelectorAll('.timestamp_hovers_END_lock');
+                                  end_lockeds.forEach(end_locked => {
+                                    end_locked.classList.remove('timestamp_hovers_END_lock');
+                                        });
+
+                              end_time_class_locked = 'locked';
                             };
 
                             if(seism_selected_start_inMS && seism_selected_end_inMS){
@@ -1419,6 +1538,17 @@ input[type=radio]:checked + label::after {
                                 freqs_volt = params_logger[selected_logger]["freq_volt"][data_domain.rounded];
                                 datas_window = params_logger[selected_logger]["opt_windowed"][data_domain.rounded];
                                 
+
+                                if(!freqs_volt || !datas_window){
+
+                                  title_msg = 'λ OR ∑ : Unknown';
+                                  html_msg = ` <hr>
+                                              <p>Please get better Picking at <u><b>Start-time</b></u> and <u><b>End-time</b></u> </p>
+                                              <p>Maybe Caused By Incorrect Logger <u><b><small>Centaur/Q330</small></b></u> </p>`;
+
+                                  OOOOPS_picking(title_msg, html_msg)
+                                }
+                                
                                 // mapping aneh
                                 // freq 0.005 => 100
                                 // freq 0.02 => 60 ato 55 ato 50
@@ -1429,7 +1559,7 @@ input[type=radio]:checked + label::after {
                                 // freq 10=> 3
                                 // freq 15=> 3
                               
-
+                                if(freqs_volt && datas_window){
                                 var itemHtml = `<div class="col-2">
                                                   <input type="radio" id="control_`+nama_station_channel+`"  name="selector_freqss" value="`+ch_selector+`" 
                                                   datas-raw-freq="`+data_domain.raw+`" 
@@ -1440,7 +1570,7 @@ input[type=radio]:checked + label::after {
                                                   <label for="control_`+nama_station_channel+`" class="card mee_rounded px-4 py-4">
                                                   <div class="row  m-0 p-0">  
                                                   <div class="col text-center">
-                                                    <p class="font-weight-bold m-0 p-0">Parameter Freq</p>
+                                                    <p class="font-weight-bold m-0 p-0"><u>Parameter Freq</u></p><br><br>
                                                     </div>
                                                     </div>
                                                     <div class="row">
@@ -1450,11 +1580,11 @@ input[type=radio]:checked + label::after {
                                                         </a>
 
                                                       </div>
-                                                      <div class="col-8 text-center ">
-                                                        <p> ⨍ :`+ data_domain.raw +`Hz <br>
-                                                          ≈⨏ :`+ data_domain.rounded +`Hz
-                                                          <hr>
-                                                          ∑ :`+ datas_window +`
+                                                      <div class="col-8  ">
+                                                        <p> &nbsp;⨍ == `+  (parseFloat(data_domain.raw).toFixed(6)) +` Hz <br>
+                                                          ≈⨏ == `+ data_domain.rounded +`&nbsp;&nbsp;&nbsp;&nbsp;Hz
+                                                          <br><br>
+                                                          ∑ :`+ datas_window +` &nbsp;|&nbsp;
                                                           λ :`+ freqs_volt +`
                                                           </p>
                                                       </div>
@@ -1464,6 +1594,8 @@ input[type=radio]:checked + label::after {
                                                 </div> `;
                                 // $("#append_data_freqss").append(itemHtml); //Ini kalau mau buat 3, kalau 1 pakai yang di bawah
                                 $("#append_data_freqss").html(itemHtml);
+                                }
+                              
                               });
 
                               document.getElementById('loader-wrapper1').hidden = true;
@@ -1589,6 +1721,11 @@ input[type=radio]:checked + label::after {
                                                       if(seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date)){
                                                           if(seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start){
                                                             append_from_Timestamp_picker("start_time_hr", formatFulll(date));
+                                                            if(start_time_class_locked == 'locked'){
+                                                              $(this).addClass("timestamp_hovers_lock");
+                                                            }else{
+                                                              $(this).removeClass("timestamp_hovers_lock");
+                                                            }
                                                           }
                                                         };
                                                     }
@@ -1596,6 +1733,11 @@ input[type=radio]:checked + label::after {
                                                     if(seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date) ){
                                                       if(seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start){
                                                         append_from_Timestamp_picker("end_time_hr", formatFulll(date));
+                                                        if(end_time_class_locked == 'locked'){
+                                                              $(this).addClass("timestamp_hovers_END_lock");
+                                                            }else{
+                                                              $(this).removeClass("timestamp_hovers_END_lock");
+                                                            }
                                                       }
                                                       };
                                             }
