@@ -1539,27 +1539,21 @@ input[type=radio]:checked + label::after {
                                 datas_window = params_logger[selected_logger]["opt_windowed"][data_domain.rounded];
                                 
 
-                                if(!freqs_volt || !datas_window){
 
-                                  title_msg = 'λ OR ∑ : Unknown';
-                                  html_msg = ` <hr>
-                                              <p>Please get better Picking at <u><b>Start-time</b></u> and <u><b>End-time</b></u> </p>
-                                              <p>Maybe Caused By Incorrect Logger <u><b><small>Centaur/Q330</small></b></u> </p>`;
+                                // Error enabled
+                                // if(!freqs_volt || !datas_window){
 
-                                  OOOOPS_picking(title_msg, html_msg)
-                                }
+                                //   title_msg = 'λ OR ∑ : Unknown';
+                                //   html_msg = ` <hr>
+                                //               <p>Please get better Picking at <u><b>Start-time</b></u> and <u><b>End-time</b></u> </p>
+                                //               <p>Maybe Caused By Incorrect Logger <u><b><small>Centaur/Q330</small></b></u> </p>`;
+
+                                //   OOOOPS_picking(title_msg, html_msg)
+                                // }
                                 
-                                // mapping aneh
-                                // freq 0.005 => 100
-                                // freq 0.02 => 60 ato 55 ato 50
-                                // freq 0.5 => 60 ato 55 ato 50
-                                // freq 1=> 30 
-                                // freq 2=> 15
-                                // freq 5=> 5
-                                // freq 10=> 3
-                                // freq 15=> 3
-                              
-                                if(freqs_volt && datas_window){
+                                
+                              // // Error enabled
+                              //   if(freqs_volt && datas_window){
                                 var itemHtml = `<div class="col-2">
                                                   <input type="radio" id="control_`+nama_station_channel+`"  name="selector_freqss" value="`+ch_selector+`" 
                                                   datas-raw-freq="`+data_domain.raw+`" 
@@ -1594,7 +1588,9 @@ input[type=radio]:checked + label::after {
                                                 </div> `;
                                 // $("#append_data_freqss").append(itemHtml); //Ini kalau mau buat 3, kalau 1 pakai yang di bawah
                                 $("#append_data_freqss").html(itemHtml);
-                                }
+                               
+                              // Error enabled
+                              // }
                               
                               });
 

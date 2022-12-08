@@ -10,12 +10,17 @@ import base64
 import math
 
 
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import argrelextrema
 from obspy import read
 from obspy import UTCDateTime
 import pandas as pd
+from obspy.imaging.cm import obspy_sequential
+
+from obspy.signal.tf_misfit import cwt
+from obspy.signal.filter import remez_fir
 
 def num_of_zeros(n):
   s = '{:.16f}'.format(n).split('.')[1]
@@ -47,12 +52,69 @@ Channel_Selector = ch_selectors
 stream_mseed = obspy.read(mseed_file)
 current_stream = stream_mseed.select(channel=Channel_Selector)
 
+data_0 = current_stream[0].data
+freq_data_0 = current_stream[0].stats.sampling_rate #sampling rate buat per gelombang
+len_data_0 = current_stream[0].stats.npts #Banyaknya data di dalam signal Atau dengan ==> len(data_0) 
+deltas_data_0 = current_stream[0].stats.delta #delta 1/frequensi sampling dalam signal
+
+
+
 rawws = current_stream.copy()
-tr_new = current_stream.copy()
+interpols_new = current_stream.copy()
+
+
 
 
 rawws.merge(method=0, fill_value=None, interpolation_samples=0)
-tr_new.merge(method=1, fill_value='interpolate', interpolation_samples=-1)
+interpols_new.merge(method=1, fill_value='interpolate', interpolation_samples=-1)
+
+
+interpol_bandpassed_new = interpols_new[0].copy() # stream to traces
+interpol_bandpassed_new.detrend()
+# interpol_bandpassed_new.merge(method=1, fill_value='interpolate', interpolation_samples=-1)
+# interpol_bandpassed_new.filter("bandpass", freqmin=0.002, freqmax=0.003, corners=1, zerophase=True ) 
+interpol_bandpassed_new.filter("lowpass", freq =0.001, corners=1, zerophase=True ) 
+# asddd = obspy.signal.filter.remez_fir(interpol_bandpassed_new.data, freqmin=0.002, freqmax=0.003,df=interpol_bandpassed_new.stats.sampling_rate)
+
+# print(asddd)
+
+
+# npts = interpol_bandpassed_new.stats.npts
+# dt = interpol_bandpassed_new.stats.delta
+# t = np.linspace(0, dt * npts, npts)
+# f_min = 0.01
+# f_max = 0.011
+
+# tesst = obspy.signal.tf_misfit.fpm(interpol_bandpassed_new.data, interpol_bandpassed_new.data, dt=dt, fmin=f_min, fmax=f_max, nf=100, w0=8)
+
+# print(tesst)
+# for plot
+# scalogram = cwt(interpol_bandpassed_new.data, dt, 8, f_min, f_max)
+
+# Plot 1
+# fig = plt.figure()
+# ax = fig.add_subplot(111)
+# x, y = np.meshgrid(
+#     t,
+#     np.logspace(np.log10(f_min), np.log10(f_max), scalogram.shape[0]))
+# ax.pcolormesh(x, y, np.abs(scalogram), cmap=obspy_sequential)
+# ax.set_xlabel("Time after %s [s]" % interpol_bandpassed_new.stats.starttime)
+# ax.set_ylabel("Frequency [Hz]")
+# ax.set_yscale('log')
+# ax.set_ylim(f_min, f_max)
+# plt.show()
+# Plot 1
+
+# Plot 2
+# fig = plt.figure()
+# ax = fig.add_subplot(111)
+# ax.imshow(np.abs(scalogram)[-1::-1], extent=[t[0], t[-1], f_min, f_max],
+#           aspect='auto')
+# ax.set_xlabel("Time after %s [s]" % interpol_bandpassed_new.stats.starttime)
+# ax.set_ylabel("Frequency [Hz]")
+# plt.show()
+
+
 
 
 
@@ -69,8 +131,9 @@ tr_new.merge(method=1, fill_value='interpolate', interpolation_samples=-1)
 
 
 
-plt.plot(rawws[0].times("matplotlib"), rawws[0].data, 'r', label='RAW', alpha=0.35)
-plt.plot(tr_new[0].times("matplotlib"), tr_new[0].data, 'b', label='interpolated', alpha=0.35)
+# plt.plot(rawws[0].times("matplotlib"), rawws[0].data, 'r', label='RAW', alpha=0.35)
+plt.plot(interpols_new[0].times("matplotlib"), interpols_new[0].data, 'b', label='interpolated', alpha=0.35)
+plt.plot(interpol_bandpassed_new.times("matplotlib"), interpol_bandpassed_new.data, 'y', label='bandpassed', alpha=0.4)
 plt.legend()
 plt.show()
 
@@ -83,10 +146,6 @@ sys.exit()
 
 
 
-data_0 = current_stream[0].data
-freq_data_0 = current_stream[0].stats.sampling_rate #sampling rate buat per gelombang
-len_data_0 = current_stream[0].stats.npts #Banyaknya data di dalam signal Atau dengan ==> len(data_0) 
-deltas_data_0 = current_stream[0].stats.delta #delta 1/frequensi sampling dalam signal
 
 
 
