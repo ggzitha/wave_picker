@@ -1497,11 +1497,12 @@ input[type=radio]:checked + label::after {
                       var start_dat = document.getElementById('current_date').value;
                         data_freq_domains.append('thisss_current_date', start_dat);
 
+                        var sensor_types = JSON.stringify(selected_logger);
+                        data_freq_domains.append('sensor_types', sensor_types);
 
                         var hmmm_channs = JSON.stringify(value_cahnnel);
                         data_freq_domains.append('ch_selectorsssss', hmmm_channs);
 
-                       
                         var timsess_deltass = JSON.stringify({"starts" : start_hr_minutess , "ends" : end_hr_minutess});
                         data_freq_domains.append('times_deltas', timsess_deltass);
 

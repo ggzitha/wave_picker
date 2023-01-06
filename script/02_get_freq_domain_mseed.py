@@ -30,13 +30,21 @@ def num_of_zeros(n):
       ss = ss+1
   return ss
 
-#  python3 F:\laragon6\www\html\wave_picker\script\02_get_freq_domain_mseed.py  MBPI.seed BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
-# $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$ch_selectors.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+
+def closest_value_find(input_list, input_value):
+    arr = np.asarray(input_list)
+    # round_to = [0,0.1,0.15,0.2,0.25]
+    i = min(arr, key=lambda x: abs(x - input_value))
+    return i
+# cd script
+#  python3 F:\laragon6\www\html\wave_picker\script\02_get_freq_domain_mseed.py  MBPI.seed Centaur BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
+# $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_selectors.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
 
 mseed_file = sys.argv[1]
-ch_selectors = sys.argv[2]
-input_starttime_frmt = sys.argv[3]
-input_endtime_frmt = sys.argv[4]
+sensor_types = sys.argv[2]
+ch_selectors = sys.argv[3]
+input_starttime_frmt = sys.argv[4]
+input_endtime_frmt = sys.argv[5]
 
 # fmin=.01,fmax=50 defaults === fmin=1.0, fmax=10.0
 freq_input_min_to_plt = 0.01
@@ -90,6 +98,27 @@ numberOfZeros = num_of_zeros(max_x)
 
 Rounded_max_x = round(max_x, numberOfZeros)
 # Rounded_max_x = math.ceil(max_x*pow(10,numberOfZeros))/pow(10,numberOfZeros)
+
+
+
+# Opening JSON file
+with open('parameter_logger.json') as json_file:
+    data_json = json.load(json_file)
+    data_json_freqList = data_json[sensor_types]['freq_list']
+    number_to_check = closest_value_find(data_json_freqList, max_x)
+    
+    # Print the type of data variable
+    # print("Type:", type(data_json))
+    
+    # Print the data of dictionary
+    # print("\nData_Parameter:", data_json[sensor_types])
+    # print("\nData_Parameter:", number_to_check)
+    # print("\Realss:", Rounded_max_x)
+
+
+
+
+
 
 
 
@@ -151,7 +180,8 @@ aDict = {   "data_Streams": None,
 
 aDict["data_Streams"] = "%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel)
 aDict["data_freqs_domain"]["raw"] = max_x
-aDict["data_freqs_domain"]["rounded"] = Rounded_max_x
+# aDict["data_freqs_domain"]["rounded"] = Rounded_max_x
+aDict["data_freqs_domain"]["rounded"] = number_to_check
 aDict["img"] = png_base64_data.decode()
 print(json.dumps(aDict))
 

@@ -3,6 +3,7 @@
 if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
 {
     $ch_selectors = json_decode($_POST['ch_selectorsssss']);
+    $sensor_types = json_decode($_POST['sensor_types']);
     $times_deltass = json_decode($_POST['times_deltas'], true);
 
 
@@ -40,7 +41,7 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     {
    
 
-   $command = escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+   $command = escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
     $output = shell_exec($command);
     $json = json_decode($output);
 
