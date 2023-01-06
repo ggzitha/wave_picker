@@ -341,6 +341,43 @@ input[type=radio]:checked + label::after {
 }
 
 
+
+.pulse_thiss {
+  animation: pulse_thiss 1s infinite;
+}
+.pulse_thiss:hover {
+  animation: none;
+}
+
+@-webkit-keyframes pulse_thiss {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgb(204, 127, 44);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgb(202, 179, 98);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgb(213, 170, 16);
+  }
+}
+@keyframes pulse_thiss {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 2px 5px 0 rgb(249, 52, 7);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(215, 170, 11, 0.64);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(215, 171, 15, 0.9);
+  }
+}
+
+
+
+
 /* Ini Buat Time Stamp boss */
 .timestamp_hovers{
     cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' width='30' height='30' %3E%3Cg%3E%3Cpolygon fill='%2300FF00' points='14.76,22.5 14.76,9.5 6.239,9.5 15,1.054 23.761,9.5 15.24,9.5 15.24,22.5 '/%3E%3Cpath fill='%2329A329' d='M15,1.749L22.522,9H15.74h-1h-0.48H7.478L15,1.749 M15,0.36L5,10h9.26v12H1v1h28v-1H15.74V10H25L15,0.36 L15,0.36z'/%3E%3C/g%3E%3Cg%3E%3Cpath fill='%2339B54A' d='M4.575,28.751c0.351,0.188,0.862,0.346,1.402,0.346c0.8,0,1.267-0.369,1.267-0.903 c0-0.495-0.323-0.778-1.141-1.054c-0.989-0.306-1.6-0.754-1.6-1.501c0-0.824,0.782-1.438,1.959-1.438 c0.62,0,1.069,0.126,1.339,0.259l-0.216,0.559c-0.197-0.095-0.603-0.252-1.15-0.252c-0.827,0-1.142,0.433-1.142,0.794 c0,0.495,0.369,0.738,1.204,1.021c1.025,0.346,1.546,0.778,1.546,1.556c0,0.817-0.691,1.524-2.121,1.524 c-0.584,0-1.222-0.148-1.545-0.338L4.575,28.751z'/%3E%3Cpath fill='%2339B54A' d='M10.267,24.869H8.425v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3Cpath fill='%2339B54A' d='M13.892,27.918l-0.63,1.666h-0.809l2.059-5.297h0.943l2.067,5.297h-0.836l-0.647-1.666H13.892z M15.877,27.384l-0.593-1.524c-0.135-0.346-0.225-0.66-0.314-0.967h-0.018c-0.09,0.314-0.189,0.637-0.306,0.959l-0.594,1.532 H15.877z'/%3E%3Cpath fill='%2339B54A' d='M18.414,24.358c0.396-0.071,0.962-0.11,1.501-0.11c0.836,0,1.375,0.134,1.753,0.433 c0.306,0.235,0.477,0.597,0.477,1.006c0,0.699-0.504,1.163-1.142,1.352v0.023c0.468,0.142,0.746,0.519,0.89,1.068 c0.198,0.739,0.342,1.25,0.468,1.454h-0.81c-0.099-0.149-0.233-0.605-0.404-1.266c-0.18-0.73-0.503-1.006-1.213-1.029h-0.737v2.295 h-0.782V24.358z M19.196,26.771h0.8c0.836,0,1.366-0.4,1.366-1.006c0-0.684-0.566-0.982-1.393-0.99 c-0.378,0-0.647,0.032-0.773,0.063V26.771z'/%3E%3Cpath fill='%2339B54A' d='M24.483,24.869h-1.842v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3C/g%3E%3C/svg%3E%0A") 16 16, crosshair;
@@ -372,6 +409,21 @@ input[type=radio]:checked + label::after {
   border: 1px solid #777474;
   opacity: 0.2;
 }
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
   </style>
 
   <!-- Head Libs -->
@@ -528,7 +580,7 @@ input[type=radio]:checked + label::after {
 
 
                   <div class="card-body px-lg-4 pt-2">
-                  <form style="color: #757575;" id="form_time_domain_param" name="form_time_domain_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+                  <form style="color: #757575;" id="form_time_domain_param" name="form_time_domain_param" method="POST" enctype="multipart/form-data" >
                   </form>
 
                     <form style="color: #757575;" id="form_pickers_param_id" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -540,7 +592,7 @@ input[type=radio]:checked + label::after {
                     </div>
 
                       <div class="md-form">
-                        <select class="mdb-select md-form colorful-select dropdown-primary" id="ch_selectors" name="ch_selectors" multiple searchable="Cari. ..">
+                        <select class="mdb-select md-form colorful-select dropdown-primary" id="ch_selectors" name="ch_selectors" multiple searchable="Cari. .." required>
                           <option value="" disabled selected>Pilih....</option>
                         </select>
                         <label class="mdb-main-label">Channel Stream</label>
@@ -565,17 +617,19 @@ input[type=radio]:checked + label::after {
 
 
                         <div class="col">
-                          <div class="md-form" id="input_starttime_container">
-                            <input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker">
+                          <div class="md-form" id="input_starttime_container" data-toggle="helper_start_Time">
+                            <input  placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker timepicker_start_class" required>
                             <label  class="active" for="input_starttime">Start Time</label>
+                            <div class="invalid-tooltip">Please select Start Time.</div>
                           </div>
                         </div>
 
 
                         <div class="col">
-                          <div class="md-form" id="input_endtime_container">
-                            <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker">
+                          <div class="md-form" id="input_endtime_container" data-toggle="helper_end_Time">
+                            <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
                             <label  class="active" for="input_endtime">End Time</label>
+                            <div class="invalid-feedback">Please select End Time.</div>
                           </div>
                         </div>
 
@@ -591,7 +645,7 @@ input[type=radio]:checked + label::after {
                                 <i class="green-text text-muted fa-regular fa-messages-question"></i>
                               </a> -->
                             </div>
-                            <input type="number" id="number_checked" name="number_checked" class="form-control" step="1" min="1">
+                            <input type="number" id="number_checked" name="number_checked" class="form-control" step="1" min="1" required>
                             <label  class="active" for="number_checked">Windowing Number </label>
 
                           </div>
@@ -604,7 +658,7 @@ input[type=radio]:checked + label::after {
                                 <i class="green-text text-muted fa-regular fa-messages-question"></i>
                               </a> -->
                             </div>
-                            <input type="number" id="freq_number" name="freq_number" class="form-control" step="0.001">
+                            <input type="number" id="freq_number" name="freq_number" class="form-control" step="0.001" required>
                             <label  class="active" for="freq_number">Frekuensi(Hz) </label>
 
                           </div>
@@ -616,7 +670,7 @@ input[type=radio]:checked + label::after {
                                 <i class="green-text text-muted fa-regular fa-messages-question"></i>
                               </a> -->
                             </div>
-                            <input type="number" id="volt_number" name="volt_number" class="form-control" step="0.001">
+                            <input type="number" id="volt_number" name="volt_number" class="form-control" step="0.001" required>
                             <label  class="active" for="volt_number">Amplitudo(Volt) </label>
 
 
@@ -636,7 +690,7 @@ input[type=radio]:checked + label::after {
                               <i class="green-text text-muted fa-regular fa-messages-question"></i>
                             </a> -->
                           </div>
-                          <input type="number" id="const_number" name="const_number" class="form-control" step="0.00001">
+                          <input type="number" id="const_number" name="const_number" class="form-control" step="0.000000000000000001"  >
                           <label  class="active" for="const_number">Konstanta Perhitungan</label>
 
                         </div>
@@ -884,6 +938,26 @@ input[type=radio]:checked + label::after {
     })
   </script>
 
+  <script>
+   (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
+
 
   <?php
   if (isset($_SESSION['Logged_Datas']) && $_SESSION['Logged_Datas'] == $hash) {
@@ -1013,6 +1087,9 @@ input[type=radio]:checked + label::after {
                                     });
                               
                                 start_time_class_locked = 'locked';
+
+                                
+                                get_pickertimess("end_times_init");
                             };
                             if( time_selector == "end_time_hr" && current_picks == "end_pick_time"){
                               seism_selected_end = this_hour;
@@ -1093,6 +1170,8 @@ input[type=radio]:checked + label::after {
                               destroy: true
                                 });
                               $('.mdb-select').materialSelect();
+                              $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
+                                "Stream Data").prop('required', true).addClass('form-control').css('background-color', '#fff');
                           }
                       }
 
@@ -1101,7 +1180,8 @@ input[type=radio]:checked + label::after {
                      
                       function Radio_Freq_Got_Selected(e) {
                           if (this.checked) {
-                             
+                            $(".to_be_pulsees").removeClass('pulse_thiss');
+
                              raw_freqs = this.getAttribute('datas-raw-freq');
                              round_freqs = this.getAttribute('datas-round-freq');
                              windowing_dats = this.getAttribute('datas-windowing');
@@ -1162,22 +1242,25 @@ input[type=radio]:checked + label::after {
                              
                               if(which_to_init == 'start_times_init'){
                               document.getElementById('input_starttime_container').innerHTML = "";
-                              document.getElementById('input_starttime_container').innerHTML = `<input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker">
+                              document.getElementById('input_starttime_container').innerHTML = `<input placeholder="" onkeyup="typing_starttime();" type="text" name="input_starttime" id="input_starttime" disabled class="timepicker_start_class form-control timepicker" required>
                                                                                                  <label class="active" for="input_starttime">Start Time</label>`;
 
 
-                                          $('#input_starttime').pickatime({
-                                                    // Light or Dark theme
-                                                    twelvehour: false,
-                                                    darktheme: false,
-                                                    autoclose: true,
-                                                    closeOnClear: true,
-                                                    vibrate: true,
-                                                    min:  twenty_to_twelve_Convert(times_selectors),
-                                                    max:  twenty_to_twelve_Convert(times_selectorsEND),
-                                                    afterDone: seconds_starttime
-                                                  });
+                                          // $('#input_starttime').pickatime({
+                                          //           // Light or Dark theme
+                                          //           twelvehour: false,
+                                          //           darktheme: false,
+                                          //           autoclose: true,
+                                          //           closeOnClear: true,
+                                          //           vibrate: true,
+                                          //           min:  twenty_to_twelve_Convert(times_selectors),
+                                          //           max:  twenty_to_twelve_Convert(times_selectorsEND),
+                                          //           afterDone: seconds_starttime
+                                          //         });
                                                   
+                                      
+
+
                                             $("#input_starttime").prop("disabled", false);
                                             $("#input_ms").prop("disabled", false);
 
@@ -1191,21 +1274,21 @@ input[type=radio]:checked + label::after {
                                       picker_start_datesss = document.getElementById('input_starttime').value;
 
                                       document.getElementById('input_endtime_container').innerHTML = "";
-                                      document.getElementById('input_endtime_container').innerHTML = `<input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker">
+                                      document.getElementById('input_endtime_container').innerHTML = `<input placeholder="" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
                                                                                                         <label  class="active" for="input_endtime">End Time</label>`;
-                                            $('#input_endtime').pickatime({
-                                                        // Light or Dark theme
-                                                        twelvehour: false,
-                                                        darktheme: true,
-                                                        autoclose: true,
-                                                        closeOnClear: true,
-                                                        vibrate: true,
-                                                        min:  twenty_to_twelve_Convert(picker_start_datesss),
-                                                        max:  twenty_to_twelve_Convert(times_selectorsEND),
-                                                        beforeShow: check_start_inputs,
-                                                        afterHide: check_start_inputs,
-                                                        afterDone: seconds_endtime
-                                                      });
+                                            // $('#input_endtime').pickatime({
+                                            //             // Light or Dark theme
+                                            //             twelvehour: false,
+                                            //             darktheme: true,
+                                            //             autoclose: true,
+                                            //             closeOnClear: true,
+                                            //             vibrate: true,
+                                            //             min:  twenty_to_twelve_Convert(picker_start_datesss),
+                                            //             max:  twenty_to_twelve_Convert(times_selectorsEND),
+                                            //             beforeShow: check_start_inputs,
+                                            //             afterHide: check_start_inputs,
+                                            //             afterDone: seconds_endtime
+                                            //           });
 
                                                       $("#input_endtime").prop("disabled", false);
                                                       marker_remove("Ends");
@@ -1259,80 +1342,98 @@ input[type=radio]:checked + label::after {
                     }
 
 
-                    function seconds_starttime() {
-                      var start_hr_minutes = document.getElementById('input_starttime').value;  
+                    // function seconds_starttime() {
+                    //   var start_hr_minutes = document.getElementById('input_starttime').value;  
                       
-                      if(start_hr_minutes){
+                    //   if(start_hr_minutes){
                       
-                      var start_dat = document.getElementById('current_date').value;
-                      var AAstart_datess = start_dat.substr(0, start_dat.indexOf('T'));
-                      var AAstart_hr_minutes = document.getElementById('input_starttime').value;
+                    //   var start_dat = document.getElementById('current_date').value;
+                    //   var AAstart_datess = start_dat.substr(0, start_dat.indexOf('T'));
+                    //   var AAstart_hr_minutes = document.getElementById('input_starttime').value;
 
-                      $('#strtime_second_modal').on('show.bs.modal', function (e) {
-                        document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(0);
-                        var seconds_Html = ` <center> <input type="range" id="seconds_range" value="0" max="59"> </center>`;
-                        document.getElementById('append_round_slider_seconds').innerHTML = seconds_Html;
-                      });
+                    //   $('#strtime_second_modal').on('show.bs.modal', function (e) {
+                    //     document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(0);
+                    //     var seconds_Html = ` <center> <input type="range" id="seconds_range" value="0" max="59"> </center>`;
+                    //     document.getElementById('append_round_slider_seconds').innerHTML = seconds_Html;
+                    //   });
 
-                      $('#strtime_second_modal').modal('show');
+                    //   $('#strtime_second_modal').modal('show');
 
-                      $("#seconds_range").roundSlider({
-                        sliderType: "default",
-                        handleShape: "dot",
-                        startAngle: 90,
-                        mouseScrollAction: true,
-                        endAngle: "+360",
-                        min: 0,
-                        value: 0,
-                        max: 59,
-                        value: 0,
-                        width: 10, // width of outer line
-                        radius: 125, // radius size
-                        handleSize: "+16",
-                        svgMode: true,
-                        pathColor: "#58a79c",
-                        rangeColor: "#fff",
-                        borderWidth: 0,
-                        handleColor: "#07786d",
-                        tooltipColor: "#000",
-                        tooltipFormat: function (args) {
-                          return addZeroSecond(args.value);
-                        },
-                        create: function () {
-                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
-                        },
-                        beforeCreate: function () {
-                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
-                        },
-                        drag: function (args) {
-                          document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(args.value);
-                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
-                        },
-                        stop: function (args) {
-                          document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
-                          $('#strtime_second_modal').modal('hide');
-                          $("#seconds_range").roundSlider("destroy");
-                          document.getElementById('append_round_slider_seconds').innerHTML = "";
-                          get_pickertimess("end_times_init");
+                    //   $("#seconds_range").roundSlider({
+                    //     sliderType: "default",
+                    //     handleShape: "dot",
+                    //     startAngle: 90,
+                    //     mouseScrollAction: true,
+                    //     endAngle: "+360",
+                    //     min: 0,
+                    //     value: 0,
+                    //     max: 59,
+                    //     value: 0,
+                    //     width: 10, // width of outer line
+                    //     radius: 125, // radius size
+                    //     handleSize: "+16",
+                    //     svgMode: true,
+                    //     pathColor: "#58a79c",
+                    //     rangeColor: "#fff",
+                    //     borderWidth: 0,
+                    //     handleColor: "#07786d",
+                    //     tooltipColor: "#000",
+                    //     tooltipFormat: function (args) {
+                    //       return addZeroSecond(args.value);
+                    //     },
+                    //     create: function () {
+                    //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
+                    //     },
+                    //     beforeCreate: function () {
+                    //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
+                    //     },
+                    //     drag: function (args) {
+                    //       document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(args.value);
+                    //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
+                    //     },
+                    //     stop: function (args) {
+                    //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
+                    //       $('#strtime_second_modal').modal('hide');
+                    //       $("#seconds_range").roundSlider("destroy");
+                    //       document.getElementById('append_round_slider_seconds').innerHTML = "";
+                    //       get_pickertimess("end_times_init");
 
 
                         
 
-                          // Formatted to 2022-10-15T01:30:00.000000Z
-                          datesto_moment = AAstart_datess + 'T' + AAstart_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
-                          marker_remove("Start");
-                          markers_Adds('add', 'Start', 'Start-Type', datesto_moment);
+                    //       // Formatted to 2022-10-15T01:30:00.000000Z
+                    //       datesto_moment = AAstart_datess + 'T' + AAstart_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
+                    //       marker_remove("Start");
+                    //       markers_Adds('add', 'Start', 'Start-Type', datesto_moment);
 
 
 
 
-                        },
-                      });
+                    //     },
+                    //   });
 
-                    };
-                    };
+                    // };
+                    // };
 
 
+
+
+                
+
+          
+                    let typingtimer;
+                    let timedelay = 1000;
+
+                    function typing_starttime() {
+                      var start_hr_minutes = document.getElementById('input_starttime').value; 
+                      clearTimeout(typingtimer)
+                        if (start_hr_minutes){
+                            typingtimer = setTimeout(()=>{
+                                //do stuff
+                                get_pickertimess("end_times_init");
+                            }, timedelay);
+                        };
+                    }
 
 
                     function check_start_inputs() {
@@ -1344,92 +1445,92 @@ input[type=radio]:checked + label::after {
                     }
 
 
-                    function seconds_endtime() {
-                      var start_dat = document.getElementById('current_date').value;
-                      var start_datess = start_dat.substr(0, start_dat.indexOf('T'));
+                    // function seconds_endtime() {
+                    //   var start_dat = document.getElementById('current_date').value;
+                    //   var start_datess = start_dat.substr(0, start_dat.indexOf('T'));
 
 
 
                       
-                      var start_hr_minutes = document.getElementById('input_starttime').value;  
+                    //   var start_hr_minutes = document.getElementById('input_starttime').value;  
 
-                      var end_hr_minutes = document.getElementById('input_endtime').value;
-                      if(start_hr_minutes && end_hr_minutes){
-                      $('#endtime_second_modal').on('show.bs.modal', function (e) {
-                        document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(0);
-                        var seconds_Html = ` <center> <input type="range" id="seconds_end_range" value="0" max="59"> </center>`;
-                        document.getElementById('append_round_slider_end_seconds').innerHTML = seconds_Html;
-                      });
+                    //   var end_hr_minutes = document.getElementById('input_endtime').value;
+                    //   if(start_hr_minutes && end_hr_minutes){
+                    //   $('#endtime_second_modal').on('show.bs.modal', function (e) {
+                    //     document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(0);
+                    //     var seconds_Html = ` <center> <input type="range" id="seconds_end_range" value="0" max="59"> </center>`;
+                    //     document.getElementById('append_round_slider_end_seconds').innerHTML = seconds_Html;
+                    //   });
 
-                      $('#endtime_second_modal').modal('show');
+                    //   $('#endtime_second_modal').modal('show');
 
-                      $("#seconds_end_range").roundSlider({
-                        sliderType: "default",
-                        handleShape: "dot",
-                        startAngle: 90,
-                        mouseScrollAction: true,
-                        endAngle: "+360",
-                        min: 0,
-                        value: 0,
-                        max: 59,
-                        value: 0,
-                        width: 10, // width of outer line
-                        radius: 125, // radius size
-                        handleSize: "+16",
-                        svgMode: true,
-                        pathColor: "#a1a1a1",
-                        rangeColor: "#fff",
-                        borderWidth: 0,
-                        handleColor: "#ffffff",
-                        tooltipColor: "#a1a1a1",
-                        tooltipFormat: function (args) {
-                          return addZeroSecond(args.value);
-                        },
-                        create: function () {
-                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
-                        },
-                        beforeCreate: function () {
-                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
-                        },
-                        drag: function (args) {
-                          document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(args.value);
-                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
-                        },
-                        stop: function (args) {
-                          document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
-                          $('#endtime_second_modal').modal('hide');
-                          $("#seconds_end_range").roundSlider("destroy");
-                          document.getElementById('append_round_slider_end_seconds').innerHTML = "";
-
-
-
-                          // Formatted to 2022-10-15T01:30:00.000000Z
-                          datesEND_to_moment = start_datess + 'T' + end_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
-                          marker_remove("Ends");
-                          markers_Adds('add', 'Ends', 'pick', datesEND_to_moment);
+                    //   $("#seconds_end_range").roundSlider({
+                    //     sliderType: "default",
+                    //     handleShape: "dot",
+                    //     startAngle: 90,
+                    //     mouseScrollAction: true,
+                    //     endAngle: "+360",
+                    //     min: 0,
+                    //     value: 0,
+                    //     max: 59,
+                    //     value: 0,
+                    //     width: 10, // width of outer line
+                    //     radius: 125, // radius size
+                    //     handleSize: "+16",
+                    //     svgMode: true,
+                    //     pathColor: "#a1a1a1",
+                    //     rangeColor: "#fff",
+                    //     borderWidth: 0,
+                    //     handleColor: "#ffffff",
+                    //     tooltipColor: "#a1a1a1",
+                    //     tooltipFormat: function (args) {
+                    //       return addZeroSecond(args.value);
+                    //     },
+                    //     create: function () {
+                    //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
+                    //     },
+                    //     beforeCreate: function () {
+                    //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
+                    //     },
+                    //     drag: function (args) {
+                    //       document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(args.value);
+                    //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
+                    //     },
+                    //     stop: function (args) {
+                    //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
+                    //       $('#endtime_second_modal').modal('hide');
+                    //       $("#seconds_end_range").roundSlider("destroy");
+                    //       document.getElementById('append_round_slider_end_seconds').innerHTML = "";
 
 
-                            //ambil value atau update duluuuk 
+
+                    //       // Formatted to 2022-10-15T01:30:00.000000Z
+                    //       datesEND_to_moment = start_datess + 'T' + end_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
+                    //       marker_remove("Ends");
+                    //       markers_Adds('add', 'Ends', 'pick', datesEND_to_moment);
+
+
+                    //         //ambil value atau update duluuuk 
                       
                           
-                          var end_hr_minutessss = end_hr_minutes + ':' + addZeroSecond(args.value);
+                    //       var end_hr_minutessss = end_hr_minutes + ':' + addZeroSecond(args.value);
 
-                          if(start_hr_minutes && end_hr_minutessss){
-                            get_domain_freq(start_hr_minutes , end_hr_minutessss);
-                          }
+                    //       if(start_hr_minutes && end_hr_minutessss){
+                    //         get_domain_freq(start_hr_minutes , end_hr_minutessss);
+                    //       }
 
 
-                          // console.log(seisplotjs.moment.utc(datesEND_to_moment));
-                          // console.log(datesEND_to_moment);
+                    //       // console.log(seisplotjs.moment.utc(datesEND_to_moment));
+                    //       // console.log(datesEND_to_moment);
 
-                        },
-                      });
+                    //     },
+                    //   });
 
-                    }else{
-                      var end_hr_minutes = document.getElementById('input_endtime').value= "";
-                      $("#input_endtime").prop("disabled", true);
-                    }
-                    };
+                    // }else{
+                    //   var end_hr_minutes = document.getElementById('input_endtime').value= "";
+                    //   $("#input_endtime").prop("disabled", true);
+                    // }
+                    // };
 
 
 
@@ -1562,7 +1663,7 @@ input[type=radio]:checked + label::after {
                                                   datas-windowing="`+datas_window+`" 
                                                   datas-volt-amp="`+freqs_volt+`" 
                                                   >
-                                                  <label for="control_`+nama_station_channel+`" class="card mee_rounded px-4 py-4">
+                                                  <label for="control_`+nama_station_channel+`" class="card to_be_pulsees mee_rounded px-4 py-4">
                                                   <div class="row  m-0 p-0">  
                                                   <div class="col text-center">
                                                     <p class="font-weight-bold m-0 p-0"><u>Parameter Freq</u></p><br><br>
@@ -1857,6 +1958,8 @@ input[type=radio]:checked + label::after {
 
                             
                             $('.mdb-select').materialSelect();
+                            $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
+                                "Stream Data").prop('required', true).addClass('form-control').css('background-color', '#fff');
 
                             $('#Wave_containerModal').modal('show');
 
@@ -1895,6 +1998,46 @@ input[type=radio]:checked + label::after {
                       
 
                       $('#form_pickers_param_id').submit(function (evnt) {
+                        var formss = document.getElementById('form_pickers_param_id');
+                        if ( formss.checkValidity() === false) {
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+
+
+                        if(!value_cahnnel.length ){
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+                        if(!$("#number_checked").val()){
+                          
+                          $(".to_be_pulsees").addClass('pulse_thiss');
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+                        if(!$("#volt_number").val()){
+                          $(".to_be_pulsees").addClass('pulse_thiss');
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+                        if(!$("#freq_number").val()){
+                          $(".to_be_pulsees").addClass('pulse_thiss');
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+                        if(!$("#const_number").val()){
+                          evnt.preventDefault();
+                          evnt.stopPropagation();
+                          return false;
+                        }
+
+
+                        formss.classList.add('was-validated');
                         evnt.preventDefault();
 
                         var formData_params = new FormData($('#form_pickers_param_id')[0]);
@@ -2150,33 +2293,32 @@ input[type=radio]:checked + label::after {
 
                       $('[data-toggle="tooltip"]').tooltip();
                       $('.mdb-select').materialSelect();
+                            $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
+                                "Stream Data").prop('required', true).addClass('form-control').css('background-color', '#fff');
                       $('.file-upload').file_upload();
                       $('.file-upload').show();
 
-                      // $('#input_starttime').pickatime({
-                      //   // Light or Dark theme
-                      //   twelvehour: false,
-                      //   darktheme: false,
-                      //   autoclose: true,
-                      //   closeOnClear: false,
-                      //   beforeShow: get_pickertimess,
-                       
-                      //   afterDone: seconds_starttime
-                      // });
-                      
-                      // $('#input_endtime').pickatime({
-                      //   // Light or Dark theme
-                      //   twelvehour: false,
-                      //   darktheme: true,
-                      //   autoclose: true,
-                      //   closeOnClear: false,
-                      //   // min: "8:20am",
-                      //   // max: "5:15pm"
-                      //   afterDone: seconds_endtime
-                      // });
+
+
+                 
+                $('[data-toggle="helper_start_Time"]').popover({
+                    html: true,
+                    trigger: ' focus',
+                    placement: 'top',
+                    content: function () { return `<ul> <img src="/images/tuts/TimeStartPick.gif" alt="This How To"  width="250" /></ul>`; }
+                });
+
+                $('[data-toggle="helper_end_Time"]').popover({
+                    html: true,
+                    trigger: ' focus',
+                    placement: 'top',
+                    content: function () { return `<ul> <img src="/images/tuts/TimeEndPick.gif" alt="This How To"  width="250" /></ul>`; }
+                });
 
                     });
 
+
+                  
 
   
     </script>
