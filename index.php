@@ -639,7 +639,7 @@ input[type=number] {
 
                       <div class="row">
                         <div class="col">
-                          <div class="md-form input-group">
+                          <div class="md-form input-group"  data-toggle="helper_windowing">
                             <div class="input-group-prepend">
                               <!-- <a data-toggle="tooltip" data-html="true" title="freq-kecil==>input=(~100)<br>freq-besar==>input=(~1) <u>Menyesuiakan</u>">
                                 <i class="green-text text-muted fa-regular fa-messages-question"></i>
@@ -2305,14 +2305,21 @@ input[type=number] {
                     html: true,
                     trigger: ' focus',
                     placement: 'top',
-                    content: function () { return `<ul> <img src="/images/tuts/TimeStartPick.gif" alt="This How To"  width="250" /></ul>`; }
+                    content: function () { return `<img src="/images/tuts/TimeStartPick.gif" alt="This How To"  width="250" /><ul> </ul>`; }
                 });
 
                 $('[data-toggle="helper_end_Time"]').popover({
                     html: true,
                     trigger: ' focus',
                     placement: 'top',
-                    content: function () { return `<ul> <img src="/images/tuts/TimeEndPick.gif" alt="This How To"  width="250" /></ul>`; }
+                    content: function () { return `<img src="/images/tuts/TimeEndPick.gif" alt="This How To"  width="250" /><ul> </ul>`; }
+                });
+
+                $('[data-toggle="helper_windowing"]').popover({
+                    html: true,
+                    trigger: ' focus',
+                    placement: 'left',
+                    content: function () { return `<img src="/images/tuts/WindowingNumb.gif" alt="This How To"  width="250" /> <ul> <li class="list_helpers_jumbotron" >  Makin Kecil Untuk Freq Tinggi </li> <li class="list_helpers_jumbotron" >  Bagian Hijau Dan Merah Harus Ada di setiap Gelombang </li> <li class="list_helpers_jumbotron" >  Tidak Boleh Bertabrakan Kedua Poin Tersebut </li></ul>`; }
                 });
 
                     });
