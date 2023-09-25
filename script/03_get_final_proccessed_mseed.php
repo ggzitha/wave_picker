@@ -12,8 +12,14 @@ if(!empty($_POST) && !empty($_FILES['current_mseed_file']))
     $const_number = $_POST['const_number'];
 
     $current_date = (new DateTime($_POST['current_date']))->format('Y-m-d');
-    $input_starttime_frmt = $current_date.'T'.$input_starttime.'Z';
-    $input_endtime_frmt = $current_date.'T'.$input_endtime.'Z';
+
+    
+    $startx_dates = (new DateTime($_POST['current_starts_datex']))->format('Y-m-d');
+    $endx_dates = (new DateTime($_POST['current_starts_datex']))->format('Y-m-d');
+    
+    
+    $input_starttime_frmt = $startx_dates.'T'.$input_starttime.'Z';
+    $input_endtime_frmt = $endx_dates.'T'.$input_endtime.'Z';
    
    
     $mseed_Content = $_FILES['current_mseed_file']['tmp_name'];

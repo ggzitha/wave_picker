@@ -2069,7 +2069,11 @@ input[type=number] {
                         var dat_selected_chs = JSON.stringify(value_cahnnel);
                         formData_params.append('ch_selectors', dat_selected_chs);
 
+                        var start_datesxx = document.getElementById('current_starts_date').value;
+                        formData_params.append('current_starts_datex', start_datesxx);
 
+                      var end_datesxx = document.getElementById('current_ends_date').value;
+                      formData_params.append('current_starts_datex', end_datesxx);
 
                         $.ajax({
 
