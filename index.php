@@ -698,6 +698,10 @@ input[type=number] {
                       </div>
 
                       <input type="hidden" id="current_date" name="current_date">
+                      <input type="hidden" id="current_dateTime_ms" name="current_dateTime_ms">
+
+                      <input type="hidden" id="current_starts_date" name="current_starts_date">
+                      <input type="hidden" id="current_ends_date" name="current_ends_date">
 
                       <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 py-2 mt-3 waves-effect " type="submit">Proccess</button>
 
@@ -1058,13 +1062,17 @@ input[type=number] {
                         reset_window_freq_ampli();
                       });
 
-                    function  append_from_Timestamp_picker(time_selector, this_hour) {
-                      var date_Timestamp = document.getElementById('current_date').value;
-                      var datess_for_Timestamp = date_Timestamp.substr(0, date_Timestamp.indexOf('T'));
-
+                    function  append_from_Timestamp_picker(time_selector, this_datess, this_hour) {
+                      // var date_Timestamp = document.getElementById('current_date').value;
+                      // var datess_for_Timestamp = date_Timestamp.substr(0, date_Timestamp.indexOf('T'));
+                      var datess_for_Timestamp = this_datess;
+                      // console.log(datess_for_Timestamp);
+                      // console.log(this_datess);
                       
 
                             if( time_selector == "start_time_hr" && current_picks == "start_pick_time"){
+
+                              document.forms['pickers_param']['current_starts_date'].value = datess_for_Timestamp;
                               seism_selected_start = this_hour;
                               // IN MS
                               seism_selected_start_inMS = new Date(datess_for_Timestamp + ' ' +this_hour).getTime();
@@ -1092,6 +1100,7 @@ input[type=number] {
                                 get_pickertimess("end_times_init");
                             };
                             if( time_selector == "end_time_hr" && current_picks == "end_pick_time"){
+                              document.forms['pickers_param']['current_ends_date'].value = datess_for_Timestamp;
                               seism_selected_end = this_hour;
                               // IN MS
                               seism_selected_end_inMS = new Date(datess_for_Timestamp + ' ' +this_hour).getTime();
@@ -1598,6 +1607,14 @@ input[type=number] {
                       var start_dat = document.getElementById('current_date').value;
                         data_freq_domains.append('thisss_current_date', start_dat);
 
+
+                      var start_datesxx = document.getElementById('current_starts_date').value;
+                        data_freq_domains.append('thisss_startss_date', start_datesxx);
+
+                      var end_datesxx = document.getElementById('current_ends_date').value;
+                        data_freq_domains.append('thisss_endd_date', end_datesxx);
+
+
                         var sensor_types = JSON.stringify(selected_logger);
                         data_freq_domains.append('sensor_types', sensor_types);
 
@@ -1770,8 +1787,11 @@ input[type=number] {
                             channels_stream.forEach(function (ch_stream) {
                               // console.log(datas[ch_stream].sample_rate);
 
+                              // Append Date Value to input form
                               document.forms['pickers_param']['current_date'].value = datas[ch_stream].start_time;
-
+                              document.forms['pickers_param']['current_dateTime_ms'].value = Date.parse(datas[ch_stream].start_time);
+                              
+                          
 
                               var itemHtml = `<div class="card my-2 px-1 py-2 seismograph" id="Each_stream_` + ch_stream + `" style="display:none"></div>`;
                               $("#append_data_stream").append(itemHtml);
@@ -1810,15 +1830,16 @@ input[type=number] {
                                  const formatDay = seisplotjs.d3.utcFormat("%m/%d");
                                  const formatMonth = seisplotjs.d3.utcFormat("%Y/%m");
                                  const formatYear = seisplotjs.d3.utcFormat("%Y");
+                                 const formatTanggals = seisplotjs.d3.utcFormat("%Y-%m-%d");
                                  const formatFulll = seisplotjs.d3.utcFormat("%H:%M:%S.%L");
                                  const formatHMS = seisplotjs.d3.utcFormat("%H:%M:%S");
                                  
-                                 
+                            
                                         $(this).click(function () {
                                           if( current_picks == "start_pick_time"){
                                                       if(seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date)){
                                                           if(seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start){
-                                                            append_from_Timestamp_picker("start_time_hr", formatFulll(date));
+                                                            append_from_Timestamp_picker("start_time_hr", formatTanggals(date), formatFulll(date));
                                                             if(start_time_class_locked == 'locked'){
                                                               $(this).addClass("timestamp_hovers_lock");
                                                             }else{
@@ -1830,7 +1851,7 @@ input[type=number] {
                                             else if(current_picks == "end_pick_time"){
                                                     if(seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date) ){
                                                       if(seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start){
-                                                        append_from_Timestamp_picker("end_time_hr", formatFulll(date));
+                                                        append_from_Timestamp_picker("end_time_hr", formatTanggals(date), formatFulll(date));
                                                         if(end_time_class_locked == 'locked'){
                                                               $(this).addClass("timestamp_hovers_END_lock");
                                                             }else{

@@ -15,9 +15,10 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     // $volt_number = $_POST['volt_number'];
     // $const_number = $_POST['const_number'];
 
-    $current_date = (new DateTime($_POST['thisss_current_date']))->format('Y-m-d');
-    $input_starttime_frmt = $current_date.'T'.$input_starttime.'Z';
-    $input_endtime_frmt = $current_date.'T'.$input_endtime.'Z';
+    $start_dates = (new DateTime($_POST['thisss_startss_date']))->format('Y-m-d');
+    $end_dates = (new DateTime($_POST['thisss_endd_date']))->format('Y-m-d');
+    $input_starttime_frmt = $start_dates.'T'.$input_starttime.'Z';
+    $input_endtime_frmt = $end_dates.'T'.$input_endtime.'Z';
    
    
 
