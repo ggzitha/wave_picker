@@ -36,8 +36,16 @@ if(!empty($_POST) && !empty($_FILES['current_mseed_file']))
     {
    
 
-   $command = escapeshellcmd('python3 03_get_final_proccessed_mseed.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt );
-    $output = shell_exec($command);
+//    $command = escapeshellcmd('python3 03_get_final_proccessed_mseed.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt );
+    $output = shell_exec(escapeshellcmd('python3 03_get_final_proccessed_mseed.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt ));
+    if (empty($output)) {
+        // $command = ;
+        $output = shell_exec(escapeshellcmd('python 03_get_final_proccessed_mseed.py '.$mseed_Content.' '.$ch_name.' '.$number_checked.' '.$freq_number.' '.$volt_number.' '.$const_number.' '.$input_starttime_frmt.' '.$input_endtime_frmt ));
+    }
+
+
+
+
     $json = json_decode($output);
 
     $fetched_rslt[$ch_name] = $json ;

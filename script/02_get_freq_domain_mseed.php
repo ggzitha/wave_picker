@@ -42,8 +42,14 @@ if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
     {
    
 
-   $command = escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
-    $output = shell_exec($command);
+
+    $output = shell_exec(escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt ));
+    if (empty($output)) {
+        // $command = escapeshellcmd('python 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+        $output = shell_exec(escapeshellcmd('python 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt ));
+    }
+
+
     $json = json_decode($output);
 
     $fetched_rslt[$ch_name] = $json ;
