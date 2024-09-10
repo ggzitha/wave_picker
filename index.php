@@ -2,6 +2,8 @@
 ob_start();
 session_start();
 
+$self_url = $_SERVER['PHP_SELF'];
+
 $random1 = 'secret_key1';
 $random2 = 'secret_key2';
 
@@ -12,16 +14,69 @@ $logins_usr_PW_pairs = array(
   'mee' => 'qwertyuiop'
 );
 
-$hash = md5($random1  . $random2);
-
-$self_url = $_SERVER['PHP_SELF'];
+$hash = md5($random1 . $random2);
 
 if (isset($_GET['logout'])) {
   unset($_SESSION['Logged_Datas']);
   header("Location: $self_url");
 }
 
+
+function display_login_form()
+{
+  global $self_url;
+  echo <<<HTML_LOGIN
+
+  <div id="login_container" class="viewss bg_globs">
+   <div class="container h-100 d-flex justify-content-center align-items-center">
+   <div class="col-md-5 col-sm-12 px-0">
+    <div class="card" style="background-color: #ffffff6b !important;">
+     <div class="header blue lighten-2 ">
+      <div class="row d-flex justify-content-center">
+       <h2 class=" white-text mt-4 mb-4 ">Log-in </h2>
+      </div>
+     </div>
+
+     <div class="card-body mx-4 mt-4">
+      <form action="$self_url" method='POST'>
+       <div class="md-form">
+        <input type="text" id="username" name="username" class="form-control">
+        <label class="active" for="username">UserName</label>
+       </div>
+
+       <div class="md-form pb-3">
+        <input type="password" id="password" name="password" class="form-control">
+        <label class="active" for="password">Password</label>
+       </div>
+
+       <div class="text-center mb-4">
+        <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
+       </div>
+       <div class="text-center mb-4">
+        user dan PW : <br>
+        &nbsp;&nbsp;user::user<br>
+        &nbsp;&nbsp;admin::admin
+       </div>
+
+      </form>
+     </div>
+    </div>
+    </div>
+   </div>
+  </div>
+
+  HTML_LOGIN;
+}
+
+
+
 ?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 
@@ -29,7 +84,7 @@ if (isset($_GET['logout'])) {
   <meta charset="UTF-8">
   <title>The Wave</title>
   <meta name="author" content="ggzitha">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
 
 
   <link rel="stylesheet" type="text/css" href="assets/vendor/mdbootstrap_4_mee/css/bootstrap.min.css">
@@ -37,7 +92,6 @@ if (isset($_GET['logout'])) {
   <link rel="stylesheet" type="text/css" href="assets/vendor/mdbootstrap_4_mee/css/style.css">
   <link rel="stylesheet" type="text/css" href="assets/vendor/mdbootstrap_4_mee/plugins/MDB-File-Upload/css/addons/mdb-file-upload.css">
   <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesomePro/css/all.min.css">
-  <link rel="stylesheet" href="assets/vendor/roundSlider-1.6.1/roundslider.css" />
   <link rel="stylesheet" href="assets/vendor/sweetalert2-11.4.24/sweetalert2.css" />
 
   <link href="images/icon/favicon.png" rel="shortcut icon">
@@ -283,7 +337,7 @@ if (isset($_GET['logout'])) {
 
     .mee_offside_footer {
       position: fixed;
-      bottom: -45px;
+      bottom: -95px;
       right: 0%;
       margin: 0px;
       padding: 5px;
@@ -390,12 +444,20 @@ if (isset($_GET['logout'])) {
     }
 
     /* Ini Buat Time Stamp boss */
-    .timestamp_hovers {
+    .TimeStamp_markers_svg {
+      stroke: black;
+      stroke-width: 0.5;
+      stroke-dasharray: 4, 2;
+      /* 4 units dash, 2 units gap */
+    }
+
+
+    .timestamp_hovers_START {
       cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' width='30' height='30' %3E%3Cg%3E%3Cpolygon fill='%2300FF00' points='14.76,22.5 14.76,9.5 6.239,9.5 15,1.054 23.761,9.5 15.24,9.5 15.24,22.5 '/%3E%3Cpath fill='%2329A329' d='M15,1.749L22.522,9H15.74h-1h-0.48H7.478L15,1.749 M15,0.36L5,10h9.26v12H1v1h28v-1H15.74V10H25L15,0.36 L15,0.36z'/%3E%3C/g%3E%3Cg%3E%3Cpath fill='%2339B54A' d='M4.575,28.751c0.351,0.188,0.862,0.346,1.402,0.346c0.8,0,1.267-0.369,1.267-0.903 c0-0.495-0.323-0.778-1.141-1.054c-0.989-0.306-1.6-0.754-1.6-1.501c0-0.824,0.782-1.438,1.959-1.438 c0.62,0,1.069,0.126,1.339,0.259l-0.216,0.559c-0.197-0.095-0.603-0.252-1.15-0.252c-0.827,0-1.142,0.433-1.142,0.794 c0,0.495,0.369,0.738,1.204,1.021c1.025,0.346,1.546,0.778,1.546,1.556c0,0.817-0.691,1.524-2.121,1.524 c-0.584,0-1.222-0.148-1.545-0.338L4.575,28.751z'/%3E%3Cpath fill='%2339B54A' d='M10.267,24.869H8.425v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3Cpath fill='%2339B54A' d='M13.892,27.918l-0.63,1.666h-0.809l2.059-5.297h0.943l2.067,5.297h-0.836l-0.647-1.666H13.892z M15.877,27.384l-0.593-1.524c-0.135-0.346-0.225-0.66-0.314-0.967h-0.018c-0.09,0.314-0.189,0.637-0.306,0.959l-0.594,1.532 H15.877z'/%3E%3Cpath fill='%2339B54A' d='M18.414,24.358c0.396-0.071,0.962-0.11,1.501-0.11c0.836,0,1.375,0.134,1.753,0.433 c0.306,0.235,0.477,0.597,0.477,1.006c0,0.699-0.504,1.163-1.142,1.352v0.023c0.468,0.142,0.746,0.519,0.89,1.068 c0.198,0.739,0.342,1.25,0.468,1.454h-0.81c-0.099-0.149-0.233-0.605-0.404-1.266c-0.18-0.73-0.503-1.006-1.213-1.029h-0.737v2.295 h-0.782V24.358z M19.196,26.771h0.8c0.836,0,1.366-0.4,1.366-1.006c0-0.684-0.566-0.982-1.393-0.99 c-0.378,0-0.647,0.032-0.773,0.063V26.771z'/%3E%3Cpath fill='%2339B54A' d='M24.483,24.869h-1.842v-0.582h4.484v0.582h-1.852v4.715h-0.791V24.869z'/%3E%3C/g%3E%3C/svg%3E%0A") 16 16, crosshair;
       color: #39B54A;
     }
 
-    .timestamp_hovers_lock {
+    .TimeStamp_Start_Color {
       color: #39B54A;
       font-weight: 700;
     }
@@ -405,16 +467,16 @@ if (isset($_GET['logout'])) {
       color: #FF1D25;
     }
 
-    .timestamp_hovers_END_lock {
+    .TimeStamp_End_Color {
       color: #FF1D25;
       font-weight: 700;
     }
 
-    .mee_clear_pickings {
+    .Mee_Clr_Pick_Container {
       position: absolute;
       z-index: 99999999;
-      top: 10%;
-      left: 59%;
+      top: 5%;
+      left: 50%;
     }
 
     .picks_button {
@@ -441,11 +503,112 @@ if (isset($_GET['logout'])) {
       -webkit-appearance: textfield;
       appearance: textfield;
     }
+
+
+
+    /* // Extra small devices (portrait phones, less than 576px)
+    // No media query for `xs` since this is the default in Bootstrap */
+
+    /* // Small devices (landscape phones, 576px and up) */
+    @media (min-width: 576px) {}
+
+    /* // Medium devices (tablets, 768px and up) */
+    @media (min-width: 768px) {}
+
+    /* // Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) {
+      .Mee_Clr_Pick_Container {
+        position: absolute;
+        z-index: 99999999;
+        top: 10%;
+        left: 56.5%;
+      }
+    }
+
+    /* // Extra large devices (large desktops, 1200px and up) */
+    @media (min-width: 1200px) {}
   </style>
 
-  <!-- Head Libs -->
+
   <script src="assets/vendor/modernizr/modernizr.min.js"></script>
 
+  <script type="text/javascript">
+    var ListTableID_Channel = [];
+  </script>
+
+  <script type="text/javascript">
+    function copyTablesToClipboard_Success() {
+      Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'success',
+        title: 'Table Berhasil Di-Salin',
+        footer: 'Silahkan Paste di Excel',
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+      })
+    }
+
+    function OOOOPS_Login() {
+      Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'error',
+        title: 'Log-In Gagal, Coba Periksa Akun dan Password',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
+    }
+
+    function OOOOPS_picking(title_msg, html_msg) {
+      Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'error',
+        title: title_msg,
+        html: html_msg,
+        footer: '<a href="https://github.com/ggzitha/wave_picker">What Kind Of Black Magic Is Thiss ?</a>',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        stopKeydownPropagation: false,
+        timer: 3500,
+        showCloseButton: true,
+        timerProgressBar: true,
+        width: '35em',
+        background: '#f1d8f4ff',
+        didOpen: ($this) => {
+          $this.addEventListener('mouseenter', Swal.stopTimer)
+          $this.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        didClose: () => {
+          $('#Btn_Erase_Time_Picks').click();
+        },
+        customClass: {
+          popup: 'swall_borders',
+          timerProgressBar: 'swall_borders_timers',
+        }
+      })
+    }
+
+    function UnixTimeStamp_To_Date(UNIX_timestamp) {
+      // var a = new Date(UNIX_timestamp * 1000 ); //Kalau belum milisecond
+      var a = new Date(UNIX_timestamp);
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var year = a.getFullYear();
+      var month = months[a.getMonth()];
+      var date = a.getDate();
+      var hour = a.getHours();
+      var min = a.getMinutes();
+      var sec = a.getSeconds();
+      // var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+      var time = date + '-' + month + '-' + year;
+      return time;
+    };
+  </script>
 
 
 </head>
@@ -458,7 +621,7 @@ if (isset($_GET['logout'])) {
       <h1 class=" display-4 white-text lighten-5 animated heartBeat slow infinite">Uploading Mseed</h1>
     </div>
     <div class="d-flex justify-content-center">
-      <div class="spinner-border  text-info" role="status">
+      <div class="spinner-border text-info" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
@@ -470,7 +633,7 @@ if (isset($_GET['logout'])) {
       <h1 class=" display-5 white-text lighten-5 animated tada slow infinite">Reading Mseed Param's</h1>
     </div>
     <div class="d-flex justify-content-center">
-      <div class="spinner-border  text-info" role="status">
+      <div class="spinner-border text-info" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
@@ -483,7 +646,7 @@ if (isset($_GET['logout'])) {
     </div>
 
     <div class="d-flex justify-content-center">
-      <div class="spinner-border  text-light" role="status">
+      <div class="spinner-border text-light" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
@@ -500,7 +663,7 @@ if (isset($_GET['logout'])) {
 
 
 
-    <div id="home" class="viewss  bg_globs">
+    <div id="home" class="viewss bg_globs">
 
       <div class="container h-100 d-flex justify-content-center align-items-center">
 
@@ -508,10 +671,10 @@ if (isset($_GET['logout'])) {
           <a href="?logout=true" type="button" class="btn btn-outline-danger btn-rounded waves-effect btn-sm"><i class="fas fa-power-off mr-2 fa-2x white-text"></i> Log-Out</a>
         </div>
 
-        <div class="row smooth-scroll">
-          <div class="col-md-12 white-text text-center">
+        <div class="row smooth-scroll w-75">
+          <div class="col-md-12 white-text text-center p-0 ">
             <div class="wow fadeInDown" data-wow-delay="0.3s">
-              <h3 class="display-3 font-weight-bold mb-2"><span><img src="images/icon/favicon.png" width="75px"></span> The Wave Pickers</h3>
+              <h1 class="font-weight-bold mb-2 h1-responsive display-4"><span><img src="images/icon/favicon.png" width="75px"></span> The Wave Pickers</h1>
               <hr class="hr-light">
             </div>
             <div class="wow fadeInUp" data-wow-delay="0.5s">
@@ -530,13 +693,12 @@ if (isset($_GET['logout'])) {
 
     <div class="modal top fade" id="Wave_containerModal" tabindex="-1" role="dialog" aria-labelledby="Wave_containerModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
 
-      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable  mt-0" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable mt-0" role="document" style="backdrop-filter: blur(1px) !important;">
 
         <div class="modal-content">
-          <div class="mee_clear_pickings">
-            <a class="btn-floating btn-sm picks_button disss" id="erase_pickings"
-              style="position: absolute; top: 0px; right: 0px;"
-              data-toggle="tooltip" data-html="true" title="<i><u>Reset Time Pick's</u></i>"
+          <div class="Mee_Clr_Pick_Container">
+            <a class="btn-floating btn-sm picks_button disss" id="Btn_Erase_Time_Picks"
+              data-toggle="tooltip" data-html="true" title="<i><u>Reset ALL Start-End Time Pick's</u></i> "
               disabled>
               <i class="fa-light fa-eraser"></i>
             </a>
@@ -545,18 +707,18 @@ if (isset($_GET['logout'])) {
 
           <div class="modal-header blue lighten-2">
             <h5 class="modal-title" id="Wave_containerModalTitle">Waveform Picker's</h5>
-            <button type="button" class="btn  btn-danger" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
+            <button type="button" class="btn btn-danger btn-md" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
               <i class="fa-solid fa-xmark-large fa-1x"></i>
             </button>
           </div>
 
           <div class="modal-body m-0 p-0 py-2">
             <div class="row no-gutters">
-              
-              <div class="col-7">
+
+              <div class="col-lg-7 col-12">
                 <div class="card scroll-content scrollbar-light-blue bolds" style="min-height: 100%;">
-                  <div class="card-body ">
-                    <div class=" w-100" id="append_data_stream"></div>
+                  <div class="card-body pl-1 pr-3 pt-2 ">
+                    <div class=" w-100 pb-3" id="append_data_stream"></div>
                   </div>
                 </div>
               </div>
@@ -570,9 +732,9 @@ if (isset($_GET['logout'])) {
                     <form style="color: #757575;" id="form_time_domain_param" name="form_time_domain_param" method="POST" enctype="multipart/form-data">
                     </form>
                     <form style="color: #757575;" id="form_pickers_param_id" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-                      
-                    <div class="row">
-                        <div class="btn-group  btn-sm btn-block" data-toggle="buttons" id="Logger_select">
+
+                      <div class="row">
+                        <div class="btn-group btn-sm btn-block" data-toggle="buttons" id="Logger_select">
                         </div>
                       </div>
 
@@ -584,19 +746,6 @@ if (isset($_GET['logout'])) {
                       </div>
 
                       <div class="row">
-                        <!-- <div class="col-2">
-                            <div class="switch">
-                          
-                              <label>
-                                
-                                <input type="checkbox" id="input_ms" name="input_ms" disabled>
-                                <span class="lever"></span> 
-                                
-                                <label  class="active" for="input_ms"> Milisecond</label>
-                              
-                              </label>
-                            </div>
-                        </div> -->
 
 
                         <div class="col">
@@ -624,9 +773,7 @@ if (isset($_GET['logout'])) {
                         <div class="col">
                           <div class="md-form input-group" data-toggle="helper_windowing">
                             <div class="input-group-prepend">
-                              <!-- <a data-toggle="tooltip" data-html="true" title="freq-kecil==>input=(~100)<br>freq-besar==>input=(~1) <u>Menyesuiakan</u>">
-                                <i class="green-text text-muted fa-regular fa-messages-question"></i>
-                              </a> -->
+
                             </div>
                             <input type="number" id="number_checked" name="number_checked" class="form-control" step="1" min="1" required>
                             <label class="active" for="number_checked">Windowing Number </label>
@@ -637,9 +784,7 @@ if (isset($_GET['logout'])) {
                         <div class="col">
                           <div class="md-form input-group">
                             <div class="input-group-prepend">
-                              <!-- <a data-toggle="tooltip" data-html="true" title="Di Excel, Kolom Frekuensi<br>Bisa Juga Dari Spectra PQL ">
-                                <i class="green-text text-muted fa-regular fa-messages-question"></i>
-                              </a> -->
+
                             </div>
                             <input type="number" id="freq_number" name="freq_number" class="form-control" step="0.001" required>
                             <label class="active" for="freq_number">Frekuensi(Hz) </label>
@@ -649,9 +794,7 @@ if (isset($_GET['logout'])) {
                         <div class="col">
                           <div class="md-form input-group">
                             <div class="input-group-prepend">
-                              <!-- <a data-toggle="tooltip" data-html="true" title="Di Excel, Kolom Amplitudo(Volt) ">
-                                <i class="green-text text-muted fa-regular fa-messages-question"></i>
-                              </a> -->
+
                             </div>
                             <input type="number" id="volt_number" name="volt_number" class="form-control" step="0.001" required>
                             <label class="active" for="volt_number">Amplitudo(Volt) </label>
@@ -669,9 +812,7 @@ if (isset($_GET['logout'])) {
                         <div class="col">
                           <div class="md-form input-group">
                             <div class="input-group-prepend">
-                              <!-- <a data-toggle="tooltip" data-html="true" title="Di Excel(Rumus Sensitivitas)<br>contoh: 0.0000161935461400047 <br> 0.000788081020399124">
-                              <i class="green-text text-muted fa-regular fa-messages-question"></i>
-                            </a> -->
+
                             </div>
                             <input type="number" id="const_number" name="const_number" class="form-control" step="0.000000000000000001">
                             <label class="active" for="const_number">Konstanta Perhitungan</label>
@@ -738,22 +879,45 @@ if (isset($_GET['logout'])) {
     <div class="modal fade" id="Final_rslt_Modal" tabindex="-1" role="dialog" aria-labelledby="Final_rslt_ModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
 
 
-      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable " role="document">
+      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable " role="document" style="backdrop-filter: blur(1px) !important;">
 
 
         <div class="modal-content">
-          <div class="modal-header green lighten-3">
-            <h5 class="modal-title" id="Final_rslt_ModalTitle">Picks By Parameter Result</h5>
-            <button type="button" class="btn  btn-danger" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
-              <i class="fa-solid fa-xmark-large fa-1x"></i>
-            </button>
+          <div class="modal-header green lighten-3 pb-0 pt-2">
+
+            <div class="col-8">
+              <h5 class="modal-title" id="Final_rslt_ModalTitle">Picks By Parameter Result</h5>
+              <div class="row w-75 g-0 align-content-center">
+                <div class="col-lg-3 col-10 m-0 p-0" style="scale: 85%;">
+                  <div class="form-check pt-1">
+                    <input type="checkbox" class="form-check-input" id="Chkbox_SortValues">
+                    <label class="form-check-label px-4" for="Chkbox_SortValues" autocomplete="off">Sorted <i class="fa-light fa-arrow-down-1-9"></i></label>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-2 m-0 p-0" style="scale: 85%;">
+                  <button type="button" class="btn btn-sm waves-effect m-0" id="Btn_CopyValues" onclick="copyTablesToClipboard('TempTable_Results');"><i class="fa-solid fa-copy"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-2">
+              <button type="button" class="btn btn-danger btn-md" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
+                <i class="fa-solid fa-xmark-large fa-1x"></i>
+              </button>
+            </div>
+
           </div>
           <div class="modal-body grey lighten-2">
 
-            <div class="row" id="append_final_results">
+            <div class="row" id="AppendedResult_IMG">
 
+            </div>
 
+            <div class="row" id="AppendedResult_TABLE">
 
+            </div>
+
+            <div class="row" id="Temp_CopyTABLE">
 
             </div>
 
@@ -772,10 +936,6 @@ if (isset($_GET['logout'])) {
 
 
 
-
-    <!-- ====================================
-            SECOND ON START Times 
-========================================== -->
     <div class="modal fade" id="strtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strtime_second_modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
         <div class="modal-content">
@@ -790,10 +950,6 @@ if (isset($_GET['logout'])) {
       </div>
     </div>
 
-
-    <!-- ====================================
-            SECOND ON END Times 
-========================================== -->
     <div class="modal fade" id="endtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="endtime_second_modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
         <div class="modal-content">
@@ -811,120 +967,24 @@ if (isset($_GET['logout'])) {
 
   <?php
   }
-
-  function display_login_form()
-  {
-
-    $self_url = $_SERVER['PHP_SELF'];
   ?>
-
-
-    <div id="home" class="viewss  bg_globs">
-
-      <div class="container h-100 d-flex justify-content-center align-items-center">
-
-
-
-        <!--Form with header-->
-        <div class="card" style="background-color: #ffffff6b !important; width:40% !important;">
-
-          <!--Header-->
-          <div class="header  blue lighten-2 ">
-
-            <div class="row d-flex justify-content-center">
-              <h2 class=" white-text mt-4 mb-4 ">Log-in </h2>
-            </div>
-
-          </div>
-          <!--Header-->
-
-          <div class="card-body mx-4 mt-4">
-            <form action="<?php echo $self_url; ?>" method='post'>
-              <!--Body-->
-              <div class="md-form">
-                <input type="text" id="username" name="username" class="form-control">
-                <label class="active" for="username">UserName</label>
-              </div>
-
-              <div class="md-form pb-3">
-                <input type="password" id="password" name="password" class="form-control">
-                <label class="active" for="password">Password</label>
-              </div>
-
-              <div class="text-center mb-4">
-                <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
-              </div>
-              <div class="text-center mb-4">
-                user dan PW : <br>
-                &nbsp;&nbsp;user::user<br>
-                &nbsp;&nbsp;admin::admin
-              </div>
-
-            </form>
-          </div>
-
-        </div>
-
-
-
-
-
-
-      </div>
-
-    </div>
-
-
-
-    <script>
-      function OOOOPS() {
-        Swal.fire({
-          position: 'top-end',
-          toast: true,
-          icon: 'error',
-          title: 'Log-In Gagal, Coba Periksa Akun dan Password',
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
-        })
-      }
-    </script>
-
-
-
-  <?php } ?>
 
 
 
 
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/js/jquery.min.js"></script>
-
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/js/popper.min.js"></script>
-
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/js/bootstrap.min.js"></script>
-
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/js/mdb.min.js"></script>
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/plugins/MDB-File-Upload/js/addons/mdb-file-upload.min.js"></script>
-
-
   <script type="text/javascript" src="assets/vendor/lightbox2/js/lightbox.js"></script>
-
-
-  <script type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
-  <script type="text/javascript" src="assets/vendor/roundSlider-1.6.1/roundslider.js"></script>
-
   <script type="text/javascript" src="assets/vendor/sweetalert2-11.4.24/sweetalert2.js"></script>
 
+  <script type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
+  <!-- <script type="text/javascript" src="assets/vendor/seisplotjs_2.1.0-alpha/seisplotjs_2.1.0-alpha.0_standalone.js"></script> -->
 
 
-  <script>
-    lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
-    })
-  </script>
-
-  <script>
+  <script type="text/javascript">
     (function() {
       'use strict';
       window.addEventListener('load', function() {
@@ -942,6 +1002,11 @@ if (isset($_GET['logout'])) {
         });
       }, false);
     })();
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    })
   </script>
 
 
@@ -950,10 +1015,12 @@ if (isset($_GET['logout'])) {
   ?>
     <script type="text/javascript">
       var current_picks = "start_pick_time";
-      var seism_selected_start = 100; // DUmmy ajaaa
-      var seism_selected_start_inMS;
-      var seism_selected_end = 10; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function
-      var seism_selected_end_inMS;
+      var TimeStamp_Selected_Start = 66; // DUmmy ajaaa  formatnya 03:20:00.000
+      var TimeStamp_Selected_Start_MS = 66;
+      var Temp_TimeStamp_Selected_Start_MS = 66;
+      var TimeStamp_Selected_End = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+      var TimeStamp_Selected_End_MS = 6;
+      var Temp_TimeStamp_Selected_End_MS = 6;
 
 
       var seisData;
@@ -971,61 +1038,167 @@ if (isset($_GET['logout'])) {
       var value_cahnnel = [];
 
 
-      function OOOOPS_picking(title_msg, html_msg) {
-        Swal.fire({
-          position: 'top-end',
-          toast: true,
-          icon: 'error',
-          title: title_msg,
-          html: html_msg,
-          footer: '<a href="https://github.com/ggzitha/wave_picker">What Kind Of Black Magic Is Thiss ?</a>',
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: false,
-          stopKeydownPropagation: false,
-          timer: 3500,
-          showCloseButton: true,
-          timerProgressBar: true,
-          width: '35em',
-          background: '#f1d8f4ff',
-          didOpen: ($this) => {
-            $this.addEventListener('mouseenter', Swal.stopTimer)
-            $this.addEventListener('mouseleave', Swal.resumeTimer)
-          },
-          didClose: () => {
-            $('#erase_pickings').click();
-          },
-          customClass: {
-            // container: '',
-            popup: 'swall_borders',
-            // header: '...',
-            // title: '...',
-            // closeButton: '...',
-            // icon: '...',
-            // image: '...',
-            // htmlContainer: '...',
-            // input: '...',
-            // inputLabel: '...',
-            // validationMessage: '...',
-            // actions: '...',
-            // confirmButton: '...',
-            // denyButton: '...',
-            // cancelButton: '...',
-            // loader: '...',
-            // footer: '....',
-            timerProgressBar: 'swall_borders_timers',
-          }
-        })
-      };
+      const ChkBox_Sorted = document.getElementById("Chkbox_SortValues");
 
-      $('#erase_pickings').click(function() {
+      ChkBox_Sorted.addEventListener("change", function() {
+        if (this.checked) {
+          // console.log("Checked");
+          ListTableID_Channel.forEach(function(elmnt) {
+            sortResultTable(elmnt, 3)
+          });
+        } else {
+          // console.log("Un-Checked");
+          ListTableID_Channel.forEach(function(elmnt) {
+            sortResultTable(elmnt, 0)
+          });
+        }
+      });
+
+      function sortResultTable(table_ID, RowOrder) {
+        var table = document.getElementById(table_ID);
+        var tbody = table.querySelector('tbody'); // Target the tbody specifically
+        var rows = Array.from(tbody.rows).slice(0); // Get all rows from tbody
+
+        rows.sort(function(a, b) {
+          var aValue = parseFloat(a.cells[RowOrder].textContent);
+          var bValue = parseFloat(b.cells[RowOrder].textContent);
+          if (isNaN(aValue) || isNaN(bValue)) {
+            return 0; // Skip non-numeric values
+          }
+          if (aValue < bValue) {
+            return -1;
+          } else if (aValue > bValue) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        // If RowOrder is -1, reverse the order for descending sort
+        if (RowOrder === -1) {
+          rows.reverse();
+        }
+        // Clear existing tbody rows
+        while (tbody.firstChild) {
+          tbody.removeChild(tbody.firstChild);
+        }
+        // Append sorted rows back to tbody
+        rows.forEach(function(row) {
+          tbody.appendChild(row);
+        });
+      }
+
+      function copyTablesToClipboard(TableCont_ID) {
+        var body = document.body,
+          range, sel;
+
+        range = document.createRange();
+        sel = window.getSelection();
+        sel.removeAllRanges();
+        // Append table to Bottom Of results
+        $("#Temp_CopyTABLE").html('');
+        $("#Temp_CopyTABLE").append(`<table id="TempTable_Results"></table>`);
+        if (document.createRange && window.getSelection) {
+
+          var ResultTables = document.querySelectorAll('#AppendedResult_TABLE table');
+          var theadRow_1 = ``;
+          var theadRow_2 = ``;
+          var tbodyRow_1 = ``;
+          // Collect all rows from each table
+          var allRows = [];
+
+          ResultTables.forEach(function(table) {
+            var Theadss = table.querySelectorAll('thead tr');
+            Theadss.forEach(function(trs) {
+              if (trs.children.length == 2) {
+                theadRow_1 += trs.innerHTML;
+              }
+              if (trs.children.length == 5) {
+                theadRow_2 += trs.innerHTML;
+              }
+            });
+
+            var Tbodyss = table.querySelector('tbody');
+            var Rowss = Array.from(Tbodyss.rows);
+            allRows.push(Rowss);
+          });
+          var new_Tbody = document.createElement("tbody");
+          // Determine the maximum length (in case tables have different row counts)
+          var maxRowss = Math.max(...allRows.map(Rowss => Rowss.length));
+          // Iterate over the maximum number of rows
+          for (var i = 0; i < maxRowss; i++) {
+            var newRow = document.createElement("tr");
+            // Iterate over each table's rows and append cells to the new row
+            allRows.forEach(function(Rowss) {
+              if (Rowss[i]) {
+                // If the row exists, add its cells
+                Array.from(Rowss[i].cells).forEach(cell => {
+                  var newCell = document.createElement("td");
+                  newCell.innerHTML = cell.innerHTML;
+                  // Check if the cell has the hidden attribute and preserve it
+                  if (cell.hasAttribute('hidden')) {
+                    newCell.setAttribute('hidden', '');
+                  }
+                  newRow.appendChild(newCell);
+                });
+              } else {
+                // If no row exists, add empty cells to maintain the structure
+                var numCells = Rowss[0].cells.length; // Assumes first row defines the number of columns
+                for (var j = 0; j < numCells; j++) {
+                  var emptyCell = document.createElement("td");
+                  emptyCell.innerHTML = "";
+                  newRow.appendChild(emptyCell);
+                }
+              }
+            });
+            // Append the new row to the new tbody
+            new_Tbody.appendChild(newRow);
+          }
+
+          var new_Thead = `<thead><tr>` + theadRow_1 + `</tr><tr>` + theadRow_2 + `</tr></thead>`;
+          $('#TempTable_Results').append(new_Thead);
+          $('#TempTable_Results').append(new_Tbody);
+
+          // elements.forEach(function(el) {
+          try {
+            // $('#Temp_Combined_Results').append($('#'+el).find('tr').has('td'));
+            // window['Ranges_' + el] = document.createRange();
+            // window['Ranges_' + el].selectNodeContents(document.getElementById(el));
+            // sel.addRange(window['Ranges_' + el]);
+            range.selectNodeContents(document.getElementById(TableCont_ID));
+            sel.addRange(range);
+          } catch (e) {
+            range.selectNode(document.getElementById(TableCont_ID));
+            sel.addRange(range);
+          }
+          // });
+
+          document.execCommand("copy");
+          sel.removeAllRanges();
+          $("#Temp_CopyTABLE").html('');
+
+        } else if (body.createTextRange) {
+          range = body.createTextRange();
+          elements.forEach(function(TableCont_ID) {
+            range.moveToElementText(document.getElementById(TableCont_ID));
+            range.select();
+            range.execCommand("Copy");
+            $("#Temp_CopyTABLE").html('');
+          });
+        }
+        // alert("Tables copied to clipboard!");
+        copyTablesToClipboard_Success();
+      }
+
+
+      $('#Btn_Erase_Time_Picks').click(function() {
         // samaain sama initial di paling atas
         current_picks = "start_pick_time";
-        seism_selected_start = 100; // DUmmy ajaaa
-        seism_selected_start_inMS = 100;
-        seism_selected_end = 10; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function
-        seism_selected_end_inMS = 10;
+        TimeStamp_Selected_Start = 66; // DUmmy ajaaa formatnya 03:20:00.000
+        TimeStamp_Selected_Start_MS = 66;
+        Temp_TimeStamp_Selected_Start_MS = 66;
+        TimeStamp_Selected_End = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+        TimeStamp_Selected_End_MS = 6;
+        Temp_TimeStamp_Selected_End_MS = 6;
 
         marker_remove("Ends");
         marker_remove("Start");
@@ -1034,79 +1207,80 @@ if (isset($_GET['logout'])) {
         document.getElementById('input_endtime').value = "";
 
         $("#input_endtime").prop("disabled", true);
+        $("#append_data_freqss").html('');
 
-        st_lockeds = document.querySelectorAll('.timestamp_hovers_lock, .timestamp_hovers_END_lock');
+        st_lockeds = document.querySelectorAll('.TimeStamp_Start_Color, .TimeStamp_End_Color');
         st_lockeds.forEach(st_locked => {
-          st_locked.classList.remove('timestamp_hovers_lock');
-          st_locked.classList.remove('timestamp_hovers_END_lock');
+          st_locked.classList.remove('TimeStamp_Start_Color');
+          st_locked.classList.remove('TimeStamp_End_Color');
         });
-        reset_window_freq_ampli();
+        Reset_Win_Freq_Amp_Form();
       });
 
-      function append_from_Timestamp_picker(time_selector, this_datess, this_hour) {
-        // var date_Timestamp = document.getElementById('current_date').value;
-        // var datess_for_Timestamp = date_Timestamp.substr(0, date_Timestamp.indexOf('T'));
-        var datess_for_Timestamp = this_datess;
-        // console.log(datess_for_Timestamp);
-        // console.log(this_datess);
 
 
-        if (time_selector == "start_time_hr" && current_picks == "start_pick_time") {
 
-          document.forms['pickers_param']['current_starts_date'].value = datess_for_Timestamp;
-          seism_selected_start = this_hour;
-          // IN MS
-          seism_selected_start_inMS = new Date(datess_for_Timestamp + ' ' + this_hour).getTime();
-          // Convert to Unix
-          // seism_selected_start_inMS = Math.floor(new Date(this_hour).getTime()/ 1000);
-          datess_To_moment = datess_for_Timestamp + 'T' + this_hour + 'Z';
+      function Clicked_TimeStamp_WavePicks(Start_Or_End, The_Date, The_Hour) {
+
+        if (Start_Or_End == "start_time_hr" && current_picks == "start_pick_time") {
+
+          document.forms['pickers_param']['current_starts_date'].value = The_Date;
+          document.getElementById('input_starttime').value = The_Hour;
+
+          TimeStamp_Selected_Start = The_Hour;
+          TimeStamp_Selected_Start_MS = new Date(The_Date + ' ' + The_Hour).getTime();
+          datess_To_moment = The_Date + 'T' + The_Hour + 'Z';
           marker_remove("Start");
           markers_Adds('add', 'Start', 'Start-Type', datess_To_moment);
 
-          document.getElementById('input_starttime').value = this_hour;
+
           $("#input_starttime").prop("disabled", false);
 
-
-          // console.log("st"+seism_selected_start_inMS);
           current_picks = "end_pick_time";
 
-          st_lockeds = document.querySelectorAll('.timestamp_hovers_lock');
+          st_lockeds = document.querySelectorAll('.TimeStamp_Start_Color');
           st_lockeds.forEach(st_locked => {
-            st_locked.classList.remove('timestamp_hovers_lock');
+            st_locked.classList.remove('TimeStamp_Start_Color');
           });
 
           start_time_class_locked = 'locked';
 
+          if (TimeStamp_Selected_End_MS != 6 && (TimeStamp_Selected_Start_MS > TimeStamp_Selected_End_MS)) {
+            TimeStamp_Selected_End = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+            TimeStamp_Selected_End_MS = 6;
 
-          get_pickertimess("end_times_init");
+            get_pickertimess("end_times_init");
+            document.getElementById('input_endtime').value = "";
+            $("#input_endtime").prop("disabled", true);
+          }
+
+
         };
-        if (time_selector == "end_time_hr" && current_picks == "end_pick_time") {
-          document.forms['pickers_param']['current_ends_date'].value = datess_for_Timestamp;
-          seism_selected_end = this_hour;
-          // IN MS
-          seism_selected_end_inMS = new Date(datess_for_Timestamp + ' ' + this_hour).getTime();
-          // Convert to Unix
-          // seism_selected_start_inMS = Math.floor(new Date(this_hour).getTime()/ 1000);
-          datess_To_moment = datess_for_Timestamp + 'T' + this_hour + 'Z';
+        if (Start_Or_End == "end_time_hr" && current_picks == "end_pick_time") {
+          document.forms['pickers_param']['current_ends_date'].value = The_Date;
+          TimeStamp_Selected_End = The_Hour;
+          TimeStamp_Selected_End_MS = new Date(The_Date + ' ' + The_Hour).getTime();
+          datess_To_moment = The_Date + 'T' + The_Hour + 'Z';
           marker_remove("Ends");
           markers_Adds('add', 'Ends', 'pick', datess_To_moment);
 
-          document.getElementById('input_endtime').value = this_hour;
+          document.getElementById('input_endtime').value = The_Hour;
           $("#input_endtime").prop("disabled", false);
-          // console.log("end"+seism_selected_end_inMS);
           current_picks = "start_pick_time";
 
-          end_lockeds = document.querySelectorAll('.timestamp_hovers_END_lock');
+          end_lockeds = document.querySelectorAll('.TimeStamp_End_Color');
           end_lockeds.forEach(end_locked => {
-            end_locked.classList.remove('timestamp_hovers_END_lock');
+            end_locked.classList.remove('TimeStamp_End_Color');
           });
 
           end_time_class_locked = 'locked';
         };
 
-        if (seism_selected_start_inMS && seism_selected_end_inMS) {
-          if (seism_selected_start_inMS < seism_selected_end_inMS) {
-            get_domain_freq(seism_selected_start, seism_selected_end);
+        if (TimeStamp_Selected_Start_MS && TimeStamp_Selected_End_MS) {
+          if (TimeStamp_Selected_Start_MS != 66 && TimeStamp_Selected_End_MS != 6) {
+            if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
+              get_domain_freq(TimeStamp_Selected_Start, TimeStamp_Selected_End);
+            }
           }
         };
 
@@ -1120,9 +1294,9 @@ if (isset($_GET['logout'])) {
           // console.log(key);
           // console.log(valuess);
           var itemHtmls = `<label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
-                                            <input class="form-check-input" type="radio" value="` + key + `" name="options_logger" id="` + key + `" autocomplete="off"> 
-                                            ` + key + `
-                                         </label>`;
+                      <input class="form-check-input" type="radio" value="` + key + `" name="options_logger" id="` + key + `" autocomplete="off"> 
+                      ` + key + `
+                     </label>`;
           $("#Logger_select").append(itemHtmls);
         });
 
@@ -1198,7 +1372,7 @@ if (isset($_GET['logout'])) {
       }
 
 
-      function reset_window_freq_ampli() {
+      function Reset_Win_Freq_Amp_Form() {
         $("#number_checked").prop("disabled", true);
         $("#freq_number").prop("disabled", true);
         $("#volt_number").prop("disabled", true);
@@ -1233,20 +1407,20 @@ if (isset($_GET['logout'])) {
             if (which_to_init == 'start_times_init') {
               document.getElementById('input_starttime_container').innerHTML = "";
               document.getElementById('input_starttime_container').innerHTML = `<input placeholder="" onkeyup="typing_starttime();" type="text" name="input_starttime" id="input_starttime" disabled class="timepicker_start_class form-control timepicker" required>
-                                                                                                 <label class="active" for="input_starttime">Start Time</label>`;
+                                                 <label class="active" for="input_starttime">Start Time</label>`;
 
 
               // $('#input_starttime').pickatime({
-              //           // Light or Dark theme
-              //           twelvehour: false,
-              //           darktheme: false,
-              //           autoclose: true,
-              //           closeOnClear: true,
-              //           vibrate: true,
-              //           min:  twenty_to_twelve_Convert(times_selectors),
-              //           max:  twenty_to_twelve_Convert(times_selectorsEND),
-              //           afterDone: seconds_starttime
-              //         });
+              //      // Light or Dark theme
+              //      twelvehour: false,
+              //      darktheme: false,
+              //      autoclose: true,
+              //      closeOnClear: true,
+              //      vibrate: true,
+              //      min: twenty_to_twelve_Convert(times_selectors),
+              //      max: twenty_to_twelve_Convert(times_selectorsEND),
+              //      afterDone: seconds_starttime
+              //     });
 
 
 
@@ -1265,26 +1439,26 @@ if (isset($_GET['logout'])) {
 
               document.getElementById('input_endtime_container').innerHTML = "";
               document.getElementById('input_endtime_container').innerHTML = `<input placeholder="" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
-                                                                                                        <label  class="active" for="input_endtime">End Time</label>`;
+                                                    <label class="active" for="input_endtime">End Time</label>`;
               // $('#input_endtime').pickatime({
-              //             // Light or Dark theme
-              //             twelvehour: false,
-              //             darktheme: true,
-              //             autoclose: true,
-              //             closeOnClear: true,
-              //             vibrate: true,
-              //             min:  twenty_to_twelve_Convert(picker_start_datesss),
-              //             max:  twenty_to_twelve_Convert(times_selectorsEND),
-              //             beforeShow: check_start_inputs,
-              //             afterHide: check_start_inputs,
-              //             afterDone: seconds_endtime
-              //           });
+              //       // Light or Dark theme
+              //       twelvehour: false,
+              //       darktheme: true,
+              //       autoclose: true,
+              //       closeOnClear: true,
+              //       vibrate: true,
+              //       min: twenty_to_twelve_Convert(picker_start_datesss),
+              //       max: twenty_to_twelve_Convert(times_selectorsEND),
+              //       beforeShow: check_start_inputs,
+              //       afterHide: check_start_inputs,
+              //       afterDone: seconds_endtime
+              //      });
 
               $("#input_endtime").prop("disabled", false);
               marker_remove("Ends");
             }
 
-            reset_window_freq_ampli();
+            Reset_Win_Freq_Amp_Form();
 
           } else {
 
@@ -1300,23 +1474,6 @@ if (isset($_GET['logout'])) {
 
 
 
-      function timeConverter(UNIX_timestamp) {
-
-        // var a = new Date(UNIX_timestamp * 1000 ); //Kalau belum milisecond
-        var a = new Date(UNIX_timestamp);
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var year = a.getFullYear();
-        var month = months[a.getMonth()];
-        var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
-        var sec = a.getSeconds();
-        // var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-        var time = date + '-' + month + '-' + year;
-        return time;
-      };
-
-
       function twenty_to_twelve_Convert(timeX) {
         var [hourString, minute] = timeX.split(":");
         var hour = +hourString % 24;
@@ -1330,85 +1487,6 @@ if (isset($_GET['logout'])) {
         else
           return number;
       }
-
-
-      // function seconds_starttime() {
-      //   var start_hr_minutes = document.getElementById('input_starttime').value;  
-
-      //   if(start_hr_minutes){
-
-      //   var start_dat = document.getElementById('current_date').value;
-      //   var AAstart_datess = start_dat.substr(0, start_dat.indexOf('T'));
-      //   var AAstart_hr_minutes = document.getElementById('input_starttime').value;
-
-      //   $('#strtime_second_modal').on('show.bs.modal', function (e) {
-      //     document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(0);
-      //     var seconds_Html = ` <center> <input type="range" id="seconds_range" value="0" max="59"> </center>`;
-      //     document.getElementById('append_round_slider_seconds').innerHTML = seconds_Html;
-      //   });
-
-      //   $('#strtime_second_modal').modal('show');
-
-      //   $("#seconds_range").roundSlider({
-      //     sliderType: "default",
-      //     handleShape: "dot",
-      //     startAngle: 90,
-      //     mouseScrollAction: true,
-      //     endAngle: "+360",
-      //     min: 0,
-      //     value: 0,
-      //     max: 59,
-      //     value: 0,
-      //     width: 10, // width of outer line
-      //     radius: 125, // radius size
-      //     handleSize: "+16",
-      //     svgMode: true,
-      //     pathColor: "#58a79c",
-      //     rangeColor: "#fff",
-      //     borderWidth: 0,
-      //     handleColor: "#07786d",
-      //     tooltipColor: "#000",
-      //     tooltipFormat: function (args) {
-      //       return addZeroSecond(args.value);
-      //     },
-      //     create: function () {
-      //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
-      //     },
-      //     beforeCreate: function () {
-      //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(0);
-      //     },
-      //     drag: function (args) {
-      //       document.getElementById('strtime_second_modal_titles').innerText = start_hr_minutes + ':' + addZeroSecond(args.value);
-      //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
-      //     },
-      //     stop: function (args) {
-      //       document.getElementById('input_starttime').value = start_hr_minutes + ':' + addZeroSecond(args.value);
-      //       $('#strtime_second_modal').modal('hide');
-      //       $("#seconds_range").roundSlider("destroy");
-      //       document.getElementById('append_round_slider_seconds').innerHTML = "";
-      //       get_pickertimess("end_times_init");
-
-
-
-
-      //       // Formatted to 2022-10-15T01:30:00.000000Z
-      //       datesto_moment = AAstart_datess + 'T' + AAstart_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
-      //       marker_remove("Start");
-      //       markers_Adds('add', 'Start', 'Start-Type', datesto_moment);
-
-
-
-
-      //     },
-      //   });
-
-      // };
-      // };
-
-
-
-
-
 
 
       let typingtimer;
@@ -1433,94 +1511,6 @@ if (isset($_GET['logout'])) {
           $("#input_endtime").prop("disabled", false);
         }
       }
-
-
-      // function seconds_endtime() {
-      //   var start_dat = document.getElementById('current_date').value;
-      //   var start_datess = start_dat.substr(0, start_dat.indexOf('T'));
-
-
-
-
-      //   var start_hr_minutes = document.getElementById('input_starttime').value;  
-
-      //   var end_hr_minutes = document.getElementById('input_endtime').value;
-      //   if(start_hr_minutes && end_hr_minutes){
-      //   $('#endtime_second_modal').on('show.bs.modal', function (e) {
-      //     document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(0);
-      //     var seconds_Html = ` <center> <input type="range" id="seconds_end_range" value="0" max="59"> </center>`;
-      //     document.getElementById('append_round_slider_end_seconds').innerHTML = seconds_Html;
-      //   });
-
-      //   $('#endtime_second_modal').modal('show');
-
-      //   $("#seconds_end_range").roundSlider({
-      //     sliderType: "default",
-      //     handleShape: "dot",
-      //     startAngle: 90,
-      //     mouseScrollAction: true,
-      //     endAngle: "+360",
-      //     min: 0,
-      //     value: 0,
-      //     max: 59,
-      //     value: 0,
-      //     width: 10, // width of outer line
-      //     radius: 125, // radius size
-      //     handleSize: "+16",
-      //     svgMode: true,
-      //     pathColor: "#a1a1a1",
-      //     rangeColor: "#fff",
-      //     borderWidth: 0,
-      //     handleColor: "#ffffff",
-      //     tooltipColor: "#a1a1a1",
-      //     tooltipFormat: function (args) {
-      //       return addZeroSecond(args.value);
-      //     },
-      //     create: function () {
-      //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
-      //     },
-      //     beforeCreate: function () {
-      //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(0);
-      //     },
-      //     drag: function (args) {
-      //       document.getElementById('endtime_second_modal_titles').innerText = end_hr_minutes + ':' + addZeroSecond(args.value);
-      //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
-      //     },
-      //     stop: function (args) {
-      //       document.getElementById('input_endtime').value = end_hr_minutes + ':' + addZeroSecond(args.value);
-      //       $('#endtime_second_modal').modal('hide');
-      //       $("#seconds_end_range").roundSlider("destroy");
-      //       document.getElementById('append_round_slider_end_seconds').innerHTML = "";
-
-
-
-      //       // Formatted to 2022-10-15T01:30:00.000000Z
-      //       datesEND_to_moment = start_datess + 'T' + end_hr_minutes + ':' + addZeroSecond(args.value) + '.000000Z';
-      //       marker_remove("Ends");
-      //       markers_Adds('add', 'Ends', 'pick', datesEND_to_moment);
-
-
-      //         //ambil value atau update duluuuk 
-
-
-      //       var end_hr_minutessss = end_hr_minutes + ':' + addZeroSecond(args.value);
-
-      //       if(start_hr_minutes && end_hr_minutessss){
-      //         get_domain_freq(start_hr_minutes , end_hr_minutessss);
-      //       }
-
-
-      //       // console.log(seisplotjs.moment.utc(datesEND_to_moment));
-      //       // console.log(datesEND_to_moment);
-
-      //     },
-      //   });
-
-      // }else{
-      //   var end_hr_minutes = document.getElementById('input_endtime').value= "";
-      //   $("#input_endtime").prop("disabled", true);
-      // }
-      // };
 
 
 
@@ -1554,10 +1544,10 @@ if (isset($_GET['logout'])) {
 
 
       // function marker_remove() {
-      //   seisDataList.forEach(seisData => seisData['markerList'] = []
-      //   );
+      //  seisDataList.forEach(seisData => seisData['markerList'] = []
+      //  );
 
-      //   graphList.forEach(g => g.drawMarkers());
+      //  graphList.forEach(g => g.drawMarkers());
       // }
 
       function meeee_cust_file_reset() {
@@ -1646,49 +1636,49 @@ if (isset($_GET['logout'])) {
               // Error enabled
               // if(!freqs_volt || !datas_window){
 
-              //   title_msg = 'λ OR ∑ : Unknown';
-              //   html_msg = ` <hr>
-              //               <p>Please get better Picking at <u><b>Start-time</b></u> and <u><b>End-time</b></u> </p>
-              //               <p>Maybe Caused By Incorrect Logger <u><b><small>Centaur/Q330</small></b></u> </p>`;
+              //  title_msg = 'λ OR ∑ : Unknown';
+              //  html_msg = ` <hr>
+              //        <p>Please get better Picking at <u><b>Start-time</b></u> and <u><b>End-time</b></u> </p>
+              //        <p>Maybe Caused By Incorrect Logger <u><b><small>Centaur/Q330</small></b></u> </p>`;
 
-              //   OOOOPS_picking(title_msg, html_msg)
+              //  OOOOPS_picking(title_msg, html_msg)
               // }
 
 
               // // Error enabled
-              //   if(freqs_volt && datas_window){
-              var itemHtml = `<div class="col-2">
-                                                  <input type="radio" id="control_` + nama_station_channel + `"  name="selector_freqss" value="` + ch_selector + `" 
-                                                  datas-raw-freq="` + data_domain.raw + `" 
-                                                  datas-round-freq="` + data_domain.rounded + `" 
-                                                  datas-windowing="` + datas_window + `" 
-                                                  datas-volt-amp="` + freqs_volt + `" 
-                                                  >
-                                                  <label for="control_` + nama_station_channel + `" class="card to_be_pulsees mee_rounded px-4 py-4">
-                                                  <div class="row  m-0 p-0">  
-                                                  <div class="col text-center">
-                                                    <p class="font-weight-bold m-0 p-0"><u>Parameter Freq</u></p><br><br>
-                                                    </div>
-                                                    </div>
-                                                    <div class="row">
-                                                      <div class="col-4 rounded white p-0 ">
-                                                        <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_` + ch_selector + `" data-lightbox="group_` + ch_selector + `">
-                                                          <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `">
-                                                        </a>
+              //  if(freqs_volt && datas_window){
+              var itemHtml = `<div class="col-lg-2 col-md-3 col-6">
+                         <input type="radio" id="control_` + nama_station_channel + `" name="selector_freqss" value="` + ch_selector + `" 
+                         datas-raw-freq="` + data_domain.raw + `" 
+                         datas-round-freq="` + data_domain.rounded + `" 
+                         datas-windowing="` + datas_window + `" 
+                         datas-volt-amp="` + freqs_volt + `" 
+                         >
+                         <label for="control_` + nama_station_channel + `" class="card to_be_pulsees mee_rounded px-4 py-4">
+                         <div class="row m-0 p-0"> 
+                         <div class="col text-center">
+                          <p class="font-weight-bold m-0 p-0"><u>Parameter Freq</u></p><br><br>
+                          </div>
+                          </div>
+                          <div class="row">
+                           <div class="col-4 rounded white p-0 ">
+                            <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="FreqDomain_IMG_` + ch_selector + `" data-lightbox="FdomainGroup_` + ch_selector + `">
+                             <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="FreqDomain_IMG_` + ch_selector + `">
+                            </a>
 
-                                                      </div>
-                                                      <div class="col-8  ">
-                                                        <p> &nbsp;⨍ == ` + (parseFloat(data_domain.raw).toFixed(6)) + ` Hz <br>
-                                                          ≈⨏ == ` + data_domain.rounded + `&nbsp;&nbsp;&nbsp;&nbsp;Hz
-                                                          <br><br>
-                                                          ∑ :` + datas_window + ` &nbsp;|&nbsp;
-                                                          λ :` + freqs_volt + `
-                                                          </p>
-                                                      </div>
-                                                    </div>
+                           </div>
+                           <div class="col-8 ">
+                            <p> &nbsp;⨍ == ` + (parseFloat(data_domain.raw).toFixed(6)) + ` Hz <br>
+                             ≈⨏ == ` + data_domain.rounded + `&nbsp;&nbsp;&nbsp;&nbsp;Hz
+                             <br><br>
+                             ∑ :` + datas_window + ` &nbsp;|&nbsp;
+                             λ :` + freqs_volt + `
+                             </p>
+                           </div>
+                          </div>
 
-                                                  </label>
-                                                </div> `;
+                         </label>
+                        </div> `;
               // $("#append_data_freqss").append(itemHtml); //Ini kalau mau buat 3, kalau 1 pakai yang di bawah
               $("#append_data_freqss").html(itemHtml);
 
@@ -1700,7 +1690,7 @@ if (isset($_GET['logout'])) {
             document.getElementById('loader-wrapper1').hidden = true;
             // $('#Final_rslt_Modal').modal('show');
 
-            reset_window_freq_ampli();
+            Reset_Win_Freq_Amp_Form();
 
             var freqss_rads = document.querySelectorAll('input[name="selector_freqss"]');
 
@@ -1766,8 +1756,6 @@ if (isset($_GET['logout'])) {
 
 
 
-
-
             channels_stream.forEach(function(ch_stream) {
               // console.log(datas[ch_stream].sample_rate);
 
@@ -1789,14 +1777,14 @@ if (isset($_GET['logout'])) {
               start = seisplotjs.moment.utc(datas[ch_stream].start_time);
 
               Seismo_segment = new seisplotjs.seismogram.SeismogramSegment(datas[ch_stream].trace_data, sampleRate, start);
-              // seismogram=  new seisplotjs.seismogram.Seismogram(Seismo_segment);
+              // seismogram= new seisplotjs.seismogram.Seismogram(Seismo_segment);
               seismogram = seisplotjs.seismogram.Seismogram.createFromContiguousData(datas[ch_stream].trace_data, sampleRate, start);
 
 
               element_sel = seisplotjs.d3.select('div#Each_stream_' + ch_stream);
 
               seisConfig = new seisplotjs.seismographconfig.SeismographConfig();
-              seisConfig.title = datas[ch_stream].sta_names + '_' + ch_stream + ' ' + timeConverter(start);
+              seisConfig.title = datas[ch_stream].sta_names + '_' + ch_stream + ' ' + UnixTimeStamp_To_Date(start);
               seisConfig.margin.top = 25;
               seisConfig.maxWidth = 1080;
               seisConfig.minWidth = 900;
@@ -1821,24 +1809,24 @@ if (isset($_GET['logout'])) {
 
                 $(this).click(function() {
                   if (current_picks == "start_pick_time") {
-                    if (seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date)) {
-                      if (seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start) {
-                        append_from_Timestamp_picker("start_time_hr", formatTanggals(date), formatFulll(date));
+                    if (TimeStamp_Selected_Start != formatFulll(date) && TimeStamp_Selected_End != formatFulll(date)) {
+                      if (TimeStamp_Selected_Start != TimeStamp_Selected_End && TimeStamp_Selected_End != TimeStamp_Selected_Start) {
+                        Clicked_TimeStamp_WavePicks("start_time_hr", formatTanggals(date), formatFulll(date));
                         if (start_time_class_locked == 'locked') {
-                          $(this).addClass("timestamp_hovers_lock");
+                          $(this).addClass("TimeStamp_Start_Color");
                         } else {
-                          $(this).removeClass("timestamp_hovers_lock");
+                          $(this).removeClass("TimeStamp_Start_Color");
                         }
                       }
                     };
                   } else if (current_picks == "end_pick_time") {
-                    if (seism_selected_start != formatFulll(date) && seism_selected_end != formatFulll(date)) {
-                      if (seism_selected_start != seism_selected_end && seism_selected_end != seism_selected_start) {
-                        append_from_Timestamp_picker("end_time_hr", formatTanggals(date), formatFulll(date));
+                    if (TimeStamp_Selected_Start != formatFulll(date) && TimeStamp_Selected_End != formatFulll(date)) {
+                      if (TimeStamp_Selected_Start != TimeStamp_Selected_End && TimeStamp_Selected_End != TimeStamp_Selected_Start) {
+                        Clicked_TimeStamp_WavePicks("end_time_hr", formatTanggals(date), formatFulll(date));
                         if (end_time_class_locked == 'locked') {
-                          $(this).addClass("timestamp_hovers_END_lock");
+                          $(this).addClass("TimeStamp_End_Color");
                         } else {
-                          $(this).removeClass("timestamp_hovers_END_lock");
+                          $(this).removeClass("TimeStamp_End_Color");
                         }
                       }
                     };
@@ -1847,11 +1835,11 @@ if (isset($_GET['logout'])) {
 
                 $(this).mouseover(function() {
                   if (current_picks == "start_pick_time") {
-                    $(this).addClass("timestamp_hovers");
+                    $(this).addClass("timestamp_hovers_START");
                     $(this).removeClass("timestamp_hovers_END");
                   } else if (current_picks == "end_pick_time") {
                     $(this).addClass("timestamp_hovers_END");
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
 
                   }
 
@@ -1859,36 +1847,36 @@ if (isset($_GET['logout'])) {
 
                 $(this).mouseout(function() {
                   if (current_picks == "start_pick_time") {
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
                     $(this).removeClass("timestamp_hovers_END");
 
                   } else if (current_picks == "end_pick_time") {
                     $(this).removeClass("timestamp_hovers_END");
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
 
                   }
                 });
 
                 $(this).mouseenter(function() {
                   if (current_picks == "start_pick_time") {
-                    $(this).addClass("timestamp_hovers");
+                    $(this).addClass("timestamp_hovers_START");
                     $(this).removeClass("timestamp_hovers_END");
 
                   } else if (current_picks == "end_pick_time") {
                     $(this).addClass("timestamp_hovers_END");
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
 
                   }
                 });
 
                 $(this).mouseleave(function() {
                   if (current_picks == "start_pick_time") {
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
                     $(this).removeClass("timestamp_hovers_END");
 
                   } else if (current_picks == "end_pick_time") {
                     $(this).removeClass("timestamp_hovers_END");
-                    $(this).removeClass("timestamp_hovers");
+                    $(this).removeClass("timestamp_hovers_START");
 
                   }
                 });
@@ -1900,15 +1888,6 @@ if (isset($_GET['logout'])) {
                   seisplotjs.d3.utcMonth(date) < date ? formatDay :
                   seisplotjs.d3.utcYear(date) < date ? formatMonth :
                   formatYear)(date);
-
-                // seisplotjs.d3.utcSecond(date) < date ? formatMillisecond
-                // : seisplotjs.d3.utcMinute(date) < date ? formatSecond
-                // : seisplotjs.d3.utcHour(date) < date ? formatMinute
-                // : seisplotjs.d3.utcDay(date) < date ? formatHour
-                // : seisplotjs.d3.utcMonth(date) < date ?  formatDay
-                // : seisplotjs.d3.utcYear(date) < date ? formatMonth
-                // : formatYear)(date);
-
 
               };
               seisConfig.lineColors = [
@@ -1943,6 +1922,39 @@ if (isset($_GET['logout'])) {
               graph.draw();
               graph.drawSeismogramsSvg();
 
+
+
+
+              // Ensure SVG is fully rendered before querying
+
+              const svgElement = document.querySelector(`#Each_stream_${ch_stream} svg`);
+              if (!svgElement) {
+                console.error(`SVG element not found for ${ch_stream}`);
+                return;
+              }
+
+              // Create and append the dashed marker to the SVG
+              const marker = document.createElementNS("http://www.w3.org/2000/svg", "line");
+              marker.classList.add("TimeStamp_markers_svg"); // Apply the CSS class with dashed style
+
+              marker.setAttribute("stroke", "black");
+              marker.setAttribute("stroke-width", "0.5");
+              marker.setAttribute("y1", "10%"); // Start 10% from the top
+              marker.setAttribute("y2", "80%"); // Extend marker vertically 80% (leaving 10% at the bottom)
+              svgElement.appendChild(marker);
+
+              // Add mouse event handling for marker
+              svgElement.addEventListener('mousemove', (event) => {
+                const rect = svgElement.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                marker.setAttribute("x1", x);
+                marker.setAttribute("x2", x);
+              });
+
+              svgElement.addEventListener('mouseleave', () => {
+                marker.setAttribute("x1", null);
+                marker.setAttribute("x2", null);
+              });
 
             });
 
@@ -1981,13 +1993,16 @@ if (isset($_GET['logout'])) {
       $('#ch_selectors').on('change', function() {
         var $selectedOptions = $(this).find('option:selected');
         value_cahnnel = [];
+        ListTableID_Channel = [];
         $selectedOptions.each(function() {
           value_cahnnel.push($(this).text());
+          ListTableID_Channel.push('table_' + $(this).text());
         });
 
-        $('#erase_pickings').click();
-        $("#erase_pickings").prop("disabled", true);
+        $('#Btn_Erase_Time_Picks').click();
+        $("#Btn_Erase_Time_Picks").prop("disabled", true);
         // console.log(value_cahnnel);
+        // console.log(ListTableID_Channel);
       });
 
 
@@ -2063,9 +2078,9 @@ if (isset($_GET['logout'])) {
 
           data: formData_params, // get all form field value in serialize form
           // data: {
-          //                 channels: dat_selected_chs,
-          //                 forms: formData_params,
-          //             },
+          //         channels: dat_selected_chs,
+          //         forms: formData_params,
+          //       },
 
           contentType: false,
           cache: false,
@@ -2075,7 +2090,8 @@ if (isset($_GET['logout'])) {
             $("#err").fadeOut();
           },
           success: function(result_finale) {
-            $("#append_final_results").html('');
+            $("#AppendedResult_IMG").html('');
+            $("#AppendedResult_TABLE").html('');
             // console.log(result_finale);
 
 
@@ -2093,60 +2109,64 @@ if (isset($_GET['logout'])) {
 
 
 
-              var itemHtml = `<div class="col">
-                                                      <div class="row">
-                                                            <div class="col">
-                                                                <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
-                                                                  <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_` + ch_selector + `"  >
-                                                                </a>
-                                                            </div>
-                                                            <div class="col">
-                                                                <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `"  data-lightbox="group_` + ch_selector + `">
-                                                                  <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `"  >
-                                                                </a>
-                                                            </div>
-                                                      </div>
+              var ResultHtml_IMG = `<div class="col">
+                              <div class="row">
+                                  <div class="col">
+                                    <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_pick_` + ch_selector + `" data-lightbox="group_` + ch_selector + `">
+                                    <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_pick_` + ch_selector + `" >
+                                    </a>
+                                  </div>
+                                  <div class="col">
+                                    <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `" data-lightbox="group_` + ch_selector + `">
+                                    <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `" >
+                                    </a>
+                                  </div>
+                            </div>`;
+              $("#AppendedResult_IMG").append(ResultHtml_IMG);
 
-                                                  
 
-                                                      <div class="row">
-                                                          <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
-                                                              <center>
-                                                                  <table class="table table-striped" id="table_` + ch_selector + `" style="width: 80%;">
 
-                                                                      <thead class="black white-text">
-                                                                          <tr>
-                                                                              <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
-                                                                          </tr>
-                                                                          <tr>
-                                                                              <th scope="col">Peak</th>
-                                                                              <th scope="col">Valley</th>
-                                                                              <th scope="col">Sensitivitas</th>
-                                                                          </tr>
-                                                                      </thead>
-                                                                      <tbody>
+              var ResultHtml_TABLE = `<div class="col">
+                             <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
+                               <center>
+                                 <table class="table table-striped" id="table_` + ch_selector + `" style="width: 80%;">
 
-                                                                      </tbody>
-                                                                  </table>
-                                                              </center>
-                                                          </div>
-                                                      </div>
-                                                  </div> `;
-              $("#append_final_results").append(itemHtml);
+                                   <thead class="black white-text">
+                                     <tr>
+                                       <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
+                                       <th></th>
+                                     </tr>
+                                     <tr>
+                                       <th scope="col" hidden></th>
+                                       <th scope="col">Peak</th>
+                                       <th scope="col">Valley</th>
+                                       <th scope="col">Sensitivitas</th>
+                                       <th></th>
+                                     </tr>
+                                   </thead>
+                                   <tbody>
+
+                                   </tbody>
+                                 </table>
+                               </center>
+                             </div>
+                           </div>
+                         </div> `;
+              $("#AppendedResult_TABLE").append(ResultHtml_TABLE);
 
               table_tbody_ref = document.getElementById("table_" + ch_selector + "").getElementsByTagName('tbody')[0];
 
               // console.log(table_ids);
 
-              // var arr_dat2 = data_peaks.map((element, indx) => ({ element,  x:data_valleys[indx], z:data_sensitivity[indx]  }));
-              //             console.log(arr_dat2);
+              // var arr_dat2 = data_peaks.map((element, indx) => ({ element, x:data_valleys[indx], z:data_sensitivity[indx] }));
+              //       console.log(arr_dat2);
 
               var data_peaks = result_finale[ch_selector]['data_peaks'];
               var data_valleys = result_finale[ch_selector]['data_valleys'];
               var data_sensitivity = result_finale[ch_selector]['data_sensitivity'];
 
               var array_to_three_col = data_sensitivity.map(function(element, indx) {
-                return [data_peaks[indx], data_valleys[indx], data_sensitivity[indx]]
+                return [indx, data_peaks[indx], data_valleys[indx], data_sensitivity[indx], null]
               });
               // console.log(array_to_three_col);
 
@@ -2159,6 +2179,13 @@ if (isset($_GET['logout'])) {
 
                   // add value to the cell
                   cell.innerHTML = array_to_three_col[idx][j];
+
+                  // add class to the first cell
+                  if (j === 0) {
+                    // cell.classList.add('your-class-name');
+                    // cell.style = "....";
+                    cell.hidden = true;
+                  }
                 }
               }
 
@@ -2218,13 +2245,13 @@ if (isset($_GET['logout'])) {
               $("#input_starttime").prop("disabled", true);
               $("#input_endtime").prop("disabled", true);
 
-              reset_window_freq_ampli();
+              Reset_Win_Freq_Amp_Form();
             }
           }
 
           // selected_chann.forEach((item) => {
-          //   $('#Each_stream_'+item).show();
-          //   })
+          //  $('#Each_stream_'+item).show();
+          //  })
 
           $("div[id^='Each_stream_']").each(function() {
             //get id
@@ -2238,9 +2265,9 @@ if (isset($_GET['logout'])) {
             } else {
               $(this).show();
 
-              $('#erase_pickings').click();
-              $("#erase_pickings").removeClass("disss");
-              $("#erase_pickings").prop("disabled", false);
+              $('#Btn_Erase_Time_Picks').click();
+              $("#Btn_Erase_Time_Picks").removeClass("disss");
+              $("#Btn_Erase_Time_Picks").prop("disabled", false);
             }
             // console.log($(this));
             // $(this).toggleClass("shown", !selected_chann_id.includes(this.id));
@@ -2260,11 +2287,11 @@ if (isset($_GET['logout'])) {
           $("#input_starttime").prop("disabled", true);
           $("#input_endtime").prop("disabled", true);
 
-          $('#erase_pickings').click();
-          $("#erase_pickings").addClass("disss");
-          $("#erase_pickings").prop("disabled", true);
+          $('#Btn_Erase_Time_Picks').click();
+          $("#Btn_Erase_Time_Picks").addClass("disss");
+          $("#Btn_Erase_Time_Picks").prop("disabled", true);
 
-          reset_window_freq_ampli();
+          Reset_Win_Freq_Amp_Form();
         }
       });
 
@@ -2280,7 +2307,7 @@ if (isset($_GET['logout'])) {
 
         new WOW().init();
 
-        reset_window_freq_ampli();
+        Reset_Win_Freq_Amp_Form();
 
         $("#input_starttime").prop("disabled", true);
         $("#input_endtime").prop("disabled", true);
@@ -2309,7 +2336,7 @@ if (isset($_GET['logout'])) {
           trigger: ' focus',
           placement: 'top',
           content: function() {
-            return `<img src="/images/tuts/TimeStartPick.gif" alt="This How To"  width="250" /><ul> </ul>`;
+            return `<img src="/images/tuts/TimeStartPick.gif" alt="This How To" width="250" /><ul> </ul>`;
           }
         });
 
@@ -2318,7 +2345,7 @@ if (isset($_GET['logout'])) {
           trigger: ' focus',
           placement: 'top',
           content: function() {
-            return `<img src="/images/tuts/TimeEndPick.gif" alt="This How To"  width="250" /><ul> </ul>`;
+            return `<img src="/images/tuts/TimeEndPick.gif" alt="This How To" width="250" /><ul> </ul>`;
           }
         });
 
@@ -2327,7 +2354,7 @@ if (isset($_GET['logout'])) {
           trigger: ' focus',
           placement: 'left',
           content: function() {
-            return `<img src="/images/tuts/WindowingNumb.gif" alt="This How To"  width="250" /> <ul> <li class="list_helpers_jumbotron" >  Makin Kecil Untuk Freq Tinggi </li> <li class="list_helpers_jumbotron" >  Bagian Hijau Dan Merah Harus Ada di setiap Gelombang </li> <li class="list_helpers_jumbotron" >  Tidak Boleh Bertabrakan Kedua Poin Tersebut </li></ul>`;
+            return `<img src="/images/tuts/WindowingNumb.gif" alt="This How To" width="250" /> <ul> <li class="list_helpers_jumbotron" > Makin Kecil Untuk Freq Tinggi </li> <li class="list_helpers_jumbotron" > Bagian Hijau Dan Merah Harus Ada di setiap Gelombang </li> <li class="list_helpers_jumbotron" > Tidak Boleh Bertabrakan Kedua Poin Tersebut </li></ul>`;
           }
         });
 
@@ -2359,7 +2386,7 @@ if (isset($_GET['logout'])) {
 
       // DISPLAY FORM WITH ERROR
       display_login_form();
-      echo "<script> OOOOPS(); </script>";
+      echo "<script> OOOOPS_Login(); </script>";
     }
   }
 
