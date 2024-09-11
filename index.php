@@ -677,6 +677,9 @@ function display_login_form()
               <h1 class="font-weight-bold mb-2 h1-responsive display-4"><span><img src="images/icon/favicon.png" width="75px"></span> The Wave Pickers</h1>
               <hr class="hr-light">
             </div>
+            <div id="myseismograph">
+              <sp-seismograph ></sp-seismograph>
+            </div>
             <div class="wow fadeInUp" data-wow-delay="0.5s">
               <div class="file-upload-wrapper">
                 <input type="file" id="file_mseed" name="mseed" class="file-upload" data-max-file-size="200M" style="display:none" />
@@ -980,11 +983,22 @@ function display_login_form()
   <script type="text/javascript" src="assets/vendor/lightbox2/js/lightbox.js"></script>
   <script type="text/javascript" src="assets/vendor/sweetalert2-11.4.24/sweetalert2.js"></script>
 
-  <script type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
+  <script nomodule type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
   <!-- <script type="text/javascript" src="assets/vendor/seisplotjs_2.1.0-alpha/seisplotjs_2.1.0-alpha.0_standalone.js"></script> -->
+  <!-- <script type="module" src="assets/vendor/seisplotjs-3.1.4/docs/seisplotjs_3.1.4_standalone.mjs"></script> -->
+
+  <script type="module">
+    
+  import * as seisplotjs3 from './assets/vendor/seisplotjs-3.1.4/seisplotjs_3.1.4_standalone.js';
+  seisplotjs3.util.updateVersionText('.sp_version');
+  
+  </script>
+
 
 
   <script type="text/javascript">
+
+      
     (function() {
       'use strict';
       window.addEventListener('load', function() {
@@ -1792,8 +1806,11 @@ function display_login_form()
               seisConfig.maxHeight = 600;
               seisConfig.minHeight = 250;
               seisConfig.wheelZoom = true;
-              seisConfig.doRMean = true;
-              seisConfig.doGain = true;
+              seisConfig.Zoom = true;
+              // seisConfig.interactive = true;
+              // seisConfig.autoResize = true;
+              seisConfig.doRMean = false;
+              seisConfig.doGain = false;
               seisConfig.xScaleFormat = function(date) {
                 const formatMillisecond = seisplotjs.d3.utcFormat(".%L");
                 const formatSecond = seisplotjs.d3.utcFormat(":%S");
@@ -1893,12 +1910,15 @@ function display_login_form()
               seisConfig.lineColors = [
                 "#87ceeb"
               ];
+              
               seisConfig.lineWidth = 1;
               seisConfig.xLabelOrientation = "horizontal";
               seisConfig.xLabel = "";
-              seisConfig.xSublabel = "Time";
+              seisConfig.xSublabel = "Time Series";
 
-
+              seisConfig.onClickEvent = function(event) {
+                console.log('Click at time:', event.time);
+              };
 
               // seisConfig.margin.bottom = 0;
               // seisConfig.margin.left = 0;
