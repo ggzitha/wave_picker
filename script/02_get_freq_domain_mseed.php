@@ -1,71 +1,59 @@
 <?php
 
-if(!empty($_POST) && !empty($_FILES['thisss_mseed']))
-{
-    $ch_selectors = json_decode($_POST['ch_selectorsssss']);
-    $sensor_types = json_decode($_POST['sensor_types']);
-    $times_deltass = json_decode($_POST['times_deltas'], true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['Step02_MseedFile'])) {
+    // Validate and decode input
+    $ChannelSelected = isset($_POST['ChannelSelected']) ? json_decode($_POST['ChannelSelected'], true) : [];
+    $DigitizerType = isset($_POST['DigitizerType']) ? json_decode($_POST['DigitizerType'], true) : null;
+    $TimeDeltas = isset($_POST['TimeDeltas']) ? json_decode($_POST['TimeDeltas'], true) : null;
 
-
-    $input_starttime = $times_deltass['starts'];
-    $input_endtime = $times_deltass['ends'];
-
-    // $number_checked = $_POST['number_checked'];
-    // $freq_number = $_POST['freq_number'];
-    // $volt_number = $_POST['volt_number'];
-    // $const_number = $_POST['const_number'];
-
-    $start_dates = (new DateTime($_POST['thisss_startss_date']))->format('Y-m-d');
-    $end_dates = (new DateTime($_POST['thisss_endd_date']))->format('Y-m-d');
-    $input_starttime_frmt = $start_dates.'T'.$input_starttime.'Z';
-    $input_endtime_frmt = $end_dates.'T'.$input_endtime.'Z';
-   
-   
-
-
-//     print_r($_POST);
-//     print_r($input_starttime);
-
-// var_dump($_POST);
-// die;
-
-
-    $mseed_Content = $_FILES['thisss_mseed']['tmp_name'];
-
-
-
-    $fetched_ch = array();
-    $fetched_rslt = array();
-
-    $fetched_ch['channels'] = $ch_selectors ;
-    foreach($ch_selectors as $ch_name)
-    {
-   
-
-
-    $output = shell_exec(escapeshellcmd('python3 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt ));
-    if (empty($output)) {
-        // $command = escapeshellcmd('python 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
-        $output = shell_exec(escapeshellcmd('python 02_get_freq_domain_mseed.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_name.'  '.$input_starttime_frmt.' '.$input_endtime_frmt ));
+    // Validate required fields
+    if (!$ChannelSelected || !$DigitizerType || !$TimeDeltas || !isset($TimeDeltas['starts'], $TimeDeltas['ends']) || $_FILES['Step02_MseedFile']['error'] !== UPLOAD_ERR_OK ) {
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Invalid input. Missing required parameters.']);
+        exit;
     }
 
+    $Input_Start_Time = escapeshellarg($TimeDeltas['starts']); // Example: 2024-09-01T04:07:04.500Z
+    $Input_End_Time = escapeshellarg($TimeDeltas['ends']);     // Example: 2024-09-01T04:07:04.500Z
+    $mseed_Content = escapeshellarg($_FILES['Step02_MseedFile']['tmp_name']); // Temporary file path
 
-    $json = json_decode($output);
+    $fetched_ch = ['channels' => $ChannelSelected];
+    $fetched_rslt = [];
 
-    $fetched_rslt[$ch_name] = $json ;
+    // Loop through each selected channel
+    foreach ($ChannelSelected as $ch_name) {
+        $ch_name_escaped = escapeshellarg($ch_name);
+        $DigitizerType_escaped = escapeshellarg($DigitizerType);
+
+        // Prepare command
+        $command = "python3 02_get_freq_domain_mseed.py $mseed_Content $DigitizerType_escaped $ch_name_escaped $Input_Start_Time $Input_End_Time";
+        $output = shell_exec($command);
+
+        // Fallback to another python command if first fails
+        if (empty($output)) {
+            $command_fallback = "python 02_get_freq_domain_mseed.py $mseed_Content $DigitizerType_escaped $ch_name_escaped $Input_Start_Time $Input_End_Time";
+            $output = shell_exec($command_fallback);
+        }
+
+        // Parse the JSON result
+        $json = json_decode($output, true);
+
+        if ($json === null) {
+            // Handle parsing errors or empty output
+            $fetched_rslt[$ch_name] = ['error' => 'Failed to process channel: ' . $ch_name];
+        } else {
+            $fetched_rslt[$ch_name] = $json;
+        }
     }
-    
-    
-    $resultss = json_encode(array_merge($fetched_ch, $fetched_rslt));
-    // header("Content-Type: application/json");
-    // print_r ($json);
-    print_r ($resultss);
-    // echo json_encode($resultss);
 
-}
-else{
-    echo "Error";
-    // var_dump ($_POST);
+    // Merge and output results
+    $resultss = json_encode(['data' => array_merge($fetched_ch, $fetched_rslt)]);
+    // $resultss = json_encode(['data' =>array_merge($fetched_ch, $fetched_rslt)], JSON_PRETTY_PRINT);
+    header("Content-Type: application/json");
+    echo $resultss;
+} else {
+    // Handle errors
+    echo json_encode(['error' => 'Invalid request or file missing']);
 }
 
 ?>

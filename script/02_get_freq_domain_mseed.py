@@ -1,191 +1,156 @@
 #!/usr/bin/python3
 
-from __future__ import print_function
-import sys, getopt
+import sys
 import json
-import pprint
 import obspy
-import io
-import base64
-import math
-
-
 import numpy as np
 import matplotlib.pyplot as plt
-# from scipy import signal
-# from scipy.signal import savgol_filter
 from scipy.signal import argrelextrema
-# from scipy.ndimage.filters import gaussian_filter1d
-# from scipy.ndimage.filters import gaussian_filter
-from obspy import read
 from obspy import UTCDateTime
-import pandas as pd
+import io
+import base64
 
+# Exception classes for specific error handling
+class InputError(Exception):
+    pass
+
+class FileError(Exception):
+    pass
+
+class ProcessingError(Exception):
+    pass
+
+# Utility function: count trailing zeros in a floating-point number
 def num_of_zeros(n):
-  s = '{:.16f}'.format(n).split('.')[1]
-  ss = len(s) - len(s.lstrip('0'))
-  if ss > 0 :
-      ss = ss+1
-  elif len(s.rstrip('0')) > 0:
-      ss = ss+1
-  return ss
+    s = '{:.16f}'.format(n).split('.')[1]
+    return len(s) - len(s.lstrip('0')) + 1 if s.rstrip('0') else 0
 
-
+# Utility function: find the closest value in a list
 def closest_value_find(input_list, input_value):
     arr = np.asarray(input_list)
-    # round_to = [0,0.1,0.15,0.2,0.25]
-    i = min(arr, key=lambda x: abs(x - input_value))
-    return i
-# cd script
-#  python3 F:\laragon6\www\html\wave_picker\script\02_get_freq_domain_mseed.py  MBPI.seed Centaur BHE  2022-10-15T01:49:00Z 2022-10-15T01:58:02Z
-# $command = escapeshellcmd('python3 picker_with_arg.py '.$mseed_Content.' '.$sensor_types.'  '.$ch_selectors.'  '.$input_starttime_frmt.' '.$input_endtime_frmt );
+    return min(arr, key=lambda x: abs(x - input_value))
 
-mseed_file = sys.argv[1]
-sensor_types = sys.argv[2]
-ch_selectors = sys.argv[3]
-input_starttime_frmt = sys.argv[4]
-input_endtime_frmt = sys.argv[5]
+# Function to load and process MiniSEED file
+def process_mseed(mseed_file, start_time, end_time, channel):
+    try:
+        stream = obspy.read(mseed_file, starttime=start_time, endtime=end_time)
+        selected_stream = stream.select(channel=channel)
+        if not selected_stream:
+            raise FileError(f"No data for channel: {channel}")
+        return selected_stream[0]
+    except Exception as e:
+        raise FileError(f"Error processing MiniSEED file: {e}")
 
-# fmin=.01,fmax=50 defaults === fmin=1.0, fmax=10.0
-freq_input_min_to_plt = 0.01
-freq_input_max_to_plt = 10.0
+# Function to perform FFT and find frequency domain information
+def calculate_frequency_domain(stream):
+    data = stream.data
+    sampling_rate = stream.stats.sampling_rate
+    delta = stream.stats.delta
+    num_points = len(data)
 
-times = UTCDateTime(input_starttime_frmt)
-endtimes = UTCDateTime(input_endtime_frmt)
+    freq_range = 1. / (2. * delta)
+    freq_values = np.linspace(0, freq_range, num_points // 2 + 1)
+    amplitude = np.fft.rfft(data)
 
-# times = UTCDateTime("2022-06-20T09:15:02Z")
-# endtimes = UTCDateTime("2022-06-20T09:15:35Z")
+    max_amp = max(amplitude)
+    max_freq = freq_values[amplitude.argmax()]
 
-# Konstanta_trilium_horizon = const_number
-Channel_Selector = ch_selectors
-# number_checked = number_checked  # number of points to be checked before and after
+    return max_amp, max_freq, freq_values, amplitude
 
-stream_mseed = obspy.read(mseed_file, starttime=times, endtime=endtimes)
-current_stream = stream_mseed.select(channel=Channel_Selector)
+# Function to load parameters from JSON and find closest frequency
+def load_parameters_and_find_freq(sensor_type, max_freq):
+    try:
+        with open('parameter_logger.json') as json_file:
+            data = json.load(json_file)
+            freq_list = data[sensor_type]['freq_list']
+            closest_freq = closest_value_find(freq_list, max_freq)
+            return closest_freq
+    except Exception as e:
+        raise FileError(f"Error loading JSON parameters: {e}")
 
+# Function to plot the frequency domain and return base64 image
+def plot_frequency_domain(freq_values, amplitude, max_freq, station, channel):
+    plt.plot(freq_values, abs(amplitude), color='green', label="Peaks")
+    plt.axvline(x=max_freq, color='blue', linestyle='dashed')
+    plt.title(f'Frequency Domain {station}_{channel}')
+    plt.ylabel('Amplitude')
 
-data_0 = current_stream[0].data
-freq_data_0 = current_stream[0].stats.sampling_rate #sampling rate buat per gelombang
-len_data_0 = current_stream[0].stats.npts #Banyaknya data di dalam signal Atau dengan ==> len(data_0) 
-deltas_data_0 = current_stream[0].stats.delta #delta 1/frequensi sampling dalam signal
+    set_x_limits(max_freq)
 
+    io_bytes = io.BytesIO()
+    plt.savefig(io_bytes, format='png', transparent=True)
+    io_bytes.seek(0)
+    plt.close()
+    return base64.b64encode(io_bytes.read()).decode()
 
+# Helper function to set x-axis limits based on frequency range
+def set_x_limits(max_freq):
+    limits = {
+        (0, 0.02): (0.5, 1.5),
+        (0.02, 0.1): (0.5, 1.5),
+        (0.1, 0.5): (0.75, 1.2),
+        (0.5, 2): (0.7, 1.3),
+        (2, 5): (0.85, 1.15),
+        (5, 7): (0.95, 1.05),
+        (7, 10): (0.9, 1.15),
+        (10, float('inf')): (0.9, 1.1)
+    }
+    for (min_val, max_val), (left_mult, right_mult) in limits.items():
+        if min_val <= max_freq < max_val:
+            plt.xlim(left=max_freq * left_mult, right=max_freq * right_mult)
+            break
 
+# Error response function
+def error_response(error_message):
+    return json.dumps({"error": error_message})
 
+# Main function that orchestrates the process
+def main():
+    try:
+        # Check if correct number of arguments are provided
+        if len(sys.argv) != 6:
+            raise InputError("Invalid number of arguments. Expected 5 arguments.")
 
+        # Parse command-line arguments
+        mseed_file = sys.argv[1]
+        sensor_type = sys.argv[2]
+        channel = sys.argv[3]
+        start_time = UTCDateTime(sys.argv[4])
+        end_time = UTCDateTime(sys.argv[5])
 
+        # Process MiniSEED file and get stream data
+        stream = process_mseed(mseed_file, start_time, end_time, channel)
 
-# Menghitung rentang frequency (untuk plot sumbu x)
-Freqqss = 1. / (2. * deltas_data_0)                     
-freqsssss = np.linspace(0, Freqqss, len_data_0 // 2 + 1)
+        # Calculate frequency domain data
+        max_amp, max_freq, freq_values, amplitude = calculate_frequency_domain(stream)
 
-# FFT untuk nilai amplitudo (sumbu y)
-fdom_Amplitude = np.fft.rfft(data_0)
+        # Get closest frequency from JSON parameters
+        closest_freq = load_parameters_and_find_freq(sensor_type, max_freq)
 
+        # Plot the frequency domain and get base64 image
+        base64_img = plot_frequency_domain(freq_values, amplitude, max_freq, stream.stats.station, stream.stats.channel)
 
-max_y = max(fdom_Amplitude)  # Find the maximum y value
-max_x = freqsssss[fdom_Amplitude.argmax()]  # Find the x value corresponding to the maximum y value
-
-
-
-
-
-
-
-# cari Jumlah 0 di belakang koma
-numberOfZeros = num_of_zeros(max_x)
-
-
-Rounded_max_x = round(max_x, numberOfZeros)
-# Rounded_max_x = math.ceil(max_x*pow(10,numberOfZeros))/pow(10,numberOfZeros)
-
-
-
-# Opening JSON file
-with open('parameter_logger.json') as json_file:
-    data_json = json.load(json_file)
-    data_json_freqList = data_json[sensor_types]['freq_list']
-    number_to_check = closest_value_find(data_json_freqList, max_x)
-    
-    # Print the type of data variable
-    # print("Type:", type(data_json))
-    
-    # Print the data of dictionary
-    # print("\nData_Parameter:", data_json[sensor_types])
-    # print("\nData_Parameter:", number_to_check)
-    # print("\Realss:", Rounded_max_x)
-
-
-
-
-
-
-
-
-# Plotting
-plt.plot(freqsssss, abs(fdom_Amplitude),   color='green', label="Peaks (tMax)")
-plt.axvline(x=max_x,   color='blue', linestyle='dashed')
-plt.title('frequency-domain %s_%s' % (current_stream[0].stats.station, current_stream[0].stats.channel))
-plt.ylabel('amplitude')
-
-
-# plt.xlim(0,0.12)
-if max_x < 0.02 and max_x >= 0: 
-    plt.xlim(left=(max_x*0.5), right=(max_x*1.5))
-elif max_x < 0.1 and max_x >= 0.02:
-    plt.xlim(left=(max_x*0.5), right=(max_x*1.5))
-elif max_x < 0.5 and max_x >= 0.1:
-    plt.xlim(left=(max_x*0.75), right=(max_x*1.2))
-elif max_x < 2 and max_x >= 0.5:
-    plt.xlim(left=(max_x*0.7), right=(max_x*1.3))
-elif max_x < 5 and max_x >= 2:
-    plt.xlim(left=(max_x*0.85), right=(max_x*1.15))
-elif max_x < 7 and max_x >= 5:
-    plt.xlim(left=(max_x*0.95), right=(max_x*1.05))
-elif max_x < 10 and max_x >= 7:
-    plt.xlim(left=(max_x*0.9), right=(max_x*1.15))
-elif  max_x >= 10:
-    plt.xlim(left=(max_x*0.9), right=(max_x*1.1))
-     
-    
-
-
-io_container_bytes = io.BytesIO()
-plt.savefig(io_container_bytes, format='png', transparent=True)
-io_container_bytes.seek(0)
-png_base64_data = base64.b64encode(io_container_bytes.read())
-
-
-
-
-plt.close()
-
-
-
-# Dictionary ternyata seperti Json, Hanya butuh intialisasi saja
-aDict = {   "data_Streams": None,
+        # Prepare and return the final result as a JSON
+        result = {
+            "data_Streams": f"{stream.stats.station}_{stream.stats.channel}",
             "data_freqs_domain": {
-                "raw": None,
-                "rounded": None
+                "raw": max_freq,
+                "rounded": closest_freq
             },
-            "img": None
-            }
+            "img": base64_img
+        }
+    
 
+        print(json.dumps(result))
 
+    except InputError as e:
+        print(json.dumps({"error": f"Input Error: {str(e)}"}))
+    except FileError as e:
+        print(json.dumps({"error": f"File Error: {str(e)}"}))
+    except ProcessingError as e:
+        print(json.dumps({"error": f"Processing Error: {str(e)}"}))
+    except Exception as e:
+        print(json.dumps({"error": f"Unexpected Error: {str(e)}"}))
 
-
-####################################################################
-####################################################################
-
-
-aDict["data_Streams"] = "%s_%s"  % (current_stream[0].stats.station, current_stream[0].stats.channel)
-aDict["data_freqs_domain"]["raw"] = max_x
-# aDict["data_freqs_domain"]["rounded"] = Rounded_max_x
-aDict["data_freqs_domain"]["rounded"] = number_to_check
-aDict["img"] = png_base64_data.decode()
-print(json.dumps(aDict))
-
-
-sys.exit()
-
-
+if __name__ == "__main__":
+    main()
