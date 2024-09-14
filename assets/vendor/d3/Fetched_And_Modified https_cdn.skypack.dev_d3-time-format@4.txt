@@ -1,0 +1,15 @@
+
+
+
+
+source https://www.npmjs.com/package/d3-time-format
+and 
+https://www.npmjs.com/package/d3-format
+
+and change all import export link to local, IE:
+
+import {utcMonday, utcDay} from "/-/d3-time@v3.0.0-Ww07wkuPsE2c8Ac33BKQ/dist=es2019,mode=imports/optimized/d3-time.js";
+TO :
+import {utcMonday, utcDay} from "./d3-time.js";
+
+andd all files must be serve and found (not 404)

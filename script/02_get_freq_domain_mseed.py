@@ -78,7 +78,7 @@ def plot_frequency_domain(freq_values, amplitude, max_freq, station, channel):
     set_x_limits(max_freq)
 
     io_bytes = io.BytesIO()
-    plt.savefig(io_bytes, format='png', transparent=True)
+    plt.savefig(io_bytes, format='png', transparent=True, dpi=100)  # Increase dpi To high quality def =100
     io_bytes.seek(0)
     plt.close()
     return base64.b64encode(io_bytes.read()).decode()

@@ -7,7 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['Step02_MseedFile']))
     $TimeDeltas = isset($_POST['TimeDeltas']) ? json_decode($_POST['TimeDeltas'], true) : null;
 
     // Validate required fields
-    if (!$ChannelSelected || !$DigitizerType || !$TimeDeltas || !isset($TimeDeltas['starts'], $TimeDeltas['ends']) || $_FILES['Step02_MseedFile']['error'] !== UPLOAD_ERR_OK ) {
+    if (
+        !$ChannelSelected || !$DigitizerType ||
+        !$TimeDeltas || !isset($TimeDeltas['starts'], $TimeDeltas['ends']) ||
+        $_FILES['Step02_MseedFile']['error'] !== UPLOAD_ERR_OK
+    ) {
+        http_response_code(400); // Bad Request
         header('Content-Type: application/json');
         echo json_encode(['error' => 'Invalid input. Missing required parameters.']);
         exit;
@@ -46,14 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['Step02_MseedFile']))
         }
     }
 
-    // Merge and output results
-    $resultss = json_encode(['data' => array_merge($fetched_ch, $fetched_rslt)]);
-    // $resultss = json_encode(['data' =>array_merge($fetched_ch, $fetched_rslt)], JSON_PRETTY_PRINT);
-    header("Content-Type: application/json");
-    echo $resultss;
-} else {
-    // Handle errors
-    echo json_encode(['error' => 'Invalid request or file missing']);
-}
+    // Merge channels and results into a final response
+    $response = [
+        'data' => array_merge($fetched_ch, $fetched_rslt)
+    ];
 
-?>
+    // $resultss = json_encode(['data' =>array_merge($fetched_ch, $fetched_rslt)], JSON_PRETTY_PRINT);
+    // Send JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+} else {
+    // Handle invalid request or missing file
+    http_response_code(400); // Bad Request
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Invalid request or file missing']);
+    exit;
+}

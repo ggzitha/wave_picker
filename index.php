@@ -52,11 +52,7 @@ function display_login_form()
        <div class="text-center mb-4">
         <button class="btn btn-default btn-rounded" name="submit" value="submit" type="submit">Log-In<i class="fa-solid fa-paper-plane white-text ml-2"></i></i></button>
        </div>
-       <div class="text-center mb-4">
-        user dan PW : <br>
-        &nbsp;&nbsp;user::user<br>
-        &nbsp;&nbsp;admin::admin
-       </div>
+       
 
       </form>
      </div>
@@ -66,6 +62,12 @@ function display_login_form()
   </div>
 
   HTML_LOGIN;
+
+  // <div class="text-center mb-4">
+  //       user dan PW : <br>
+  //       &nbsp;&nbsp;user::user<br>
+  //       &nbsp;&nbsp;admin::admin
+  //      </div>
 }
 
 
@@ -164,7 +166,7 @@ function display_login_form()
       padding: 0.2em 0;
     }
 
-    #loader-wrapper {
+    #Load_01_Mseed_wrapper {
       position: fixed;
       top: 0;
       left: 0;
@@ -174,7 +176,7 @@ function display_login_form()
       background: #00000099;
     }
 
-    #loader-wrapper1 {
+    #Load_02_MseedParams_wrapper {
       position: fixed;
       top: 0;
       left: 0;
@@ -184,14 +186,14 @@ function display_login_form()
       background: #00000099;
     }
 
-    #loader-wrapper1 .mt-3.text-center {
+    #Load_02_MseedParams_wrapper .mt-3.text-center {
       position: relative;
       margin-bottom: 0% !important;
       padding-bottom: 0% !important;
       margin-top: 25% !important;
     }
 
-    #loader-wrapper2 {
+    #Load_03_BearPicking_wrapper {
       position: fixed;
       top: 0;
       left: 0;
@@ -201,7 +203,7 @@ function display_login_form()
       background: #00000099;
     }
 
-    #loader-wrapperChannel {
+    #Load_00_NoChannel_wrapper {
       z-index: 2000;
       position: relative;
       width: 100%;
@@ -209,11 +211,6 @@ function display_login_form()
       background: #fff;
     }
 
-
-    #input_ms:disabled~label,
-    #input_ms:disabled~span {
-      opacity: 0.2;
-    }
 
 
     #input_starttime:disabled,
@@ -232,23 +229,23 @@ function display_login_form()
       opacity: 0.2;
     }
 
-    #number_checked:disabled,
-    .md-form>#number_checked:disabled+label {
+    #Windowing_ParamsValue:disabled,
+    .md-form>#Windowing_ParamsValue:disabled+label {
       opacity: 0.2;
     }
 
-    #freq_number:disabled,
-    .md-form>#freq_number:disabled+label {
+    #Frequency_ParamsValue:disabled,
+    .md-form>#Frequency_ParamsValue:disabled+label {
       opacity: 0.2;
     }
 
-    #volt_number:disabled,
-    .md-form>#volt_number:disabled+label {
+    #Voltage_ParamsValue:disabled,
+    .md-form>#Voltage_ParamsValue:disabled+label {
       opacity: 0.2;
     }
 
-    #const_number:disabled,
-    .md-form>#const_number:disabled+label {
+    #Constanta_ParamsValue:disabled,
+    .md-form>#Constanta_ParamsValue:disabled+label {
       opacity: 0.2;
     }
 
@@ -298,6 +295,73 @@ function display_login_form()
       font-weight: 900;
       box-shadow: rgb(243, 25, 229) 0px 1px 2px 0px, rgb(208, 55, 205) 0px 2px 6px 2px;
     }
+
+
+
+
+
+    /* Start Button */
+    .green-gradient-mee {
+      background: linear-gradient(90deg, #b6ec4073, #d2b02a63) !important;
+      color: black;
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+
+
+    .green-gradient-mee:not([disabled]):not(.disabled):active,
+    .green-gradient-mee:not([disabled]):not(.disabled).active,
+    .show>.green-gradient-mee.dropdown-toggle {
+      background: linear-gradient(0deg, #7eec40ad, #c5dd1d47) !important;
+      color: #000;
+      font-weight: 900;
+      box-shadow: rgb(38, 113, 16) 0px 1px 2px 0px, rgb(14, 130, 26) 0px 2px 6px 2px;
+    }
+
+    .btn.btn-rounded.green-gradient-mee.waves-effect.waves-light.active::before {
+      content: "☑️";
+    }
+
+    .btn.btn-rounded.green-gradient-mee.waves-effect.waves-light::before {
+      /* content: "☑️"; */
+      content: "";
+    }
+
+
+
+    /* Start Button */
+
+    /* End Button */
+    .red-gradient-mee {
+      background: linear-gradient(90deg, #ec404082, #f4090963) !important;
+      color: black;
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+
+
+    .red-gradient-mee:not([disabled]):not(.disabled):active,
+    .red-gradient-mee:not([disabled]):not(.disabled).active,
+    .show>.red-gradient-mee.dropdown-toggle {
+      background: linear-gradient(0deg, #d28d42e8, #ec1616ab) !important;
+      color: #fff;
+      font-weight: 900;
+      box-shadow: rgb(208, 11, 11) 0px 1px 2px 0px, rgb(213, 56, 20) 0px 2px 6px 2px;
+    }
+
+
+
+    .btn.btn-rounded.red-gradient-mee.waves-effect.waves-light.active::before {
+      content: "✅";
+    }
+
+    .btn.btn-rounded.red-gradient-mee.waves-effect.waves-light::before {
+      /* content: "☑️"; */
+      content: "";
+    }
+
+
+    /* End Button */
 
 
     .swall_borders {
@@ -452,11 +516,12 @@ function display_login_form()
       }
     }
 
-    /* Ini Buat Time Stamp boss */
+    /* Ini Buat Time Stamp boss Ga work kampret, Kudu Hardcoded di init */
     .TimeStamp_markers_svg {
       stroke-width: 1;
-      stroke-dasharray: 4, 2;
-      /* 4 units dash, 2 units gap */
+      stroke: #7d7d7d;
+      stroke-dasharray: 5, 4;
+      /* 4 units dash, 4 units gap */
     }
 
 
@@ -559,22 +624,38 @@ function display_login_form()
   <script type="text/javascript">
     var Selected_Digitizer;
     var Selected_Digitizer_Parameter = [];
+    var Constanta_ParamsValue; // konstanta nilai untuk perhitungan kalibrasi
 
-    var ListTableID_Channel = [];
-    var SelectedChannel_Lists = [];
+    var CurrentMseedFile; // Is mseedfile for JS processing wich trigger by #Mseed_FileUpload onchange
+    var mseed_ParsedRecords; // from Function Init_MseedChannels_Name, which contain Parsed Array from mseedfile by function Init_The_MseedFile
+    var SeismoBy_Channels; // from Function Init_MseedChannels_Name, which contain Mseed file sorted byChannel(mseedRecords)
+    var RawChnName_Lists = []; // from Function Init_MseedChannels_Name, which contains full name of channel "IA.MBPI.00.HNN";
+    var ChnCtryName_Lists = []; // from Function Init_MseedChannels_Name, which contains Channels Country "IA";
+    var ChnStaName_Lists = []; // from Function Init_MseedChannels_Name, which contains names Station channel "MBPI";
+    var CodedName_Lists = []; // from Function Init_MseedChannels_Name, which contains  channel Code "00";
+    var ChnName_Lists = []; // from Function Init_MseedChannels_Name, which contains  name of channel "HNN";
 
-    var CurrentMseedFile;
 
-    var Data_from_Step_01;
+    var SelectedChannel_Lists = []; // Channel selected List trigger by #ch_selectors onchange
 
-    var CurrentSeismogram;
-    var CurrentSeismogram_Lists = [];
-    var GraphSeismo;
-    var GraphSeismo_Lists = [];
 
-    var Selector_Start_OR_End_Picks = "";
+    var CurrentSeismogram; // seis data from function Init_Selected_WaveFormSeismogram
+    var CurrentSeismogram_Lists = []; // seis data Lists from function Init_Selected_WaveFormSeismogram
 
-    var isMouseInside = false;
+    var GraphSeismo; // Graphic data from function Init_Selected_WaveFormSeismogram
+    var GraphSeismo_Lists = []; // Graphic data Lists from function Init_Selected_WaveFormSeismogram
+
+
+    var Selector_Start_OR_End_Picks = ""; // trigger by picking Wavefrom svg, value are : |"picking_start_Time" or "picking_end_Time" |
+
+    var isMouseIn_forSED = false;
+
+    var ShadowRoot_markerX = []; // Element ShaddowRoot of marker, so can be processed...
+
+    var TimeStamp_Selected_Start_TZ = ""; // DUmmy ajaaa  formatnya 03:20:00.000
+    var TimeStamp_Selected_Start_MS = "";
+    var TimeStamp_Selected_End_TZ = ""; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+    var TimeStamp_Selected_End_MS = "";
   </script>
 
   <script type="text/javascript">
@@ -655,385 +736,384 @@ function display_login_form()
 </head>
 
 <body>
-  <span class="sp_version d-none">3.1.4</span>
 
-  <div id="loader-wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
-    <span class="loader_rockets"></span>
-    <div class="mt-3 text-center">
-      <h1 class=" display-4 white-text lighten-5 animated heartBeat slow infinite">Uploading Mseed</h1>
-    </div>
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border text-info" role="status">
-        <span class="sr-only">Loading...</span>
+  <div class="INI_SEMUA_ISINYA_LOADER">
+    <span class="sp_version d-none">3.1.3</span>
+
+    <div id="Load_01_Mseed_wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
+      <span class="loader_rockets"></span>
+      <div class="mt-3 text-center">
+        <h1 class=" display-4 white-text lighten-5 animated heartBeat slow infinite">Uploading Mseed</h1>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="loader-wrapper1" style="z-index:999999 !important" hidden aria-hidden="true">
-    <span class="loader_wave"></span>
-    <div class="mt-3 text-center">
-      <h1 class=" display-5 white-text lighten-5 animated tada slow infinite">Reading Mseed Param's</h1>
-    </div>
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border text-info" role="status">
-        <span class="sr-only">Loading...</span>
+    <div id="Load_02_MseedParams_wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
+      <span class="loader_wave"></span>
+      <div class="mt-3 text-center">
+        <h1 class=" display-5 white-text lighten-5 animated tada slow infinite">Reading Mseed Param's</h1>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="loader-wrapper2" style="z-index:999999 !important" hidden aria-hidden="true">
-    <span class="loader_bear"></span>
-    <div class="mt-3 text-center">
-      <h1 class=" display-4 grey-text lighten-5 animated flipInY slower infinite">Sa BEAR, Lagi Picking</h1>
-    </div>
+    <div id="Load_03_BearPicking_wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
+      <span class="loader_bear"></span>
+      <div class="mt-3 text-center">
+        <h1 class=" display-4 grey-text lighten-5 animated flipInY slower infinite">Sa BEAR, Lagi Picking</h1>
+      </div>
 
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border text-light" role="status">
-        <span class="sr-only">Loading...</span>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
+
   </div>
-
-
-
-
 
   <?php
   if (isset($_SESSION['Logged_Datas']) && $_SESSION['Logged_Datas'] == $hash) {
   ?>
 
+    <div class="Logged_IN_Container_NIII">
+      <div id="home" class="viewss bg_globs">
 
+        <div class="container h-100 d-flex justify-content-center align-items-center">
 
+          <div class="butt_logout_containers" style="position: absolute; top: 0px; right: 0px; display: block;">
+            <a href="?logout=true" type="button" class="btn btn-outline-danger btn-rounded waves-effect btn-sm"><i class="fas fa-power-off mr-2 fa-2x white-text"></i> Log-Out</a>
+          </div>
 
-    <div id="home" class="viewss bg_globs">
+          <div class="row smooth-scroll w-75">
+            <div class="col-md-12 white-text text-center p-0 ">
+              <div class="wow fadeInDown" data-wow-delay="0.3s">
+                <h1 class="font-weight-bold mb-2 h1-responsive display-4"><span><img src="images/icon/favicon.png" width="75px"></span> The Wave Pickers</h1>
+                <hr class="hr-light">
+              </div>
 
-      <div class="container h-100 d-flex justify-content-center align-items-center">
-
-        <div class="butt_logout_containers" style="position: absolute; top: 0px; right: 0px; display: block;">
-          <a href="?logout=true" type="button" class="btn btn-outline-danger btn-rounded waves-effect btn-sm"><i class="fas fa-power-off mr-2 fa-2x white-text"></i> Log-Out</a>
-        </div>
-
-        <div class="row smooth-scroll w-75">
-          <div class="col-md-12 white-text text-center p-0 ">
-            <div class="wow fadeInDown" data-wow-delay="0.3s">
-              <h1 class="font-weight-bold mb-2 h1-responsive display-4"><span><img src="images/icon/favicon.png" width="75px"></span> The Wave Pickers</h1>
-              <hr class="hr-light">
-            </div>
-            <!-- <div id="myseismograph">
-              <sp-seismograph ></sp-seismograph>
-            </div> -->
-            <div class="wow fadeInUp" data-wow-delay="0.5s">
-              <div class="file-upload-wrapper">
-                <input type="file" id="Mseed_FileUpload" name="mseed" class="file-upload" data-max-file-size="200M" style="display:none" />
+              <div class="wow fadeInUp" data-wow-delay="0.5s">
+                <div class="file-upload-wrapper">
+                  <input type="file" id="Mseed_FileUpload" name="mseed" class="file-upload" data-max-file-size="200M" style="display:none" />
+                </div>
               </div>
             </div>
           </div>
+
         </div>
 
       </div>
 
-    </div>
 
 
+      <div class="modal top fade" id="Wave_containerModal" tabindex="-1" role="dialog" aria-labelledby="Wave_containerModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
 
-    <div class="modal top fade" id="Wave_containerModal" tabindex="-1" role="dialog" aria-labelledby="Wave_containerModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable mt-0" role="document" style="backdrop-filter: blur(1px) !important;">
 
-      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable mt-0" role="document" style="backdrop-filter: blur(1px) !important;">
-
-        <div class="modal-content">
-          <div class="Mee_Clr_Pick_Container">
-            <a class="btn-floating btn-sm picks_button disss m-0 p-0" id="Btn_Erase_Time_Picks"
-              data-toggle="tooltip" data-html="true" title="<i><u>Reset ALL Start-End Time Pick's</u></i> "
-              disabled>
-              <i class="fa-light fa-eraser"></i>
-            </a>
-          </div>
-
-          <div class="Mee_Container_PicksOption">
-            <div class="btn-group btn-sm btn-block m-0 p-0" data-toggle="buttons" id="Start_OR_End_Selection">
-              <label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
-                <input class="form-check-input" type="radio" value="Picks_StartTime" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StartX
-              </label>
-              <label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
-                <input class="form-check-input" type="radio" value="Picks_EndTime" name="options_WhichToPicks" id="Picks_EndTime" autocomplete="off">EndX
-              </label>
-            </div>
-          </div>
-
-
-          <div class="modal-header blue lighten-2">
-            <h5 class="modal-title" id="Wave_containerModalTitle">Waveform Picker's</h5>
-            <button type="button" class="btn btn-danger btn-md" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
-              <i class="fa-solid fa-xmark-large fa-1x"></i>
-            </button>
-          </div>
-
-          <div class="modal-body m-0 p-0 py-2">
-            <div class="row no-gutters">
-
-              <div class="col-lg-7 col-12" style="min-height: 30vh;">
-                <div class="card scroll-content scrollbar-light-blue bolds" style="min-height: 100%;">
-                  <div class="card-body pl-2 pr-4 pt-2 ">
-
-
-                    <div class="m-0 p-0" id="loader-wrapperChannel" style="z-index:999999 !important;position: relative;width: 100%;height: 100%;background: #fff;" aria-hidden="false">
-                      <div style="top: 50%;position: relative;" class="d-flex justify-content-center">
-                        <div role="status" class="spinner-border text-info">
-                          <span class="sr-only">Loading...</span>
-                        </div>
-                      </div>
-                    </div>
-
-
-                    <div class=" w-100 pb-3" id="append_data_stream"></div>
-
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="col px-2">
-                <div class="card " style="position: sticky !important; top: 0px;">
-                  <h5 class="card-header info-color white-text text-center py-2">
-                    <strong>Parameter Picker</strong>
-                  </h5>
-                  <div class="card-body px-lg-4 pt-2">
-
-                    <form style="color: #757575;" id="form_pickers_param_id" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-
-                      <div class="row">
-                        <div class="btn-group btn-sm btn-block" data-toggle="buttons" id="Logger_select">
-                        </div>
-                      </div>
-
-                      <div class="md-form">
-                        <select class="mdb-select validate md-form colorful-select dropdown-primary" id="ch_selectors" name="ch_selectors" multiple searchable="Cari. .." required>
-                          <option value="" disabled selected>Pilih....</option>
-                        </select>
-                        <label class="mdb-main-label">Channel Stream</label>
-                        <div class="invalid-feedback"> Select Stream</div>
-                      </div>
-
-                      <div class="row">
-
-
-                        <div class="col">
-                          <div class="md-form" id="input_starttime_container" data-toggle="helper_start_Time">
-                            <input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker timepicker_start_class" required>
-                            <label class="active" for="input_starttime">Start Time</label>
-                            <div class="invalid-feedback">Select Start Time.</div>
-                          </div>
-                        </div>
-
-
-                        <div class="col">
-                          <div class="md-form" id="input_endtime_container" data-toggle="helper_end_Time">
-                            <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
-                            <label class="active" for="input_endtime">End Time</label>
-                            <div class="invalid-feedback">Select End Time.</div>
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="md-form input-group" data-toggle="helper_windowing">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <input type="number" id="number_checked" name="number_checked" class="form-control" step="1" min="1" required>
-                            <label class="active" for="number_checked">Windowing Number </label>
-
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="md-form input-group">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <input type="number" id="freq_number" name="freq_number" class="form-control" step="0.001" required>
-                            <label class="active" for="freq_number">Frekuensi(Hz) </label>
-
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="md-form input-group">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <input type="number" id="volt_number" name="volt_number" class="form-control" step="0.001" required>
-                            <label class="active" for="volt_number">Amplitudo(Volt) </label>
-
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="md-form input-group">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <input type="number" id="const_number" name="const_number" class="form-control" step="0.000000000000000001">
-                            <label class="active" for="const_number">Konstanta Perhitungan</label>
-
-                          </div>
-                        </div>
-                      </div>
-
-                      <input type="hidden" id="current_date" name="current_date">
-                      <input type="hidden" id="current_dateTime_ms" name="current_dateTime_ms">
-
-                      <input type="hidden" id="current_starts_date" name="current_starts_date">
-                      <input type="hidden" id="current_ends_date" name="current_ends_date">
-
-                      <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 py-2 mt-3 waves-effect " type="submit">Proccess</button>
-
-                    </form>
-                  </div>
-
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-
-
-
-
-
-
-          <div class="p-0 m-0 mee_offside_footer">
-
-
-            <div class="row justify-content-end" id="Appended_DtOption_PopUp">
+          <div class="modal-content">
+            <div class="Mee_Clr_Pick_Container">
+              <a class="btn-floating btn-sm picks_button disss m-0 p-0" id="Btn_Erase_Time_Picks"
+                data-toggle="tooltip" data-html="true" title="<u>key=(d) </u><i> Reset ALL Start-End Time Pick's</i>"
+                disabled>
+                <i class="fa-light fa-eraser"></i>
+              </a>
             </div>
 
-
-
-          </div>
-
-
-        </div>
-
-        <div class="modal-footer justify-content-center p-0 grey lighten-1">
-          <small class="purple-text text-muted">◭@Mee ⩤Lutcx⩥ @◮</small>
-        </div>
-
-
-
-      </div>
-    </div>
-
-
-
-
-
-    <div class="modal fade" id="Final_rslt_Modal" tabindex="-1" role="dialog" aria-labelledby="Final_rslt_ModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
-
-
-      <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable " role="document" style="backdrop-filter: blur(1px) !important;">
-
-
-        <div class="modal-content">
-          <div class="modal-header green lighten-3 pb-0 pt-2">
-
-            <div class="col-8">
-              <h5 class="modal-title" id="Final_rslt_ModalTitle">Picks By Parameter Result</h5>
-              <div class="row w-75 g-0 align-content-center">
-                <div class="col-lg-3 col-10 m-0 p-0" style="scale: 85%;">
-                  <div class="form-check pt-1">
-                    <input type="checkbox" class="form-check-input" id="Chkbox_SortValues">
-                    <label class="form-check-label px-4" for="Chkbox_SortValues" autocomplete="off">Sorted <i class="fa-light fa-arrow-down-1-9"></i></label>
-                  </div>
-                </div>
-                <div class="col-lg-1 col-2 m-0 p-0" style="scale: 85%;">
-                  <button type="button" class="btn btn-sm waves-effect m-0" id="Btn_CopyValues" onclick="copyTablesToClipboard('TempTable_Results');"><i class="fa-solid fa-copy"></i></button>
-                </div>
+            <div class="Mee_Container_PicksOption">
+              <div class="btn-group btn-sm btn-block m-0 p-0" data-toggle="buttons" id="Start_OR_End_Selection">
+                <label class="btn waves-effect waves-light green-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(s) </u><i> Init Start-Pick mode</i>">
+                  <input disabled class="form-check-input" type="radio" value="picking_start_Time" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StartX
+                </label>
+                <label class="btn waves-effect waves-light red-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(e) </u><i> Init End-Pick mode</i>">
+                  <input disabled class="form-check-input" type="radio" value="picking_end_Time" name="options_WhichToPicks" id="Picks_EndTime" autocomplete="off">EndX
+                </label>
               </div>
             </div>
 
-            <div class="col-2">
+
+            <div class="modal-header blue lighten-2">
+              <h5 class="modal-title" id="Wave_containerModalTitle">Waveform Picker's</h5>
               <button type="button" class="btn btn-danger btn-md" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
                 <i class="fa-solid fa-xmark-large fa-1x"></i>
               </button>
             </div>
 
-          </div>
-          <div class="modal-body grey lighten-2">
+            <div class="modal-body m-0 p-0 py-2">
+              <div class="row no-gutters">
 
-            <div class="row" id="AppendedResult_IMG">
+                <div class="col-lg-7 col-12" style="min-height: 30vh;">
+                  <div class="card scroll-content scrollbar-light-blue bolds" style="min-height: 100%;">
+                    <div class="card-body pl-2 pr-4 pt-2 ">
+
+
+                      <div class="m-0 p-0" id="Load_00_NoChannel_wrapper" style="z-index:999999 !important;position: relative;width: 100%;height: 100%;background: #fff;" aria-hidden="false">
+                        <div style="top: 50%;position: relative;" class="d-flex justify-content-center">
+                          <div class="mt-3 text-center justify-content-center">
+                            <h1 class="display-5 grey-text lighten-5 animated jackInTheBox slower infinite">Select Param's First</h1>
+                            <div role="status" class="spinner-border text-info">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+
+
+                      <div class=" w-100 pb-3" id="append_data_stream"></div>
+
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col px-2">
+                  <div class="card " style="position: sticky !important; top: 0px;">
+                    <h5 class="card-header info-color white-text text-center py-2">
+                      <strong>Parameter Picker</strong>
+                    </h5>
+                    <div class="card-body px-lg-4 pt-2">
+
+                      <form style="color: #757575;" id="Form_PickersParameters" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+
+                        <div class="row">
+                          <div class="btn-group btn-sm btn-block" data-toggle="buttons" id="Digitizer_Radio_Selections">
+                          </div>
+                        </div>
+
+                        <div class="md-form">
+                          <select class="mdb-select validate md-form colorful-select dropdown-primary" id="ch_selectors" name="ch_selectors" multiple searchable="Cari. .." required>
+                            <option value="" disabled>Pilih....</option>
+                          </select>
+                          <label class="mdb-main-label">Channel Stream</label>
+                          <div class="invalid-feedback"> Select Stream</div>
+                        </div>
+
+                        <div class="row">
+
+
+                          <div class="col">
+                            <div class="md-form" id="input_starttime_container" data-toggle="helper_start_Time">
+                              <input placeholder="Start time" type="text" name="input_starttime" id="input_starttime" disabled class="form-control timepicker timepicker_start_class" required>
+                              <label class="active" for="input_starttime">Start Time</label>
+                              <div class="invalid-feedback">Select Start Time.</div>
+                            </div>
+                          </div>
+
+
+                          <div class="col">
+                            <div class="md-form" id="input_endtime_container" data-toggle="helper_end_Time">
+                              <input placeholder="End time" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
+                              <label class="active" for="input_endtime">End Time</label>
+                              <div class="invalid-feedback">Select End Time.</div>
+                            </div>
+                          </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="md-form input-group" data-toggle="helper_windowing">
+                              <div class="input-group-prepend">
+
+                              </div>
+                              <input type="number" id="Windowing_ParamsValue" name="Windowing_ParamsValue" class="form-control" step="1" min="1" required>
+                              <label class="active" for="Windowing_ParamsValue">Windowing Number </label>
+
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <div class="md-form input-group">
+                              <div class="input-group-prepend">
+
+                              </div>
+                              <input type="number" id="Frequency_ParamsValue" name="Frequency_ParamsValue" class="form-control" step="0.001" required>
+                              <label class="active" for="Frequency_ParamsValue">Frekuensi(Hz) </label>
+
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="md-form input-group">
+                              <div class="input-group-prepend">
+
+                              </div>
+                              <input type="number" id="Voltage_ParamsValue" name="Voltage_ParamsValue" class="form-control" step="0.001" required>
+                              <label class="active" for="Voltage_ParamsValue">Amplitudo(Volt) </label>
+
+
+                            </div>
+                          </div>
+
+
+
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="md-form input-group">
+                              <div class="input-group-prepend">
+
+                              </div>
+                              <input type="number" id="Constanta_ParamsValue" name="Constanta_ParamsValue" class="form-control" step="0.000000000000000001">
+                              <label class="active" for="Constanta_ParamsValue">Konstanta Perhitungan</label>
+
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 py-2 mt-3 waves-effect " type="submit">Proccess</button>
+
+                      </form>
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="p-0 m-0 mee_offside_footer">
+
+
+              <div class="row justify-content-end" id="Appended_DtOption_PopUp">
+              </div>
+
+
 
             </div>
 
-            <div class="row" id="AppendedResult_TABLE">
+
+          </div>
+
+          <div class="modal-footer justify-content-center p-0 grey lighten-1">
+            <small class="purple-text text-muted">◭@Mee ⩤Lutcx⩥ @◮</small>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+      <div class="modal fade" id="Final_rslt_Modal" tabindex="-1" role="dialog" aria-labelledby="Final_rslt_ModalTitle" aria-hidden="true" data-backdrop="static" data-mdb-backdrop="static" data-keyboard="false" data-mdb-keyboard="false">
+
+
+        <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable " role="document" style="backdrop-filter: blur(1px) !important;">
+
+
+          <div class="modal-content">
+            <div class="modal-header green lighten-3 pb-0 pt-2">
+
+              <div class="col-8">
+                <h5 class="modal-title" id="Final_rslt_ModalTitle">Picks By Parameter Result</h5>
+                <div class="row w-75 g-0 align-content-center">
+                  <div class="col-lg-3 col-10 m-0 p-0" style="scale: 85%;">
+                    <div class="form-check pt-1">
+                      <input type="checkbox" class="form-check-input" id="Chkbox_SortValues">
+                      <label class="form-check-label px-4" for="Chkbox_SortValues" autocomplete="off">Sorted <i class="fa-light fa-arrow-down-1-9"></i></label>
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-2 m-0 p-0" style="scale: 85%;">
+                    <button type="button" class="btn btn-sm waves-effect m-0" id="Btn_CopyValues" onclick="copyTablesToClipboard('TempTable_Results');"><i class="fa-solid fa-copy"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-2">
+                <button type="button" class="btn btn-danger btn-md" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0px; right: 0px;">
+                  <i class="fa-solid fa-xmark-large fa-1x"></i>
+                </button>
+              </div>
+
+            </div>
+            <div class="modal-body grey lighten-2">
+
+              <div class="row" id="AppendedResult_IMG">
+
+              </div>
+
+              <div class="row" id="AppendedResult_TABLE">
+
+              </div>
+
+              <div class="row" id="Temp_CopyTABLE">
+
+              </div>
+
+
 
             </div>
 
-            <div class="row" id="Temp_CopyTABLE">
+          </div>
+          <div class="modal-footer justify-content-center p-0 grey lighten-1">
+            <small class="purple-text text-muted">◭@Mee ⩤Lutcx⩥ @◮</small>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+      <div class="modal fade" id="strtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strtime_second_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
+          <div class="modal-content">
+
+            <div class="modal-header white-text" style="margin-bottom: 1rem; font-weight: 300; text-align: center; background-color: #4285f4;">
+              <h4 class="modal-title " id="strtime_second_modal_titles" style="font-size:52pt;"> </h4>
+            </div>
+            <div class="modal-body" id="append_round_slider_seconds">
 
             </div>
-
-
-
-          </div>
-
-        </div>
-        <div class="modal-footer justify-content-center p-0 grey lighten-1">
-          <small class="purple-text text-muted">◭@Mee ⩤Lutcx⩥ @◮</small>
-        </div>
-
-      </div>
-    </div>
-
-
-
-
-    <div class="modal fade" id="strtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strtime_second_modalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
-        <div class="modal-content">
-
-          <div class="modal-header white-text" style="margin-bottom: 1rem; font-weight: 300; text-align: center; background-color: #4285f4;">
-            <h4 class="modal-title " id="strtime_second_modal_titles" style="font-size:52pt;"> </h4>
-          </div>
-          <div class="modal-body" id="append_round_slider_seconds">
-
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="endtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="endtime_second_modalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
-        <div class="modal-content">
+      <div class="modal fade" id="endtime_second_modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="endtime_second_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
+          <div class="modal-content">
 
-          <div class="modal-header white-text" style=" font-weight: 300; text-align: center; background-color: #212121;border-bottom: none;">
-            <h4 class="modal-title " id="endtime_second_modal_titles" style="font-size:52pt;"> </h4>
-          </div>
-          <div class="modal-body" id="append_round_slider_end_seconds" style=" background-color: #212121;">
+            <div class="modal-header white-text" style=" font-weight: 300; text-align: center; background-color: #212121;border-bottom: none;">
+              <h4 class="modal-title " id="endtime_second_modal_titles" style="font-size:52pt;"> </h4>
+            </div>
+            <div class="modal-body" id="append_round_slider_end_seconds" style=" background-color: #212121;">
 
+            </div>
           </div>
         </div>
       </div>
+
+
     </div>
+
 
 
   <?php
   }
   ?>
-
-
 
 
   <script type="text/javascript" src="assets/vendor/mdbootstrap_4_mee/js/jquery.min.js"></script>
@@ -1044,435 +1124,487 @@ function display_login_form()
   <script type="text/javascript" src="assets/vendor/lightbox2/js/lightbox.js"></script>
   <script type="text/javascript" src="assets/vendor/sweetalert2-11.4.24/sweetalert2.js"></script>
 
-  <!-- <script nomodule type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script> -->
-  <script nomodule type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
-  <!-- <script async src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment-with-locales.min.js" crossorigin="anonymous"></script> -->
-
-  <script type="module">
-    // import * as seisplotjs3 from './assets/vendor/seisplotjs-3.1.4/seisplotjs_3.1.4_standalone.js'; // Still error, mising when zoom
-    import * as seisplotjs3 from './assets/vendor/seisplotjs-3.1.4/seisplotjs_3.1.3_standalone.js';
-    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-    import moment from 'https://cdn.jsdelivr.net/npm/moment@2.30.1/dist/moment.min.js';
-    seisplotjs3.util.updateVersionText('.sp_version');
-
-    window.Init_WaveFormSeismogram = async function(Channel_Selection) {
-
-      var DataStreamChannel = Data_from_Step_01[Channel_Selection];
-
-      let SampleRate = DataStreamChannel.sample_rate;
-      let StartTimes = seisplotjs3.util.isoToDateTime(DataStreamChannel.start_time);
-      let EndTimes = seisplotjs3.util.isoToDateTime(DataStreamChannel.end_time);
-      let DataTraces = DataStreamChannel.trace_data;
-      let SismogramData = seisplotjs3.seismogram.Seismogram.fromContiguousData(DataTraces, SampleRate, StartTimes);
-      CurrentSeismogram = seisplotjs3.seismogram.SeismogramDisplayData.fromSeismogram(SismogramData);
-      CurrentSeismogram_Lists.push(CurrentSeismogram);
-      const seisConfig = new seisplotjs3.seismographconfig.SeismographConfig();
-      // seisConfig.linkedTimeScale = new seisplotjs3.scale.LinkedTimeScale();
-      seisConfig.title = `${DataStreamChannel.station_name}_${Channel_Selection} ${UnixTimeStamp_To_Date(StartTimes)}`;
-      seisConfig.margin.top = 25;
-      seisConfig.margin.right = 0;
-      // seisConfig.maxWidth = 1080; //kalau di enable Gak bisa responsive
-      // seisConfig.minWidth = 900; //kalau di enable Gak bisa responsive
-      seisConfig.maxHeight = 600;
-      seisConfig.minHeight = 250;
-      // seisConfig.Zoom = true;
-      seisConfig.wheelZoom = true;
-      /**
-       * Should grid lines be drawn for each tick on the X axis.
-       * Defaults to false;
-       */
-      seisConfig.xGridLines = false;
-      seisConfig.gridLineColor = 'gainsboro'; // default gainsboro, is a color that very light grey
-      // seisConfig.maxZoomPixelPerSample  = 20;
-      // seisConfig.connectSegments = false;
-      seisConfig.doGain = true;
-      //  "raw" raw values, no centering || "zero", same as Raw, but also includes zero 
-      // "minmax", centered on midpoint of min-max || "mean", centered on mean
-      seisConfig.amplitudeMode = "minmax";
-
-      seisConfig.lineColors = [
-        "#27D9E6FF"
-      ];
-      seisConfig.lineWidth = 1;
-      seisConfig.xLabelOrientation = "horizontal";
-      seisConfig.xLabel = " ";
-      // seisConfig.xAxisTimeZone = "UTC";
-      seisConfig.xSublabel = "Time Series (UTC)";
-      seisConfig.isXAxisTop = false;
-      seisConfig.isRelativeTime = false;
-      seisConfig.timeFormat = function(date) {
-        const formatFulll = d3.utcFormat("%H:%M:%S.%L");
-        const formatHMS = d3.utcFormat("%H:%M:%S");
-        const formatDay = d3.utcFormat("%m/%d");
-        const formatMonth = d3.utcFormat("%Y/%m");
-        const formatYear = d3.utcFormat("%Y");
-        return (
-          d3.utcSecond(date) < date ? formatFulll :
-          d3.utcMinute(date) < date ? formatHMS :
-          d3.utcHour(date) < date ? formatHMS :
-          d3.utcDay(date) < date ? formatHMS :
-          d3.utcMonth(date) < date ? formatDay :
-          d3.utcYear(date) < date ? formatMonth : formatYear
-        )(date);
-      };
-
-      // Wait for the div to be ready and appended
-      await waitForElement(`#Each_stream_${Channel_Selection}`);
-
-      const SeismoContainer = document.querySelector(`#Each_stream_${Channel_Selection}`);
-      const SeismoContainerSize = SeismoContainer.getBoundingClientRect();
-
-      if (SeismoContainerSize.width > 0 && SeismoContainerSize.height > 0) {
-
-        // Extract seismograms from the mseed records
-        // Parse the mseed file
-
-        if (CurrentMseedFile) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const arrayBuffer = e.target.result;
-            plotMseed(arrayBuffer);
-          };
-          reader.readAsArrayBuffer(CurrentMseedFile); // Read the file as ArrayBuffer
-        } else {
-          console.error('No file selected');
-        }
-        
-
-        GraphSeismo = new seisplotjs3.seismograph.Seismograph([CurrentSeismogram], seisConfig);
-        GraphSeismo_Lists.push(GraphSeismo);
-        SeismoContainer.appendChild(GraphSeismo);
-
-        // Prepare External Function, Like hover, click, etc
-        // Wait for the sp-seismograph shadow DOM and SVG element to be ready
-        const spSeismograph = await waitForElement(`#Each_stream_${Channel_Selection} sp-seismograph`);
-        const svgElement = await waitForElementInShadowDOM(spSeismograph, 'svg');
-        const canvasElement = await waitForElementInShadowDOM(spSeismograph, 'foreignObject canvas');
-
-
-        if (svgElement) {
-
-          // Hover Function
-          // Create and append the dashed markerX to the SVG
-          const markerX = document.createElementNS("http://www.w3.org/2000/svg", "line");
-          markerX.classList.add("TimeStamp_markers_svg"); // Apply the CSS class with dashed style
-          markerX.setAttribute("stroke", "black");
-          markerX.setAttribute("stroke-width", "1");
-          markerX.setAttribute("y1", "10%"); // Start 10% from the top
-          markerX.setAttribute("y2", "80%"); // Extend markerX vertically 80% (leaving 10% at the bottom)
-          svgElement.appendChild(markerX);
-
-          // Track when the mouse enters the SVG
-          svgElement.addEventListener('mouseenter', () => {
-            isMouseInside = true;
-          });
-
-          // Add mouse event handling for markerX
-          svgElement.addEventListener('mousemove', (event) => {
-            const rect = svgElement.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            markerX.setAttribute("x1", x);
-            markerX.setAttribute("x2", x);
-          });
-
-          svgElement.addEventListener('mouseleave', () => {
-            isMouseInside = false;
-            markerX.setAttribute("x1", null);
-            markerX.setAttribute("x2", null);
-          });
-
-          markerX.addEventListener('click', function(event) {
-            const clickEvent = new MouseEvent('click', {
-              // view: window,
-              // bubbles: true,
-              cancelable: true,
-              clientX: event.clientX, // Pass custom X position
-              // clientY: y  // Pass custom Y position
-            });
-            canvasElement.dispatchEvent(clickEvent);
-          });
-
-
-          // Detect key press when mouse is inside SVG
-          document.addEventListener('keydown', (event) => {
-            if (isMouseInside && event.key.toLowerCase() === 's') {
-              $('#Picks_StartTime').click();
-              markerX.setAttribute("stroke", "#39b54a");
-              Selector_Start_OR_End_Picks = "picking_start_Time";
-            }
-            if (isMouseInside && event.key.toLowerCase() === 'e') {
-              $('#Picks_EndTime').click();
-              markerX.setAttribute("stroke", "#ff1d25");
-              Selector_Start_OR_End_Picks = "picking_end_Time";
-            }
-            if (isMouseInside && event.key.toLowerCase() === 'd') {
-              // Uncheck MDB4 radio buttons by setting prop to false
-              $('#Picks_StartTime').prop("checked", false).parent().removeClass('active');
-              $('#Picks_EndTime').prop("checked", false).parent().removeClass('active');
-              markerX.setAttribute("stroke", "black");
-              Selector_Start_OR_End_Picks = "";
-            }
-          });
-
-        } else {
-          console.error(`SVG element not found in shadow DOM for ${Channel_Selection}.`);
-        }
-
-        if (canvasElement) {
-          // console.log('Canvas Element:', canvasElement);
-          canvasElement.addEventListener('click', function(event) {
-            const canvasRect = canvasElement.getBoundingClientRect();
-            const clickX = event.clientX - canvasRect.left; // X position of click in pixels
-            const canvasWidth = canvasElement.clientWidth;
-
-            // console.log('clickX:', clickX);
-            // console.log('clientX:', event.clientX, ' | ', 'svgRect.left:', canvasRect.left);
-            // console.log('canvasWidth:', canvasWidth);
-
-            // Accessing the current time window from the `<sp-seismograph>` shadow DOM
-            const xAxisX = spSeismograph.shadowRoot.querySelector('svg g g.axis.axis--x');
-            const xTicks = xAxisX.querySelectorAll('g.tick text');
-            const startTimeX = xTicks[0].__data__; // Date object from the first tick
-            const endTimeX = xTicks[xTicks.length - 1].__data__; // Date object from the last tick
-
-
-            const currentStartX = startTimeX.getTime();
-            const currentEndX = endTimeX.getTime();
-            const timeAtClick = currentStartX + (clickX / canvasWidth) * (currentEndX - currentStartX);
-
-            // console.log('Click at time:', moment.unix(timeAtClick / 1000).utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z' + '|' + 'UNIX:' + timeAtClick);
-            // console.log(Selector_Start_OR_End_Picks);
-
-            const UnixTimeStamps = moment.unix(timeAtClick / 1000);
-            const TimeXFormated = moment.unix(timeAtClick / 1000).utc().format('HH:mm:ss.SSS');
-            const DateXFormated = moment.unix(timeAtClick / 1000).utc().format('YYYY-MM-DD');
-            const DateTime_utcX = seisplotjs3.util.isoToDateTime(DateXFormated + 'T' + TimeXFormated + 'Z');
-
-            if (Selector_Start_OR_End_Picks) {
-              Picked_By_Waveform_Click(Selector_Start_OR_End_Picks, DateXFormated, TimeXFormated, UnixTimeStamps, DateTime_utcX);
-            }
-
-          });
-
-        } else {
-          console.error(`Canvas element not found in shadow DOM for ${Channel_Selection}.`);
-        }
-
-      } else {
-        console.error(`WaveForm Container for ${Channel_Selection} has zero width/height. Skipping seismograph rendering.`);
-      }
-
-      $('#loader-wrapperChannel').prop("hidden", true);
-    };
-
-    // Helper function to wait for an element to be available in the DOM
-    function waitForElement(selector, timeout = 5000) {
-      return new Promise((resolve, reject) => {
-        const startTime = Date.now();
-
-        const interval = setInterval(() => {
-          const element = document.querySelector(selector);
-
-          if (element) {
-            clearInterval(interval);
-            resolve(element);
-          } else if (Date.now() - startTime > timeout) {
-            clearInterval(interval);
-            reject(`Element with selector ${selector} not found within ${timeout}ms`);
-          }
-        }, 100);
-      });
-    }
-
-    // Helper function to wait for an element within a shadow DOM
-    function waitForElementInShadowDOM(parentElement, selector, timeout = 5000) {
-      return new Promise((resolve, reject) => {
-        const startTime = Date.now();
-
-        const interval = setInterval(() => {
-          const element = parentElement.shadowRoot.querySelector(selector);
-
-          if (element) {
-            clearInterval(interval);
-            resolve(element);
-          } else if (Date.now() - startTime > timeout) {
-            clearInterval(interval);
-            reject(`Element ${selector} in shadow DOM not found within ${timeout}ms`);
-          }
-        }, 100);
-      });
-    }
-
-
- // Function to plot mseed file
-//  async function plotMseed(arrayBuffer, keyChannels) {
- async function plotMseed(arrayBuffer) {
-            try {
-                // Parse the mseed file
-                const mseedRecordsXXX = seisplotjs3.miniseed.parseDataRecords(arrayBuffer);
-
-                // Extract seismograms from the mseed records
-                const bychannelseismogramsXXX = seisplotjs3.miniseed.byChannel(mseedRecordsXXX);
-
-                // Get the MiniSEED records for the selected channel
-              const mseedDataArray = bychannelseismogramsXXX.get('IA.MBPI.00.SHN');
-              if (!mseedDataArray || mseedDataArray.length === 0) {
-                  console.error('No data available for selected channel:', selectedChannel);
-                  return;
-              }
-
-              // Convert the MiniSEED data records to SeismogramDisplayData
-              const seismogramsXXX = seisplotjs3.miniseed.seismogramPerChannel(mseedDataArray);
-              if (seismogramsXXX.length === 0) {
-                  console.error('No valid seismograms for the selected channel.');
-                  return;
-              }
-
-
-        // console.log(mseedRecordsXXX);
-        // console.log(seismogramsXXX);
-        console.log(bychannelseismogramsXXX);
-        console.log(mseedDataArray);
-                // Iterate through the seismograms and plot them
-                seismogramsXXX.forEach(seisData => {
-                    const containerXXX = document.createElement('div');
-                    containerXXX.className = 'seismograph-container';
-                    $('#append_data_stream').append(containerXXX);
-
-                    const seisConfigXXXX = new seisplotjs3.seismographconfig.SeismographConfig();
-                    seisConfigXXXX.title = `Station: ${seisData.codes.station} | Channel: ${seisData.codes.channel}`;
-                    seisConfigXXXX.wheelZoom = true;
-                    seisConfigXXXX.Zoom = true;
-
-                    const seisDisplayData = seisplotjs3.seismogram.SeismogramDisplayData.fromSeismogram(seisData);
-                    const seismographXXX = new seisplotjs3.seismograph.Seismograph([seisDisplayData], seisConfigXXXX);
-                    containerXXX.appendChild(seismographXXX);
-                });
-            } catch (error) {
-                console.error("Error plotting mseed:", error);
-            }
-        }
-
-
-
-
-
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-        var forms = document.getElementsByClassName('needs-validation');
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-
-            if ($('.needs-validation select').val() == '') {
-              $('.needs-validation').find('.valid-feedback').hide();
-              $('.needs-validation').find('.invalid-feedback').show();
-              $('.needs-validation').find('.select-dropdown').val('').prop('placeholder', 'No Value Selected')
-            } else {
-              $('.needs-validation').find('.valid-feedback').show();
-              $('.needs-validation').find('.invalid-feedback').hide();
-            }
-
-
-
-            form.classList.add('was-validated');
-          }, false);
-        });
-      }, false);
-    })();
-
-    $(document).ready(function() {
-      lightbox.option({
-        'resizeDuration': 200,
-        'wrapAround': true
-      });
-
-    });
-  </script>
-
 
   <?php
   if (isset($_SESSION['Logged_Datas']) && $_SESSION['Logged_Datas'] == $hash) {
   ?>
-    <script type="text/javascript">
-      var current_picks = "start_pick_time";
-      var TimeStamp_Selected_Start_TZ = 66; // DUmmy ajaaa  formatnya 03:20:00.000
-      var TimeStamp_Selected_Start_MS = 66;
-      var TimeStamp_Selected_End_TZ = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
-      var TimeStamp_Selected_End_MS = 6;
 
 
-      var seisData;
-      var graph;
-      var MseedValues;
-      var MseedValues_Cross = [];
+    <!------------------------------- Seisplot V3.1.3 ----------------------------->
+    <!------------------------------- Seisplot V3.1.3 ----------------------------->
+    <script type="module">
+      // import * as seisplotjs3 from './assets/vendor/seisplotjs-3.1.4/seisplotjs_3.1.4_standalone.js'; // Still error ,Glitching,mising when zoom
+      import * as seisplotjs3 from './assets/vendor/seisplotjs-3.1.4/seisplotjs_3.1.3_standalone.js';
+
+      import {
+        utcFormat as d3utcFormat
+      } from "./assets/vendor/d3/d3-time-format@4.js";
+      import {
+        utcSecond as d3utcSecond,
+        utcMinute as d3utcMinute,
+        utcHour as d3utcHour,
+        utcDay as d3utcDay,
+        utcMonth as d3utcMonth,
+        utcYear as d3utcYear,
+      } from "./assets/vendor/d3/d3-time@3.js";
+
+      seisplotjs3.util.updateVersionText('.sp_version');
+
+      const formatFulll = d3utcFormat("%H:%M:%S.%L");
+      const formatHMS = d3utcFormat("%H:%M:%S");
+      const formatDay = d3utcFormat("%m/%d");
+      const formatMonth = d3utcFormat("%Y/%m");
+      const formatYear = d3utcFormat("%Y");
+      const formatYYYMMDD = d3utcFormat("%Y-%m-%d");
+
+
+      window.Init_MseedChannels_Name = async function(Channel_ArrayBuffers) {
+        try {
+          // Parse the mseed file into records
+          mseed_ParsedRecords = seisplotjs3.miniseed.parseDataRecords(Channel_ArrayBuffers);
+          // Group the records by channel
+          SeismoBy_Channels = seisplotjs3.miniseed.byChannel(mseed_ParsedRecords);
+
+          for (const channelKey of SeismoBy_Channels.keys()) {
+            RawChnName_Lists.push(channelKey);
+            const [networkX, stationX, locationX, channelX] = channelKey.split('.');
+            ChnCtryName_Lists.push(networkX);
+            ChnStaName_Lists.push(stationX);
+            CodedName_Lists.push(locationX);
+            ChnName_Lists.push(channelX);
+          }
+
+          // Combine the arrays into an object
+          const DataFor_MultiSelect = Object.fromEntries(ChnName_Lists.map((kyX, idX) => [kyX, RawChnName_Lists[idX]]));
+          Populate_MultiSelect('#ch_selectors', DataFor_MultiSelect);
+
+          $('#Wave_containerModal').modal('show');
+          $('#Wave_containerModal').data('bs.modal').handleUpdate();
+
+        } catch (error) {
+          console.error("Error parsing mseed:", error);
+          OOOOPS_picking('Errors', error);
+        }
+      }
+
+      // Function to plot mseed file
+      window.Init_Selected_WaveFormSeismogram = async function(Channel_Selection, RawChannel_Selection) {
+        try {
+          // Get the MiniSEED records for the selected channel
+          const mseedDataArray = SeismoBy_Channels.get(RawChannel_Selection);
+          if (!mseedDataArray || mseedDataArray.length === 0) {
+            OOOOPS_picking('Errors', 'No data available for selected channel:', selectedChannel);
+            return;
+          }
+          // Convert the MiniSEED data records to SeismogramDisplayData
+          const seismogramsXXX = seisplotjs3.miniseed.seismogramPerChannel(mseedDataArray);
+          if (seismogramsXXX.length === 0) {
+            OOOOPS_picking('Errors', 'No valid seismograms for the selected channel.');
+            return;
+          }
+
+          // Iterate through the seismograms and plot them
+
+          for (const This_SeisData of seismogramsXXX) {
+            // seismogramsXXX.forEach(This_SeisData => { // Kalau ini await sama async gak bisa
+
+            let NetName = This_SeisData._segmentArray[0]._sourceId.networkCode;
+            let StaName = This_SeisData._segmentArray[0]._sourceId.stationCode;
+            let StartTimes = This_SeisData._segmentArray[0]._startTime.ts;
+
+            CurrentSeismogram = seisplotjs3.seismogram.SeismogramDisplayData.fromSeismogram(This_SeisData);
+            CurrentSeismogram_Lists.push(CurrentSeismogram);
+
+            const seisConfig = new seisplotjs3.seismographconfig.SeismographConfig();
+            // seisConfig.linkedTimeScale = new seisplotjs3.scale.LinkedTimeScale();
+            seisConfig.title = `${NetName}.${StaName}_${Channel_Selection} | ${UnixTimeStamp_To_Date(StartTimes)}`;
+            seisConfig.margin.top = 25;
+            seisConfig.margin.right = 0;
+            // seisConfig.maxWidth = 1080; //kalau di enable Gak bisa responsive
+            // seisConfig.minWidth = 900; //kalau di enable Gak bisa responsive
+            seisConfig.maxHeight = 600;
+            seisConfig.minHeight = 250;
+            // seisConfig.Zoom = true;
+            seisConfig.wheelZoom = true;
+            seisConfig.xGridLines = false; // show grid lines be drawn for each tick on the X axis. Defaults to false;
+            seisConfig.gridLineColor = 'gainsboro'; // default gainsboro, is a color that very light grey
+            // seisConfig.maxZoomPixelPerSample  = 20;
+            // seisConfig.connectSegments = false;
+            seisConfig.doGain = true;
+            //  "raw" raw values, no centering || "zero", same as Raw, but also includes zero 
+            // "minmax", centered on midpoint of min-max || "mean", centered on mean
+            seisConfig.amplitudeMode = "minmax";
+            seisConfig.lineColors = [
+              "#27D9E6FF"
+            ];
+            seisConfig.lineWidth = 1;
+            seisConfig.xLabelOrientation = "horizontal";
+            seisConfig.xLabel = " ";
+            // seisConfig.xAxisTimeZone = "UTC";
+            seisConfig.xSublabel = "Time Series (UTC)";
+            seisConfig.isXAxisTop = false;
+            seisConfig.isRelativeTime = false;
+            seisConfig.timeFormat = function(date) {
+              return (
+                d3utcSecond(date) < date ? formatFulll :
+                d3utcMinute(date) < date ? formatHMS :
+                d3utcHour(date) < date ? formatHMS :
+                d3utcDay(date) < date ? formatHMS :
+                d3utcMonth(date) < date ? formatDay :
+                d3utcYear(date) < date ? formatMonth : formatYear
+              )(date);
+            };
+            // Wait for the div to be ready and appended
+            await waitForElement(`#Each_stream_${Channel_Selection}`);
+
+            const SeismoContainer = document.querySelector(`#Each_stream_${Channel_Selection}`);
+            const SeismoContainerSize = SeismoContainer.getBoundingClientRect();
+
+            if (SeismoContainerSize.width > 0 && SeismoContainerSize.height > 0) {
 
 
 
-      var selected_chann = [];
-      var graphList = [];
-      var streamList = [];
-      var value_cahnnel = [];
+
+              GraphSeismo = new seisplotjs3.seismograph.Seismograph([CurrentSeismogram], seisConfig);
+              GraphSeismo_Lists.push(GraphSeismo);
+              SeismoContainer.appendChild(GraphSeismo);
+
+              // Prepare External Function, Like hover, click, etc
+              // Wait for the sp-seismograph shadow DOM and SVG element to be ready
+              const spSeismograph = await waitForElement(`#Each_stream_${Channel_Selection} sp-seismograph`);
+
+              const svgElement = await waitForElementInShadowDOM(spSeismograph, 'svg');
+              const canvasElement = await waitForElementInShadowDOM(spSeismograph, 'svg foreignObject canvas');
+              const xAxisX = await waitForElementInShadowDOM(spSeismograph, 'svg g g.axis.axis--x');
+
+
+              if (svgElement && canvasElement && xAxisX) {
+                // Udah coba pakai canvasElement, tapi gak bisa, mungkin ke overlay sama SVG element, dia lebih diatas 
+                // Udah coba pakai canvasElement, tapi gak bisa, mungkin ke overlay sama SVG element, dia lebih diatas 
+
+
+                var canvasRect = canvasElement.getBoundingClientRect();
+                var svgRect = svgElement.getBoundingClientRect();
+                var DeltaSize_SvgCanvas_Rect = canvasRect.left - svgRect.left;
+                // Accessing the current time window from the `<sp-seismograph>` shadow DOM
 
 
 
-      // Ini hasilnya kan di server, ubah aja, cuman ambil parameter dari server (Load ukuran besar jadi 15mb), ntar trace data pakaai yang existing mseed
-      $('#Mseed_FileUpload').on('change', function(event) {
-        var formData = new FormData();
-        CurrentMseedFile = $(this)[0].files[0];
-        // console.log(CurrentMseedFile);
+                // Hover Function
+                // Create and append the dashed markerX to the SVG
+                const markerX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                markerX.classList.add("TimeStamp_markers_svg"); // Apply the CSS class with dashed style wich is not working, but need to toggle it
+                markerX.style.stroke = "#7d7d7d";
+                markerX.style.strokeWidth = "1"; // its cammelCase wich the Capital become - dashed ==> stroke-width
+                markerX.style.strokeDasharray = "5, 4"; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+                markerX.setAttribute("y1", "10%"); // Start 10% from the top Mustbe hardcoded, not working with css
+                markerX.setAttribute("y2", "80%"); // Extend markerX vertically 80% (leaving 10% at the bottom)
+                ShadowRoot_markerX.push(markerX);
+                svgElement.appendChild(markerX);
 
-        formData.append('Step01_MseedFile', $(this)[0].files[0]);
+                // Track when the mouse enters the SVG
+                svgElement.addEventListener('mouseenter', () => {
+                  isMouseIn_forSED = true;
+                });
 
-        $.ajax({
-          url: "script/01_mseed_upload_to_array.php",
-          type: "POST",
-          data: formData,
-          dataType: 'json',
-          processData: false,
-          contentType: false,
-          cache: false,
-          beforeSend: function() {
-            document.getElementById('loader-wrapper').hidden = false;
-          },
-          success: function(response) {
-            $('#append_data_stream').html("");
-            $('#loader-wrapper').prop("hidden", true);
-            if (!response.error && response.data) {
-              Populate_MultiSelect('ch_selectors', response.data.channels);
+                // Add mouse event handling for markerX
+                svgElement.addEventListener('mousemove', (event) => {
+                  isMouseIn_forSED = true;
+                  const Xaxis_svg = event.clientX - svgRect.left;
+                  if (Xaxis_svg >= DeltaSize_SvgCanvas_Rect) {
+                    markerX.setAttribute("x1", Xaxis_svg);
+                    markerX.setAttribute("x2", Xaxis_svg);
+                  } else {
+                    markerX.setAttribute("x1", null);
+                    markerX.setAttribute("x2", null);
+                  }
+                });
 
-              Data_from_Step_01 = response.data;
+                svgElement.addEventListener('mouseleave', () => {
+                  isMouseIn_forSED = false;
+                  markerX.setAttribute("x1", null);
+                  markerX.setAttribute("x2", null);
+                });
 
-              $('#Wave_containerModal').modal('show');
-              $('#Wave_containerModal').data('bs.modal').handleUpdate();
+                markerX.addEventListener('click', function(event) {
+                  const clickEvent = new MouseEvent('click', {
+                    cancelable: true,
+                    clientX: event.clientX, // Pass custom X position
+                  });
+                  canvasElement.dispatchEvent(clickEvent);
+                });
+
+
+
+                // CanvasElement Onlyyy   console.log('Canvas Element:', canvasElement);
+                // CanvasElement Onlyyy   console.log('Canvas Element:', canvasElement);
+                canvasElement.addEventListener('click', function(event) {
+                  const clickX = event.clientX - canvasRect.left; // X position of click in pixels
+                  const canvasWidth = canvasElement.clientWidth;
+
+                  // console.log('clickX:', clickX);
+                  // console.log('clientX:', event.clientX, ' | ', 'svgRect.left:', canvasRect.left);
+                  // console.log('canvasWidth:', canvasWidth);
+
+                  var xTicks = xAxisX.querySelectorAll('g.tick text');
+
+                  // Error masihhh
+                  // xTicks.forEach(function(tick) {
+                  //   tick.addEventListener("mouseover", TimeStamp_Ticker_hover);
+                  //   tick.addEventListener("click", TimeStamp_Ticker_click);
+                  // });
+                  // Error masihhh
+
+                  const startTimeX = xTicks[0].__data__; // Date object from the first tick
+                  const endTimeX = xTicks[xTicks.length - 1].__data__; // Date object from the last tick
+
+                  const currentStartX = startTimeX.getTime();
+                  const currentEndX = endTimeX.getTime();
+                  const timeAtClick = currentStartX + (clickX / canvasWidth) * (currentEndX - currentStartX);
+
+                  const UnixTimeStamps = timeAtClick;
+                  const TimeXFormated = formatFulll(new Date(UnixTimeStamps));
+                  const DateXFormated = formatYYYMMDD(new Date(UnixTimeStamps));
+                  const DateTime_utcX = seisplotjs3.util.isoToDateTime(DateXFormated + 'T' + TimeXFormated + 'Z');
+
+                  // console.log('UnixTimeStamps:', UnixTimeStamps, ' | ', 'TimeXFormated:', TimeXFormated, ' | ', 'DateXFormated:', DateXFormated, ' | ', 'DateTime_utcX:', DateTime_utcX);
+
+                  if (Selector_Start_OR_End_Picks) {
+                    Picked_By_Waveform_Click(Selector_Start_OR_End_Picks, DateXFormated, TimeXFormated, UnixTimeStamps, DateTime_utcX);
+                  }
+
+                });
+
+              } else {
+                console.error(`SVG or Canvas element not found in shadow DOM for ${Channel_Selection}.`);
+              }
+
+
 
             } else {
-              OOOOPS_picking('Errors', response.error);
+              console.error(`WaveForm Container for ${Channel_Selection} has zero width/height. Skipping seismograph rendering.`);
             }
-          },
 
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#append_data_stream').html("");
-            // $('#ch_selectors').html("");
-            $('#loader-wrapper').prop("hidden", true);
-            OOOOPS_picking('AJAX Error', textStatus + ' - ' + errorThrown);
+            $('#Load_00_NoChannel_wrapper').prop("hidden", true);
+
+
+            // });
+          }
+        } catch (error) {
+          console.log('Error plotting mseed:', error);
+          OOOOPS_picking('Error plotting mseed:', error);
+        }
+      }
+    </script>
+
+    <!------------------------------- Seisplot V3.1.3 ----------------------------->
+    <!------------------------------- Seisplot V2.0.1 (nomodule, buat fallback Old_Browser)----------------------------->
+
+    <script nomodule type="text/javascript" src="assets/vendor/seisplotjs-2.0.1/seisplotjs_2.0.1_standalone.js"></script>
+    <!-- <script async src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment-with-locales.min.js" crossorigin="anonymous"></script> -->
+
+    <script nomodule type="text/javascript">
+
+    </script>
+    <!------------------------------- Seisplot V2.0.1 (nomodule, buat fallback Old_Browser)----------------------------->
+    <!------------------------------- Seisplot V2.0.1 (nomodule, buat fallback Old_Browser)----------------------------->
+
+
+
+
+
+
+    <script type="text/javascript">
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          var forms = document.getElementsByClassName('needs-validation');
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              if ($('.needs-validation select').val() == '') {
+                $('.needs-validation').find('.valid-feedback').hide();
+                $('.needs-validation').find('.invalid-feedback').show();
+                $('.needs-validation').find('.select-dropdown').val('').prop('placeholder', 'No Value Selected')
+              } else {
+                $('.needs-validation').find('.valid-feedback').show();
+                $('.needs-validation').find('.invalid-feedback').hide();
+              }
+
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+
+
+      $(document).ready(function() {
+
+        $.getJSON("/script/parameter_logger.json", function(json_dat) {
+          Selected_Digitizer_Parameter = json_dat;
+          Init_Digitizer_Params();
+        });
+
+        new WOW().init();
+
+        Reset_Form_PickersParameter();
+
+        $("#input_starttime").prop("disabled", true);
+        $("#input_endtime").prop("disabled", true);
+
+        $("#ch_selectors").prop("disabled", true);
+        $("#Constanta_ParamsValue").prop("disabled", true);
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.file-upload').file_upload();
+        $('.file-upload').show();
+
+
+        $('[data-toggle="helper_start_Time"]').popover({
+          html: true,
+          trigger: ' focus',
+          placement: 'top',
+          content: function() {
+            return `<img src="/images/tuts/TimeStartPick.gif" alt="This How To" width="250" /><ul> </ul>`;
           }
         });
+
+        $('[data-toggle="helper_end_Time"]').popover({
+          html: true,
+          trigger: ' focus',
+          placement: 'top',
+          content: function() {
+            return `<img src="/images/tuts/TimeEndPick.gif" alt="This How To" width="250" /><ul> </ul>`;
+          }
+        });
+
+        $('[data-toggle="helper_windowing"]').popover({
+          html: true,
+          trigger: ' focus',
+          placement: 'left',
+          content: function() {
+            return `<img src="/images/tuts/WindowingNumb.gif" alt="This How To" width="250" /> <ul> <li class="list_helpers_jumbotron" > Makin Kecil Untuk Freq Tinggi </li> <li class="list_helpers_jumbotron" > Bagian Hijau Dan Merah Harus Ada di setiap Gelombang </li> <li class="list_helpers_jumbotron" > Tidak Boleh Bertabrakan Kedua Poin Tersebut </li></ul>`;
+          }
+        });
+
+
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true
+        });
+
+
+        // Detect key press when mouse is inside SVG
+        document.addEventListener('keydown', (event) => {
+          if (isMouseIn_forSED && event.key.toLowerCase() === 's') {
+            Selector_Start_OR_End_Picks = "picking_start_Time";
+            $('#Picks_StartTime').click();
+            if (ShadowRoot_markerX.length > 0) {
+              ShadowRoot_markerX.forEach(function(elmnt) {
+                elmnt.style.stroke = "#39b54a";
+                elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+                // elmnt.style.strokeWidth = "1"; // its cammelCase wich the Capital become - dashed ==> stroke-width is unchange so no need
+              });
+            }
+          }
+          if (isMouseIn_forSED && event.key.toLowerCase() === 'e') {
+            Selector_Start_OR_End_Picks = "picking_end_Time";
+            $('#Picks_EndTime').click();
+            if (ShadowRoot_markerX.length > 0) {
+              ShadowRoot_markerX.forEach(function(elmnt) {
+                elmnt.style.stroke = "#ff1d25";
+                elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+              });
+            }
+          }
+          if (isMouseIn_forSED && event.key.toLowerCase() === 'd') {
+            Selector_Start_OR_End_Picks = "";
+            if (ShadowRoot_markerX.length > 0) {
+              ShadowRoot_markerX.forEach(function(elmnt) {
+                elmnt.style.stroke = "#7d7d7d";
+                elmnt.style.strokeDasharray = "5, 4"; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+              });
+            }
+
+            $('#Btn_Erase_Time_Picks').click();
+
+          }
+        });
+
+
+      });
+    </script>
+
+
+
+    <script type="text/javascript">
+      function Init_Digitizer_Params() {
+        Object.entries(Selected_Digitizer_Parameter).forEach(([Names, ArrayParams]) => {
+          const itemHtmlX = `<label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
+                      <input class="form-check-input" type="radio" value="` + Names + `" name="Options_WhichDigitizer" id="Digitizer_` + Names + `" autocomplete="off"> 
+                      ` + Names + `
+                     </label>`;
+          $("#Digitizer_Radio_Selections").append(itemHtmlX);
+        });
+        const DgtzrRad = document.getElementById("Digitizer_Radio_Selections");
+
+        DgtzrRad.addEventListener("change", Digitizer_Radio_Checked)
+
+      };
+
+
+      $('#Mseed_FileUpload').on('change', function(event) {
+        Reset_Form_PickersParameter();
+
+        // Gampangan Refresh aja dah on close pop up
+        // $("#ch_selectors").find('option:not(:first)').remove();
+        // $("#ch_selectors").prop("disabled", true);
+        // $('#ch_selectors').materialSelect({
+        //   destroy: true
+        // });
+
+        CurrentMseedFile = $(this)[0].files[0];
+        Init_The_MseedFile(CurrentMseedFile);
 
       });
 
 
+      function Init_The_MseedFile(CurrentMseedFile) {
+        if (CurrentMseedFile) {
+          // Show the loader when starting the file loading process
+          $('#Load_01_Mseed_wrapper').prop("hidden", false);
+
+          const readerX = new FileReader();
+          readerX.onload = function(e) {
+            const arrayBuffersX = e.target.result;
+
+            // Hide the loader when loading is done
+            $('#Load_01_Mseed_wrapper').prop("hidden", true);
+
+            // Trigger the next function with the array buffer
+            Init_MseedChannels_Name(arrayBuffersX);
+          };
+
+          readerX.onerror = function() {
+            // Hide the loader if there's an error and log it
+            $('#Load_01_Mseed_wrapper').prop("hidden", true);
+            OOOOPS_picking('Errors:', 'An error occurred while reading the file');
+          };
+
+          // Read the file as ArrayBuffer
+          readerX.readAsArrayBuffer(CurrentMseedFile);
+        } else {
+          OOOOPS_picking('Errors:', 'No file selected');
+        }
+      }
+
+
       function Populate_MultiSelect(idElement, data) {
-        var $select = $('#' + idElement);
+        var $select = $(idElement);
 
         // Clear existing options except the first one
         $select.find('option:not(:first)').remove();
@@ -1481,7 +1613,7 @@ function display_login_form()
         $.each(data, function(index, item) {
           $select.append($('<option>', {
             value: item,
-            text: item
+            text: index
           }));
         });
 
@@ -1502,53 +1634,57 @@ function display_login_form()
       }
 
 
-      const ChkBox_Sorted = document.getElementById("Chkbox_SortValues");
-
-      ChkBox_Sorted.addEventListener("change", function() {
+      $('#Chkbox_SortValues').on("change", function() {
         if (this.checked) {
           // console.log("Checked");
-          ListTableID_Channel.forEach(function(elmnt) {
-            sortResultTable(elmnt, 3)
-          });
+          sortResultTables(3);
         } else {
           // console.log("Un-Checked");
-          ListTableID_Channel.forEach(function(elmnt) {
-            sortResultTable(elmnt, 0)
-          });
+          sortResultTables(0); // dari index kolom pada tbody (setiap tag <td>)
+          //-------Index ke----|      0         |----|   1   |---|     2      |----|         3         |------|  4  |------
+          //--------------<tr><td hidden="">0</td><td>813353</td><td>-689931</td><td>236.94191773393416</td><td></td></tr>
         }
       });
 
-      function sortResultTable(table_ID, RowOrder) {
-        var table = document.getElementById(table_ID);
-        var tbody = table.querySelector('tbody'); // Target the tbody specifically
-        var rows = Array.from(tbody.rows).slice(0); // Get all rows from tbody
+      function sortResultTables(RowOrder) {
+        const ResultTables = document.querySelectorAll('#AppendedResult_TABLE table');
 
-        rows.sort(function(a, b) {
-          var aValue = parseFloat(a.cells[RowOrder].textContent);
-          var bValue = parseFloat(b.cells[RowOrder].textContent);
-          if (isNaN(aValue) || isNaN(bValue)) {
-            return 0; // Skip non-numeric values
+
+        ResultTables.forEach(function(table) {
+          const tbody = table.querySelector('tbody'); // Target the tbody specifically
+          const rows = Array.from(tbody.rows).slice(0); // Get all rows from tbody
+
+          rows.sort(function(a, b) {
+            const aValue = parseFloat(a.cells[RowOrder].textContent);
+            const bValue = parseFloat(b.cells[RowOrder].textContent);
+            if (isNaN(aValue) || isNaN(bValue)) {
+              return 0; // Skip non-numeric values
+            }
+            if (aValue < bValue) {
+              return -1;
+            } else if (aValue > bValue) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          // If RowOrder is -1, reverse the order for descending sort
+          if (RowOrder === -1) {
+            rows.reverse();
           }
-          if (aValue < bValue) {
-            return -1;
-          } else if (aValue > bValue) {
-            return 1;
-          } else {
-            return 0;
+          // Clear existing tbody rows
+          while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
           }
+          // Append sorted rows back to tbody
+          rows.forEach(function(row) {
+            tbody.appendChild(row);
+          });
+
+
         });
-        // If RowOrder is -1, reverse the order for descending sort
-        if (RowOrder === -1) {
-          rows.reverse();
-        }
-        // Clear existing tbody rows
-        while (tbody.firstChild) {
-          tbody.removeChild(tbody.firstChild);
-        }
-        // Append sorted rows back to tbody
-        rows.forEach(function(row) {
-          tbody.appendChild(row);
-        });
+
+
       }
 
       function copyTablesToClipboard(TableCont_ID) {
@@ -1622,19 +1758,13 @@ function display_login_form()
           $('#TempTable_Results').append(new_Thead);
           $('#TempTable_Results').append(new_Tbody);
 
-          // elements.forEach(function(el) {
           try {
-            // $('#Temp_Combined_Results').append($('#'+el).find('tr').has('td'));
-            // window['Ranges_' + el] = document.createRange();
-            // window['Ranges_' + el].selectNodeContents(document.getElementById(el));
-            // sel.addRange(window['Ranges_' + el]);
             range.selectNodeContents(document.getElementById(TableCont_ID));
             sel.addRange(range);
           } catch (e) {
             range.selectNode(document.getElementById(TableCont_ID));
             sel.addRange(range);
           }
-          // });
 
           document.execCommand("copy");
           sel.removeAllRanges();
@@ -1649,25 +1779,30 @@ function display_login_form()
             $("#Temp_CopyTABLE").html('');
           });
         }
-        // alert("Tables copied to clipboard!");
         copyTablesToClipboard_Success();
       }
 
 
       $('#Btn_Erase_Time_Picks').click(function() {
-        // samaain sama initial di paling atas
-        current_picks = "start_pick_time";
-        TimeStamp_Selected_Start_TZ = 66; // DUmmy ajaaa formatnya 03:20:00.000
-        TimeStamp_Selected_Start_MS = 66;
-        TimeStamp_Selected_End_TZ = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
-        TimeStamp_Selected_End_MS = 6;
+
+        Selector_Start_OR_End_Picks = "";
+        TimeStamp_Selected_Start_TZ = ""; // DUmmy ajaaa formatnya 03:20:00.000
+        TimeStamp_Selected_Start_MS = "";
+        TimeStamp_Selected_End_TZ = ""; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+        TimeStamp_Selected_End_MS = "";
 
         marker_remove("EndX");
         marker_remove("StartX");
 
+
+        // Uncheck MDB4 radio buttons by setting prop to false
+        $('#Picks_StartTime').prop("checked", false).parent().removeClass('active');
+        $('#Picks_EndTime').prop("checked", false).parent().removeClass('active');
+
         document.getElementById('input_starttime').value = "";
         document.getElementById('input_endtime').value = "";
 
+        $("#input_starttime").prop("disabled", true);
         $("#input_endtime").prop("disabled", true);
         $("#Appended_DtOption_PopUp").html('');
 
@@ -1676,12 +1811,20 @@ function display_login_form()
           st_locked.classList.remove('TimeStamp_Start_Color');
           st_locked.classList.remove('TimeStamp_End_Color');
         });
-        Reset_Win_Freq_Amp_Form();
+        Reset_Form_PickersParameter();
+
+        if (ShadowRoot_markerX.length > 0) {
+          ShadowRoot_markerX.forEach(function(elmnt) {
+            elmnt.style.stroke = "#7d7d7d";
+            elmnt.style.strokeDasharray = "5, 4"; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+          });
+        }
+
       });
 
 
 
-      function Init_EachStreamContainer(Channel_Selection) {
+      function Init_EachStreamContainer(Channel_Selection, RawChannel_Selection) {
         // Chek if exist, if not then append
         if (Channel_Selection) {
           if ($('#Each_stream_' + Channel_Selection).length) {
@@ -1700,21 +1843,23 @@ function display_login_form()
               if (checkSVG && checkCanvas) {
                 console.log("SVG & Canvas Exist ");
               } else {
-                Init_WaveFormSeismogram(Channel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
+                // Init_WaveFormSeismogram(Channel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
+                Init_Selected_WaveFormSeismogram(Channel_Selection, RawChannel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
               }
             } else {
-              Init_WaveFormSeismogram(Channel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
+              // Init_WaveFormSeismogram(Channel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
+              Init_Selected_WaveFormSeismogram(Channel_Selection, RawChannel_Selection); //Ini kalau bisa pakai module, kalau ndak pakai nomodle tag
             }
           }
         } else {
-          $('#loader-wrapperChannel').prop("hidden", false);
+          $('#Load_00_NoChannel_wrapper').prop("hidden", false);
         }
       };
 
 
       function Init_PopUpOption_Click(Fetch_Channel, Fetch_StationName, Fetch_DataIMG, Fetch_DataDomain_raw, Fetch_DataDomain_rounded, Frequency_Volt, Data_Window) {
         var ContentHtmlX = `<div class="col-lg-2 col-md-3 col-6">
-                            <input type="radio" id="control_` + Fetch_StationName + `" name="selector_freqss" value="` + Fetch_Channel + `" datas-raw-freq="` + Fetch_DataDomain_raw + `" datas-round-freq="` + Fetch_DataDomain_rounded + `" datas-windowing="` + Data_Window + `" datas-volt-amp="` + Frequency_Volt + `">
+                            <input type="radio" id="control_` + Fetch_StationName + `" name="DtOption_PopUp" value="` + Fetch_Channel + `" datas-raw-freq="` + Fetch_DataDomain_raw + `" datas-round-freq="` + Fetch_DataDomain_rounded + `" datas-windowing="` + Data_Window + `" datas-volt-amp="` + Frequency_Volt + `">
                             <label for="control_` + Fetch_StationName + `" class="card to_be_pulsees mee_rounded px-4 py-4">
                               <div class="row m-0 p-0">
                                 <div class="col text-center">
@@ -1741,16 +1886,105 @@ function display_login_form()
                           </div>
                           `;
         $("#Appended_DtOption_PopUp").html(ContentHtmlX);
-        Reset_Win_Freq_Amp_Form();
+        Reset_Form_PickersParameter();
 
-        var freqss_rads = document.querySelectorAll('input[name="selector_freqss"]');
+        var Data_Option_Stp02 = document.querySelectorAll('input[name="DtOption_PopUp"]');
 
-        freqss_rads.forEach(function(freqss_rad) {
-          freqss_rad.addEventListener('change', Radio_Freq_Got_Selected);
+        Data_Option_Stp02.forEach(function(DtOpt) {
+          DtOpt.addEventListener('click', DtOption_PopUp_GotSelected);
         });
 
       }
 
+
+
+      function Init_FinalResults_toTables(DataFinals) {
+        let Keys_FinalDataX = DataFinals.channels;
+
+        Keys_FinalDataX.forEach(function(key_Final) {
+          // console.log(key_Final);
+          // console.log(DataFinals[key_Final]);
+          var nama_station_channel = DataFinals[key_Final]['data_Streams'];
+          var images_each = DataFinals[key_Final]['img'];
+          var images_each_spectogrm = DataFinals[key_Final]['img_spectogrm'];
+
+          var ResultHtml_IMG = `<div class="col">
+                        <div class="row">
+                            <div class="col">
+                              <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_pick_` + key_Final + `" data-lightbox="group_` + key_Final + `">
+                              <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_pick_` + key_Final + `" >
+                              </a>
+                            </div>
+                            <div class="col">
+                              <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + key_Final + `" data-lightbox="group_` + key_Final + `">
+                              <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + key_Final + `" >
+                              </a>
+                            </div>
+                      </div>`;
+          $("#AppendedResult_IMG").append(ResultHtml_IMG);
+
+
+
+          var ResultHtml_TABLE = `<div class="col">
+                       <div class="table-responsive text-nowrap text-center" id="table_container` + key_Final + `">
+                         <center>
+                           <table class="table table-striped" id="table_` + key_Final + `" style="width: 80%;">
+
+                             <thead class="black white-text">
+                               <tr>
+                                 <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
+                                 <th></th>
+                               </tr>
+                               <tr>
+                                 <th scope="col" hidden></th>
+                                 <th scope="col">Peak</th>
+                                 <th scope="col">Valley</th>
+                                 <th scope="col">Sensitivitas</th>
+                                 <th></th>
+                               </tr>
+                             </thead>
+                             <tbody>
+
+                             </tbody>
+                           </table>
+                         </center>
+                       </div>
+                     </div>
+                   </div> `;
+          $("#AppendedResult_TABLE").append(ResultHtml_TABLE);
+
+          table_tbody_ref = document.getElementById("table_" + key_Final + "").getElementsByTagName('tbody')[0];
+
+          var data_peaks = DataFinals[key_Final]['data_peaks'];
+          var data_valleys = DataFinals[key_Final]['data_valleys'];
+          var data_sensitivity = DataFinals[key_Final]['data_sensitivity'];
+
+          var array_to_three_col = data_sensitivity.map(function(element, indx) {
+            return [indx, data_peaks[indx], data_valleys[indx], data_sensitivity[indx], null]
+          });
+          // console.log(array_to_three_col);
+
+          for (var idx = 0; idx < data_sensitivity.length; idx++) {
+            // create a new row
+            var newRow = table_tbody_ref.insertRow(table_tbody_ref.length);
+            for (var j = 0; j < array_to_three_col[idx].length; j++) {
+              // create a new cell
+              var cell = newRow.insertCell(j);
+
+              // add value to the cell
+              cell.innerHTML = array_to_three_col[idx][j];
+              // add class to the first cell
+              if (j === 0) {
+                cell.hidden = true;
+              }
+            }
+          }
+
+
+        });
+
+
+      }
 
 
       function Picked_By_Waveform_Click(Start_Or_End, The_Date, The_Hour, UnixTimeStamps, IsoDateTimeX) {
@@ -1775,6 +2009,16 @@ function display_login_form()
           $("#input_endtime").trigger('change');
         }
       }
+
+      // Picked_By_TimeStamp_Click And Hoverrrr
+      function TimeStamp_Ticker_click() {
+        console.log('Cliiiiic');
+      }
+
+      function TimeStamp_Ticker_hover() {
+        console.log('Hoverrrr');
+      }
+      // Picked_By_TimeStamp_Click And Hoverrrr
 
 
 
@@ -1803,9 +2047,6 @@ function display_login_form()
       }
 
 
-
-
-
       // Detector Both ID TimstampChanged so compare it
       $("#input_starttime, #input_endtime").on('change', function(event) {
         CompareTimeStampPicked();
@@ -1814,25 +2055,22 @@ function display_login_form()
 
       function CompareTimeStampPicked() {
         if (TimeStamp_Selected_Start_MS && TimeStamp_Selected_End_MS) {
-          if (TimeStamp_Selected_Start_MS != 66 && TimeStamp_Selected_End_MS != 6) {
-            if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
-              get_domain_freq(TimeStamp_Selected_Start_TZ, TimeStamp_Selected_End_TZ);
-            }
+          if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
+            get_domain_freq(TimeStamp_Selected_Start_TZ, TimeStamp_Selected_End_TZ);
           }
         };
       }
 
-
       // Langkah proses 2 freq domain freq_domain frekuensi pick frequency domain
       function get_domain_freq(StartTime_TZ, EndTime_TZ) {
-        if (StartTime_TZ && EndTime_TZ && CurrentMseedFile && Selected_Digitizer && SelectedChannel_Lists) {
+        if (StartTime_TZ && EndTime_TZ && CurrentMseedFile && Selected_Digitizer && SelectedChannel_Lists.length > 0) {
 
-          var AppendedFormData = new FormData();
+          const AppendedFormData = new FormData();
 
           AppendedFormData.append('Step02_MseedFile', CurrentMseedFile);
           AppendedFormData.append('DigitizerType', JSON.stringify(Selected_Digitizer));
           AppendedFormData.append('ChannelSelected', JSON.stringify(SelectedChannel_Lists));
-          var Time_Deltas = JSON.stringify({
+          const Time_Deltas = JSON.stringify({
             "starts": StartTime_TZ,
             "ends": EndTime_TZ
           });
@@ -1847,14 +2085,14 @@ function display_login_form()
             processData: false,
             cache: false,
             beforeSend: function() {
-              $('#loader-wrapper1').prop("hidden", false);
+              $('#Load_02_MseedParams_wrapper').prop("hidden", false);
             },
             success: function(response) {
 
-              $('#loader-wrapper1').prop("hidden", true);
+              $('#Load_02_MseedParams_wrapper').prop("hidden", true);
               $("#Appended_DtOption_PopUp").html('');
 
-              if (!response.error && response.data) {
+              if ((!response.error || !response.data.error) && response.data) {
 
                 var Fetch_Channel_Lists = response.data.channels;
 
@@ -1873,13 +2111,13 @@ function display_login_form()
                 });
 
               } else {
-                OOOOPS_picking('Errors', response.error);
+                OOOOPS_picking('Errors', response.error + response.data.error);
               }
 
             },
             error: function(e) {
               // $("#err").html(e).fadeIn();
-              $('#loader-wrapper1').prop("hidden", true);
+              $('#Load_02_MseedParams_wrapper').prop("hidden", true);
             }
           });
 
@@ -1888,8 +2126,112 @@ function display_login_form()
 
 
 
+      // Langkah proses 3 Waktunya Pickiiing boss
+      $('#Form_PickersParameters').submit(function(evnt) {
+        evnt.preventDefault();
+
+        const Windowing_ParamsValue = $("#Windowing_ParamsValue").val();
+        const Voltage_ParamsValue = $("#Voltage_ParamsValue").val();
+        const Frequency_ParamsValue = $("#Frequency_ParamsValue").val();
+
+        if (!Selected_Digitizer) {
+          $("#Digitizer_Radio_Selections").children().addClass('pulse_thiss');
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+        if (!SelectedChannel_Lists.length > 0) {
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+
+        if (!Windowing_ParamsValue || !Voltage_ParamsValue || !Frequency_ParamsValue) {
+          $(".to_be_pulsees").addClass('pulse_thiss');
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+
+        if (!Constanta_ParamsValue) {
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+
+        if (!TimeStamp_Selected_Start_TZ) {
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+        if (!TimeStamp_Selected_End_TZ) {
+          evnt.preventDefault();
+          evnt.stopPropagation();
+          return false;
+        }
+
+
+        if (SelectedChannel_Lists.length > 0 && Windowing_ParamsValue && Voltage_ParamsValue && Frequency_ParamsValue && Constanta_ParamsValue && TimeStamp_Selected_Start_TZ && TimeStamp_Selected_End_TZ) {
+          const AppndForm_ForProccess_03 = new FormData();
+
+          const Time_Deltas = JSON.stringify({
+            "starts": TimeStamp_Selected_Start_TZ,
+            "ends": TimeStamp_Selected_End_TZ
+          });
+          const Calibrate_Opt = JSON.stringify({
+            "windowing": Windowing_ParamsValue,
+            "voltage": Voltage_ParamsValue,
+            "frequency": Frequency_ParamsValue,
+            "constanta": Constanta_ParamsValue
+          });
+
+          AppndForm_ForProccess_03.append('Step03_MseedFile', CurrentMseedFile);
+          AppndForm_ForProccess_03.append('ChannelSelected', JSON.stringify(SelectedChannel_Lists));
+          AppndForm_ForProccess_03.append('TimeDeltas', Time_Deltas);
+          AppndForm_ForProccess_03.append('CalibrateOption', Calibrate_Opt);
+
+          $.ajax({
+            url: "script/03_get_final_proccessed_mseed.php",
+            type: "POST",
+            data: AppndForm_ForProccess_03,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            beforeSend: function() {
+              $('#Load_03_BearPicking_wrapper').prop("hidden", false);
+            },
+            success: function(response) {
+              $('#Load_03_BearPicking_wrapper').prop("hidden", true);
+              $("#AppendedResult_IMG").html('');
+              $("#AppendedResult_TABLE").html('');
+
+              if ((!response.error && !response.data.error) && response.data) {
+
+                Init_FinalResults_toTables(response.data);
+
+                $('#Final_rslt_Modal').modal('show');
+              } else {
+                OOOOPS_picking('Errors', response.error + response.data.error);
+              }
+
+            },
+            error: function(e) {
+              // $("#err").html(e).fadeIn();
+              $('#Load_02_MseedParams_wrapper').prop("hidden", true);
+            }
+          });
+
+        }
+
+      });
+
+
+
+
+
       $('#ch_selectors').on('change', function() {
-        var selectedOptions = $(this).find('option:selected');
+        const selectedOptions = $(this).find('option:selected');
 
         SelectedChannel_Lists = [];
         local_SelectedChannelId_Lists = [];
@@ -1897,10 +2239,13 @@ function display_login_form()
         if (selectedOptions.length > 0) {
           selectedOptions.each(function() {
             if ($(this).val() != "") {
-              SelectedChannel_Lists.push($(this).val());
-              local_SelectedChannelId_Lists.push('Each_stream_' + $(this).val());
+              // $(this).text() itu hasilnya "HNE"....
+              // $(this).val() itu hasilnya "IA.MBPI.00.HNE"....
+              SelectedChannel_Lists.push($(this).text());
+              local_SelectedChannelId_Lists.push('Each_stream_' + $(this).text());
               // Draw Seismogram Container and Graph
-              Init_EachStreamContainer($(this).val());
+              // console.log($(this).text());
+              Init_EachStreamContainer($(this).text(), $(this).val());
             }
 
           });
@@ -1916,12 +2261,20 @@ function display_login_form()
           $("#Btn_Erase_Time_Picks").addClass("disss");
           $("#Btn_Erase_Time_Picks").prop("disabled", true);
 
-          Reset_Win_Freq_Amp_Form();
+          $('#Start_OR_End_Selection').find("label").each(function() {
+            $(this).addClass('your-class'); // Add a class to each label
+
+            $(this).find('input[type="radio"').prop("disabled", true);
+            $(this).find('input[type="radio"').prop("checked", false);
+          });
+
+          $('#Load_00_NoChannel_wrapper').prop("hidden", false);
+
+          Reset_Form_PickersParameter();
         }
 
         // Buat Toggle Hide or show Seismogram dari tampilan
         $("div[id^='Each_stream_']").each(function() {
-
           var id_ = $(this).attr("id")
           //check if not in array
           if (local_SelectedChannelId_Lists.indexOf(id_) == -1) {
@@ -1933,7 +2286,15 @@ function display_login_form()
             $("#Btn_Erase_Time_Picks").removeClass("disss");
             $("#Btn_Erase_Time_Picks").prop("disabled", false);
 
-            $('#loader-wrapperChannel').prop("hidden", true);
+            $('#Start_OR_End_Selection').find("label").each(function() {
+              $(this).addClass('your-class'); // Add a class to each label
+
+              $(this).find('input[type="radio"').prop("disabled", false);
+              $(this).find('input[type="radio"').prop("checked", false);
+            });
+
+
+            $('#Load_00_NoChannel_wrapper').prop("hidden", true);
           }
         });
 
@@ -1941,55 +2302,179 @@ function display_login_form()
 
 
 
+      function Reset_Form_PickersParameter() {
+        $("#Windowing_ParamsValue").prop("disabled", true);
+        $("#Frequency_ParamsValue").prop("disabled", true);
+        $("#Voltage_ParamsValue").prop("disabled", true);
 
+        $("#Windowing_ParamsValue").val('');
+        $("#Frequency_ParamsValue").val('');
+        $("#Voltage_ParamsValue").val('');
+      }
 
+      function Digitizer_Radio_Checked(evnt) {
+        const TempDgtzrSelect = $(this).find('input:checked').val();
 
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
+        if (TempDgtzrSelect) {
+          Selected_Digitizer = TempDgtzrSelect;
+          $(this).children().removeClass('pulse_thiss');
+          const value_cons = Selected_Digitizer_Parameter[Selected_Digitizer]["constanta"];
+          Constanta_ParamsValue = parseFloat(value_cons);
+          $("#Constanta_ParamsValue").val(parseFloat(value_cons));
+          $("#Constanta_ParamsValue").prop("disabled", false);
+          $("#Constanta_ParamsValue").siblings('label').addClass('active');
 
-
-
-      function init_logger_select() {
-        // console.log(Selected_Digitizer_Parameter);
-
-        Object.entries(Selected_Digitizer_Parameter).forEach(([key, valuess]) => {
-          // console.log(key);
-          // console.log(valuess);
-          var itemHtmls = `<label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
-                      <input class="form-check-input" type="radio" value="` + key + `" name="options_logger" id="` + key + `" autocomplete="off"> 
-                      ` + key + `
-                     </label>`;
-          $("#Logger_select").append(itemHtmls);
-        });
-
-        var selected_radios = document.querySelectorAll('input[name="options_logger"]');
-
-        for (var selected_rad of selected_radios) {
-          selected_rad.addEventListener('change', Radio_Got_Selected);
+          $("#ch_selectors").prop("disabled", false);
+          $("#ch_selectors").materialSelect();
+        } else {
+          $(this).children().addClass('pulse_thiss');
         }
-      };
+      }
+
+
+
+      $('#Start_OR_End_Selection').on("change", function() {
+        const Strt_or_end = $(this).find('input:checked').val();
+        if (Strt_or_end == "picking_start_Time") {
+          Selector_Start_OR_End_Picks = Strt_or_end;
+          // current_picks = "start_pick_time";
+          if (ShadowRoot_markerX.length > 0) {
+            ShadowRoot_markerX.forEach(function(elmnt) {
+              elmnt.style.stroke = "#39b54a";
+              elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+              // elmnt.style.strokeWidth = "1"; // its cammelCase wich the Capital become - dashed ==> stroke-width is unchange so no need
+            });
+          }
+        }
+        if (Strt_or_end == "picking_end_Time") {
+          Selector_Start_OR_End_Picks = Strt_or_end;
+          // current_picks = "end_pick_time";
+          if (ShadowRoot_markerX.length > 0) {
+            ShadowRoot_markerX.forEach(function(elmnt) {
+              elmnt.style.stroke = "#ff1d25";
+              elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+            });
+          }
+        }
+
+
+      });
+
+
+
+
+
+      function DtOption_PopUp_GotSelected(e) {
+        if (this.checked) {
+          $(".to_be_pulsees").removeClass('pulse_thiss');
+
+          const raw_freqs = this.getAttribute('datas-raw-freq');
+          const round_freqs = this.getAttribute('datas-round-freq');
+          const windowing_dats = this.getAttribute('datas-windowing');
+          const volt_amp_dats = this.getAttribute('datas-volt-amp');
+
+          $("#Frequency_ParamsValue").val(parseFloat(round_freqs));
+          $("#Frequency_ParamsValue").prop("disabled", false);
+          $("#Frequency_ParamsValue").siblings('label').addClass('active');
+
+          $("#Voltage_ParamsValue").val(parseFloat(volt_amp_dats));
+          $("#Voltage_ParamsValue").prop("disabled", false);
+          $("#Voltage_ParamsValue").siblings('label').addClass('active');
+
+          $("#Windowing_ParamsValue").val(parseInt(windowing_dats));
+          $("#Windowing_ParamsValue").prop("disabled", false);
+          $("#Windowing_ParamsValue").siblings('label').addClass('active');
+        }
+      }
+
+
+
+
+
+      //  Triger refresh window kalau di tutup modal pertama
+      $('#Wave_containerModal').on('hidden.bs.modal', function(e) {
+        if (window.history.replaceState) {
+          window.history.replaceState(null, null, window.location.href);
+        }
+        window.location = window.location.href;
+      });
+
+
+
+      $('#Final_rslt_Modal').on('hidden.bs.modal', function(e) {
+        $('#Chkbox_SortValues').prop('checked', false);
+      });
+
+
+
+      // AWAIT AND ASYNC Function ==================================================
+      // AWAIT AND ASYNC Function ==================================================
+
+      // Helper function to wait for an element to be available in the DOM
+      function waitForElement(selector, timeout = 5000) {
+        return new Promise((resolve, reject) => {
+          const startTime = Date.now();
+
+          const interval = setInterval(() => {
+            const element = document.querySelector(selector);
+
+            if (element) {
+              clearInterval(interval);
+              resolve(element);
+            } else if (Date.now() - startTime > timeout) {
+              clearInterval(interval);
+              reject(`Element with selector ${selector} not found within ${timeout}ms`);
+            }
+          }, 100);
+        });
+      }
+
+      // Helper function to wait for an element within a shadow DOM
+      function waitForElementInShadowDOM(parentElement, selector, timeout = 5000) {
+        return new Promise((resolve, reject) => {
+          const startTime = Date.now();
+
+          const interval = setInterval(() => {
+            const element = parentElement.shadowRoot.querySelector(selector);
+
+            if (element) {
+              clearInterval(interval);
+              resolve(element);
+            } else if (Date.now() - startTime > timeout) {
+              clearInterval(interval);
+              reject(`Element ${selector} in shadow DOM not found within ${timeout}ms`);
+            }
+          }, 100);
+        });
+      }
+
+
+
+
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
+      // ==========================================================================================================================================================================================================================
 
 
 
@@ -2020,11 +2505,11 @@ function display_login_form()
 
           start_time_class_locked = 'locked';
 
-          if (TimeStamp_Selected_End_MS != 6 && (TimeStamp_Selected_Start_MS > TimeStamp_Selected_End_MS)) {
-            TimeStamp_Selected_End_TZ = 6; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
-            TimeStamp_Selected_End_MS = 6;
+          if (TimeStamp_Selected_End_MS && (TimeStamp_Selected_Start_MS > TimeStamp_Selected_End_MS)) {
+            TimeStamp_Selected_End_TZ = ""; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
+            TimeStamp_Selected_End_MS = "";
 
-            get_pickertimess("end_times_init");
+            // get_pickertimess("end_times_init");
             document.getElementById('input_endtime').value = "";
             $("#input_endtime").prop("disabled", true);
           }
@@ -2052,553 +2537,17 @@ function display_login_form()
         };
 
         if (TimeStamp_Selected_Start_MS && TimeStamp_Selected_End_MS) {
-          if (TimeStamp_Selected_Start_MS != 66 && TimeStamp_Selected_End_MS != 6) {
-            if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
-              get_domain_freq(TimeStamp_Selected_Start_TZ, TimeStamp_Selected_End_TZ);
-            }
+          if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
+            get_domain_freq(TimeStamp_Selected_Start_TZ, TimeStamp_Selected_End_TZ);
           }
         };
 
       }
-
-
-
-
-      $('#Wave_containerModal').on('hidden.bs.modal', function(e) {
-        if (window.history.replaceState) {
-          window.history.replaceState(null, null, window.location.href);
-        }
-        window.location = window.location.href;
-      });
-
-      function Radio_Got_Selected(e) {
-        if (this.checked) {
-          Selected_Digitizer = this.value;
-          value_cons = Selected_Digitizer_Parameter[Selected_Digitizer]["constanta"];
-
-
-
-          $("#const_number").val(parseFloat(value_cons));
-          $("#const_number").prop("disabled", false);
-          $("#const_number").siblings('label').addClass('active');
-
-
-          $("#ch_selectors").prop("disabled", false);
-          $("#ch_selectors").materialSelect({
-            // validate: true,
-            // validFeedback: 'Correct choice',
-            // invalidFeedback: 'Wrong choice'
-          });
-
-        }
-      }
-
-
-
-
-      function Radio_Freq_Got_Selected(e) {
-        if (this.checked) {
-          $(".to_be_pulsees").removeClass('pulse_thiss');
-
-          raw_freqs = this.getAttribute('datas-raw-freq');
-          round_freqs = this.getAttribute('datas-round-freq');
-          windowing_dats = this.getAttribute('datas-windowing');
-          volt_amp_dats = this.getAttribute('datas-volt-amp');
-
-
-          // console.log(raw_freqs);
-          // console.log(round_freqs);
-          // console.log(windowing_dats);
-          // console.log(volt_amp_dats);
-
-          $("#freq_number").val(parseFloat(round_freqs));
-          $("#freq_number").prop("disabled", false);
-          $("#freq_number").siblings('label').addClass('active');
-
-          $("#volt_number").val(parseFloat(volt_amp_dats));
-          $("#volt_number").prop("disabled", false);
-          $("#volt_number").siblings('label').addClass('active');
-
-          $("#number_checked").val(parseInt(windowing_dats));
-          $("#number_checked").prop("disabled", false);
-          $("#number_checked").siblings('label').addClass('active');
-        }
-      }
-
-
-      function Reset_Win_Freq_Amp_Form() {
-        $("#number_checked").prop("disabled", true);
-        $("#freq_number").prop("disabled", true);
-        $("#volt_number").prop("disabled", true);
-
-        $("#number_checked").val('');
-        $("#freq_number").val('');
-        $("#volt_number").val('');
-      }
-
-
-      function get_pickertimess(which_to_init) {
-
-        MseedValues_Cross = [];
-
-
-        // selected_chann.forEach((item, index) => {
-        //   MseedValues_Cross.push(MseedValues[item]);
-        // })
-
-
-        Object.entries(MseedValues_Cross).forEach(([key, valuess]) => {
-          if (valuess.start_time) {
-            Datetimes_selectors = valuess.start_time;
-            times_selectors = (Datetimes_selectors.split('T')[1]).split('.')[0];
-
-            Datetimes_selectorsEND = valuess.end_time;
-            times_selectorsEND = (Datetimes_selectorsEND.split('T')[1]).split('.')[0];
-
-
-
-
-            if (which_to_init == 'start_times_init') {
-              document.getElementById('input_starttime_container').innerHTML = "";
-              document.getElementById('input_starttime_container').innerHTML = `<input placeholder="" onkeyup="typing_starttime();" type="text" name="input_starttime" id="input_starttime" disabled class="timepicker_start_class form-control timepicker" required>
-                                                 <label class="active" for="input_starttime">Start Time</label>`;
-
-
-              // $('#input_starttime').pickatime({
-              //      // Light or Dark theme
-              //      twelvehour: false,
-              //      darktheme: false,
-              //      autoclose: true,
-              //      closeOnClear: true,
-              //      vibrate: true,
-              //      min: twenty_to_twelve_Convert(times_selectors),
-              //      max: twenty_to_twelve_Convert(times_selectorsEND),
-              //      afterDone: seconds_starttime
-              //     });
-
-
-
-
-              $("#input_starttime").prop("disabled", false);
-              $("#input_ms").prop("disabled", false);
-
-
-              marker_remove("StartX");
-
-            }
-
-
-            if (which_to_init == 'end_times_init') {
-              picker_start_datesss = document.getElementById('input_starttime').value;
-
-              document.getElementById('input_endtime_container').innerHTML = "";
-              document.getElementById('input_endtime_container').innerHTML = `<input placeholder="" type="text" name="input_endtime" id="input_endtime" disabled class="form-control timepicker" required>
-                                                    <label class="active" for="input_endtime">End Time</label>`;
-              // $('#input_endtime').pickatime({
-              //       // Light or Dark theme
-              //       twelvehour: false,
-              //       darktheme: true,
-              //       autoclose: true,
-              //       closeOnClear: true,
-              //       vibrate: true,
-              //       min: twenty_to_twelve_Convert(picker_start_datesss),
-              //       max: twenty_to_twelve_Convert(times_selectorsEND),
-              //       beforeShow: check_start_inputs,
-              //       afterHide: check_start_inputs,
-              //       afterDone: seconds_endtime
-              //      });
-
-              $("#input_endtime").prop("disabled", false);
-              marker_remove("EndX");
-            }
-
-            Reset_Win_Freq_Amp_Form();
-
-          } else {
-
-          }
-        })
-
-        // console.log(times_selectors);
-      }
-
-
-
-
-
-
-
-      function twenty_to_twelve_Convert(timeX) {
-        var [hourString, minute] = timeX.split(":");
-        var hour = +hourString % 24;
-        return (hour % 12 || 12) + ":" + minute + (hour < 12 ? "am" : "pm");
-      }
-
-
-      function addZeroSecond(number) {
-        if (number < 10)
-          return "0" + number;
-        else
-          return number;
-      }
-
-
-      let typingtimer;
-      let timedelay = 1000;
-
-      function typing_starttime() {
-        var start_hr_minutes = document.getElementById('input_starttime').value;
-        clearTimeout(typingtimer)
-        if (start_hr_minutes) {
-          typingtimer = setTimeout(() => {
-            //do stuff
-            get_pickertimess("end_times_init");
-          }, timedelay);
-        };
-      }
-
-
-      function check_start_inputs() {
-        var start_hr_minutes = document.getElementById('input_starttime').value;
-        if (!start_hr_minutes) {
-          var end_hr_minutes = document.getElementById('input_endtime').value = "";
-          $("#input_endtime").prop("disabled", false);
-        }
-      }
-
-
-
-
-      // function marker_remove() {
-      //  SismogramDataLists.forEach(seisData => seisData['markerList'] = []
-      //  );
-
-      //  graphList.forEach(g => g.drawMarkers());
-      // }
-
-      function meeee_cust_file_reset() {
-        // window.location.reload(true);
-        if (window.history.replaceState) {
-          window.history.replaceState(null, null, window.location.href);
-        }
-        window.location = window.location.href;
-      };
-
-
-
-
-      // $('#ch_selectors').on('change', function() {
-      //   var $selectedOptions = $(this).find('option:selected');
-      //   value_cahnnel = [];
-      //   ListTableID_Channel = [];
-      //   $selectedOptions.each(function() {
-      //     value_cahnnel.push($(this).text());
-      //     ListTableID_Channel.push('table_' + $(this).text());
-      //   });
-
-      //   $('#Btn_Erase_Time_Picks').click();
-      //   $("#Btn_Erase_Time_Picks").prop("disabled", true);
-      //   // console.log(value_cahnnel);
-      //   // console.log(ListTableID_Channel);
-      // });
-      // $('#ch_selectors').on('blur', function() {
-      //   var $selectedOptions = $(this).find('option:selected');
-      //   value_cahnnel = [];
-      //   ListTableID_Channel = [];
-      //   $selectedOptions.each(function() {
-      //     value_cahnnel.push($(this).text());
-      //     ListTableID_Channel.push('table_' + $(this).text());
-      //   });
-
-      //   $('#Btn_Erase_Time_Picks').click();
-      //   $("#Btn_Erase_Time_Picks").prop("disabled", true);
-      //   // console.log(value_cahnnel);
-      //   // console.log(ListTableID_Channel);
-      //   console.log(Blur);
-      // });
-
-
-
-
-
-
-
-
-
-      $('#form_pickers_param_id').submit(function(evnt) {
-        var formss = document.getElementById('form_pickers_param_id');
-        if (formss.checkValidity() === false) {
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-
-
-        if (!value_cahnnel.length) {
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-        if (!$("#number_checked").val()) {
-
-          $(".to_be_pulsees").addClass('pulse_thiss');
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-        if (!$("#volt_number").val()) {
-          $(".to_be_pulsees").addClass('pulse_thiss');
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-        if (!$("#freq_number").val()) {
-          $(".to_be_pulsees").addClass('pulse_thiss');
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-        if (!$("#const_number").val()) {
-          evnt.preventDefault();
-          evnt.stopPropagation();
-          return false;
-        }
-
-
-        formss.classList.add('was-validated');
-        evnt.preventDefault();
-
-        var formData_params = new FormData($('#form_pickers_param_id')[0]);
-        formData_params.append('current_mseed_file', $('#Mseed_FileUpload')[0].files[0]);
-
-
-
-        var dat_selected_chs = JSON.stringify(value_cahnnel);
-        formData_params.append('ch_selectors', dat_selected_chs);
-
-        var start_datesxx = document.getElementById('current_starts_date').value;
-        formData_params.append('current_starts_datex', start_datesxx);
-
-        var end_datesxx = document.getElementById('current_ends_date').value;
-        formData_params.append('current_starts_datex', end_datesxx);
-
-        $.ajax({
-
-          type: "POST",
-
-          url: "script/03_get_final_proccessed_mseed.php",
-
-          data: formData_params, // get all form field value in serialize form
-          // data: {
-          //         channels: dat_selected_chs,
-          //         forms: formData_params,
-          //       },
-
-          contentType: false,
-          cache: false,
-          processData: false,
-          beforeSend: function() {
-            document.getElementById('loader-wrapper2').hidden = false;
-          },
-          success: function(result_finale) {
-            $("#AppendedResult_IMG").html('');
-            $("#AppendedResult_TABLE").html('');
-            // console.log(result_finale);
-
-
-            var channels_to_stream = result_finale.channels;
-
-
-
-            channels_to_stream.forEach(function(ch_selector) {
-              // console.log(ch_selector);
-              // console.log(result_finale[ch_selector]);
-              var nama_station_channel = result_finale[ch_selector]['data_Streams'];
-              var images_each = result_finale[ch_selector]['img'];
-              var images_each_spectogrm = result_finale[ch_selector]['img_spectogrm'];
-
-
-
-
-              var ResultHtml_IMG = `<div class="col">
-                              <div class="row">
-                                  <div class="col">
-                                    <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each + `" title="image_pick_` + ch_selector + `" data-lightbox="group_` + ch_selector + `">
-                                    <img class="img-fluid" src="data:image/png;base64, ` + images_each + `" alt="image_pick_` + ch_selector + `" >
-                                    </a>
-                                  </div>
-                                  <div class="col">
-                                    <a class="img-thumbnail img-fluid" href="data:image/png;base64, ` + images_each_spectogrm + `" title="image_spec_` + ch_selector + `" data-lightbox="group_` + ch_selector + `">
-                                    <img class="img-fluid" src="data:image/png;base64, ` + images_each_spectogrm + `" alt="image_spec_` + ch_selector + `" >
-                                    </a>
-                                  </div>
-                            </div>`;
-              $("#AppendedResult_IMG").append(ResultHtml_IMG);
-
-
-
-              var ResultHtml_TABLE = `<div class="col">
-                             <div class="table-responsive text-nowrap text-center" id="table_container` + ch_selector + `">
-                               <center>
-                                 <table class="table table-striped" id="table_` + ch_selector + `" style="width: 80%;">
-
-                                   <thead class="black white-text">
-                                     <tr>
-                                       <th colspan="3"><center><b>Hasil Picking ` + nama_station_channel + `</b></center></th>
-                                       <th></th>
-                                     </tr>
-                                     <tr>
-                                       <th scope="col" hidden></th>
-                                       <th scope="col">Peak</th>
-                                       <th scope="col">Valley</th>
-                                       <th scope="col">Sensitivitas</th>
-                                       <th></th>
-                                     </tr>
-                                   </thead>
-                                   <tbody>
-
-                                   </tbody>
-                                 </table>
-                               </center>
-                             </div>
-                           </div>
-                         </div> `;
-              $("#AppendedResult_TABLE").append(ResultHtml_TABLE);
-
-              table_tbody_ref = document.getElementById("table_" + ch_selector + "").getElementsByTagName('tbody')[0];
-
-              // console.log(table_ids);
-
-              // var arr_dat2 = data_peaks.map((element, indx) => ({ element, x:data_valleys[indx], z:data_sensitivity[indx] }));
-              //       console.log(arr_dat2);
-
-              var data_peaks = result_finale[ch_selector]['data_peaks'];
-              var data_valleys = result_finale[ch_selector]['data_valleys'];
-              var data_sensitivity = result_finale[ch_selector]['data_sensitivity'];
-
-              var array_to_three_col = data_sensitivity.map(function(element, indx) {
-                return [indx, data_peaks[indx], data_valleys[indx], data_sensitivity[indx], null]
-              });
-              // console.log(array_to_three_col);
-
-              for (var idx = 0; idx < data_sensitivity.length; idx++) {
-                // create a new row
-                var newRow = table_tbody_ref.insertRow(table_tbody_ref.length);
-                for (var j = 0; j < array_to_three_col[idx].length; j++) {
-                  // create a new cell
-                  var cell = newRow.insertCell(j);
-
-                  // add value to the cell
-                  cell.innerHTML = array_to_three_col[idx][j];
-
-                  // add class to the first cell
-                  if (j === 0) {
-                    // cell.classList.add('your-class-name');
-                    // cell.style = "....";
-                    cell.hidden = true;
-                  }
-                }
-              }
-
-
-
-
-
-
-
-
-            });
-
-
-
-
-            document.getElementById('loader-wrapper2').hidden = true;
-            $('#Final_rslt_Modal').modal('show');
-
-          }
-
-
-
-        });
-      });
-
-
-
-
-
-
-
-      $('#input_ms').click(function() {
-        var ms_true = $(this).is(':checked');
-        if (!ms_true) {
-          // console.log('1111111');
-        } else {
-          // console.log('222222');
-        }
-      });
-
-
-      $(document).ready(function() {
-
-        $.getJSON("/script/parameter_logger.json", function(json_dat) {
-          Selected_Digitizer_Parameter = json_dat;
-          // console.log(json_dat); // this will show the info it in firebug console
-          init_logger_select();
-        });
-
-
-        new WOW().init();
-
-        Reset_Win_Freq_Amp_Form();
-
-        $("#input_starttime").prop("disabled", true);
-        $("#input_endtime").prop("disabled", true);
-
-        $("#ch_selectors").prop("disabled", true);
-
-
-
-        $("#const_number").prop("disabled", true);
-
-
-
-
-        $('[data-toggle="tooltip"]').tooltip();
-        $('.file-upload').file_upload();
-        $('.file-upload').show();
-
-
-
-
-        $('[data-toggle="helper_start_Time"]').popover({
-          html: true,
-          trigger: ' focus',
-          placement: 'top',
-          content: function() {
-            return `<img src="/images/tuts/TimeStartPick.gif" alt="This How To" width="250" /><ul> </ul>`;
-          }
-        });
-
-        $('[data-toggle="helper_end_Time"]').popover({
-          html: true,
-          trigger: ' focus',
-          placement: 'top',
-          content: function() {
-            return `<img src="/images/tuts/TimeEndPick.gif" alt="This How To" width="250" /><ul> </ul>`;
-          }
-        });
-
-        $('[data-toggle="helper_windowing"]').popover({
-          html: true,
-          trigger: ' focus',
-          placement: 'left',
-          content: function() {
-            return `<img src="/images/tuts/WindowingNumb.gif" alt="This How To" width="250" /> <ul> <li class="list_helpers_jumbotron" > Makin Kecil Untuk Freq Tinggi </li> <li class="list_helpers_jumbotron" > Bagian Hijau Dan Merah Harus Ada di setiap Gelombang </li> <li class="list_helpers_jumbotron" > Tidak Boleh Bertabrakan Kedua Poin Tersebut </li></ul>`;
-          }
-        });
-
-      });
     </script>
+
+
+
+
 
   <?php
   }
@@ -2608,8 +2557,6 @@ function display_login_form()
   // *********************************************** //
 
   else if (isset($_POST['submit'])) {
-
-
 
     /* Check and assign submitted Username and Password to new variable */
     $Usernames = isset($_POST['username']) ? $_POST['username'] : '';
@@ -2638,12 +2585,9 @@ function display_login_form()
     display_login_form();
   }
 
-
-
-
   ?>
 
-
+  <XXXXXX></XXXXXX>
 
 
 
