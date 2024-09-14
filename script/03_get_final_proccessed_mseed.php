@@ -30,31 +30,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['Step03_MseedFile']))
 
     $fetched_ch = ['channels' => $ChannelSelected];
     $fetched_rslt = [];
+    $processes = []; // Store the processes
+    $pipes = []; // Store pipes for process communication
 
-    // Process each selected channel
+
+
+    // Loop through each selected channel and start the Python script in parallel
     foreach ($ChannelSelected as $ch_name) {
         $ch_name_escaped = escapeshellarg($ch_name);
 
-        // Command to execute the Python script
+        // Prepare command
         $command = "python3 03_get_final_proccessed_mseed.py $mseed_Content $ch_name_escaped $CalibrateWindow $CalibrateFrequency $CalibrateVoltage $CalibrateConstant $Input_Start_Time $Input_End_Time";
-        $output = shell_exec($command);
 
-        // Fallback to Python 2 if Python 3 fails
+        // Open process in non-blocking mode using popen
+        $descriptorspec = [
+            1 => ['pipe', 'w'],  // stdout
+            2 => ['pipe', 'w']   // stderr
+        ];
+        $process = proc_open($command, $descriptorspec, $pipe);
+
+        if (is_resource($process)) {
+            $processes[$ch_name] = $process;
+            $pipes[$ch_name] = $pipe;
+        }
+    }
+
+    // Collect the results
+    foreach ($processes as $ch_name => $process) {
+        $pipe = $pipes[$ch_name];
+        $output = stream_get_contents($pipe[1]);
+        $error_output = stream_get_contents($pipe[2]);
+
+        fclose($pipe[1]);
+        fclose($pipe[2]);
+
+        // Close the process
+        proc_close($process);
+
+        // Check the output and fallback to Python 2 if necessary
         if (empty($output)) {
             $command_fallback = "python 03_get_final_proccessed_mseed.py $mseed_Content $ch_name_escaped $CalibrateWindow $CalibrateFrequency $CalibrateVoltage $CalibrateConstant $Input_Start_Time $Input_End_Time";
             $output = shell_exec($command_fallback);
         }
 
-        // Parse the output as JSON
+        // Parse the JSON result
         $json = json_decode($output, true);
 
         if ($json === null) {
-            // Handle JSON parse errors or empty output
-            $fetched_rslt[$ch_name] = ['error' => "Failed to process channel: $ch_name"];
+            // Handle parsing errors or empty output
+            $fetched_rslt[$ch_name] = ['error' => 'Failed to process channel: ' . $ch_name . ' - ' . $error_output];
         } else {
             $fetched_rslt[$ch_name] = $json;
         }
     }
+
 
     // Merge channels and results into a final response
     $response = [

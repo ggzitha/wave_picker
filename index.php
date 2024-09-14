@@ -327,9 +327,27 @@ function display_login_form()
       content: "";
     }
 
-
-
     /* Start Button */
+
+    /* Quit Button */
+
+    .grey-gradient-mee {
+      background: linear-gradient(90deg, #abaea4e8, #06060663) !important;
+      color: #c6b9b9;
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+
+    .grey-gradient-mee:not([disabled]):not(.disabled):active,
+    .grey-gradient-mee:not([disabled]):not(.disabled).active,
+    .show>.grey-gradient-mee.dropdown-toggle {
+      background: linear-gradient(0deg, #1c1c1cf5, #aaaaaa47) !important;
+      color: #f00;
+      font-weight: 900;
+      box-shadow: rgb(85, 81, 81) 0px 1px 2px 0px, rgb(6, 6, 6) 0px 2px 6px 2px;
+    }
+
+    /* Quits Button */
 
     /* End Button */
     .red-gradient-mee {
@@ -359,7 +377,6 @@ function display_login_form()
       /* content: "☑️"; */
       content: "";
     }
-
 
     /* End Button */
 
@@ -556,8 +573,8 @@ function display_login_form()
       position: absolute;
       z-index: 99999998;
       top: 5.5%;
-      left: 26%;
-      scale: 53%;
+      left: 34.5%;
+      scale: 55%;
     }
 
     .picks_button {
@@ -602,15 +619,15 @@ function display_login_form()
         position: absolute;
         z-index: 99999999;
         top: 10%;
-        left: 57%;
+        left: 57.5%;
       }
 
       .Mee_Container_PicksOption {
         position: absolute;
         z-index: 99999998;
-        top: 12%;
-        left: 51.5%;
-        scale: 50%;
+        top: 13%;
+        left: 54%;
+        scale: 60%;
       }
     }
 
@@ -637,6 +654,7 @@ function display_login_form()
 
 
     var SelectedChannel_Lists = []; // Channel selected List trigger by #ch_selectors onchange
+    var SelectedChn_Prefix = null; // Channel selected List trigger by #ch_selectors onchange
 
 
     var CurrentSeismogram; // seis data from function Init_Selected_WaveFormSeismogram
@@ -649,6 +667,11 @@ function display_login_form()
     var Selector_Start_OR_End_Picks = ""; // trigger by picking Wavefrom svg, value are : |"picking_start_Time" or "picking_end_Time" |
 
     var isMouseIn_forSED = false;
+
+    var xTicks;
+    var LOCK_TS_STRT_Pick = false;
+    var LOCK_TS_END_Pick = false;
+
 
     var ShadowRoot_markerX = []; // Element ShaddowRoot of marker, so can be processed...
 
@@ -730,6 +753,28 @@ function display_login_form()
       var time = date + '-' + month + '-' + year;
       return time;
     };
+
+
+    function formatUnixTimestampToUTC(unixTimestamp, format) {
+      // Create a new Date object from the Unix timestamp (in milliseconds)
+      const date = new Date(unixTimestamp);
+
+      // Extract the UTC components
+      const components = {
+        Y: date.getUTCFullYear(),
+        m: String(date.getUTCMonth() + 1).padStart(2, '0'), // Months are zero-indexed
+        d: String(date.getUTCDate()).padStart(2, '0'),
+        H: String(date.getUTCHours()).padStart(2, '0'),
+        i: String(date.getUTCMinutes()).padStart(2, '0'),
+        s: String(date.getUTCSeconds()).padStart(2, '0'),
+        L: String(date.getUTCMilliseconds()).padStart(3, '0'),
+      };
+
+      // Replace the format string with the appropriate values
+      const formattedDate = format.replace(/Y|m|d|H|i|s|L/g, match => components[match]);
+
+      return formattedDate;
+    }
   </script>
 
 
@@ -739,6 +784,8 @@ function display_login_form()
 
   <div class="INI_SEMUA_ISINYA_LOADER">
     <span class="sp_version d-none">3.1.3</span>
+    <span class="timestamp_hovers_START" id="Dummy_ElementStlyle_hov_START"></span>
+    <span class="timestamp_hovers_END" id="Dummy_ElementStlyle_hov_END"></span>
 
     <div id="Load_01_Mseed_wrapper" style="z-index:999999 !important" hidden aria-hidden="true">
       <span class="loader_rockets"></span>
@@ -828,10 +875,13 @@ function display_login_form()
 
             <div class="Mee_Container_PicksOption">
               <div class="btn-group btn-sm btn-block m-0 p-0" data-toggle="buttons" id="Start_OR_End_Selection">
-                <label class="btn waves-effect waves-light green-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(s) </u><i> Init Start-Pick mode</i>">
-                  <input disabled class="form-check-input" type="radio" value="picking_start_Time" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StartX
+                <label class="btn px-2 green-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(s) </u><i> Init Start-Pick mode</i>">
+                  <input disabled class="form-check-input" type="radio" value="picking_start_Time" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StrtX
                 </label>
-                <label class="btn waves-effect waves-light red-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(e) </u><i> Init End-Pick mode</i>">
+                <label class="btn px-3 grey-gradient-mee form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(q) </u><i> Quit Pick mode</i>">
+                  <input disabled class="form-check-input" type="radio" value="" name="options_WhichToPicks" id="Quit_PickMode" autocomplete="off">Q
+                </label>
+                <label class="btn px-2 red-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(e) </u><i> Init End-Pick mode</i>">
                   <input disabled class="form-check-input" type="radio" value="picking_end_Time" name="options_WhichToPicks" id="Picks_EndTime" autocomplete="off">EndX
                 </label>
               </div>
@@ -883,7 +933,7 @@ function display_login_form()
 
                       <form style="color: #757575;" id="Form_PickersParameters" name="pickers_param" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
 
-                        <div class="row">
+                        <div class="row pt-2">
                           <div class="btn-group btn-sm btn-block" data-toggle="buttons" id="Digitizer_Radio_Selections">
                           </div>
                         </div>
@@ -1275,7 +1325,7 @@ function display_login_form()
 
               const svgElement = await waitForElementInShadowDOM(spSeismograph, 'svg');
               const canvasElement = await waitForElementInShadowDOM(spSeismograph, 'svg foreignObject canvas');
-              const xAxisX = await waitForElementInShadowDOM(spSeismograph, 'svg g g.axis.axis--x');
+              var xAxisX = await waitForElementInShadowDOM(spSeismograph, 'svg g g.axis.axis--x');
 
 
               if (svgElement && canvasElement && xAxisX) {
@@ -1287,6 +1337,7 @@ function display_login_form()
                 var svgRect = svgElement.getBoundingClientRect();
                 var DeltaSize_SvgCanvas_Rect = canvasRect.left - svgRect.left;
                 // Accessing the current time window from the `<sp-seismograph>` shadow DOM
+                xTicks = xAxisX.querySelectorAll('g.tick text');
 
 
 
@@ -1318,6 +1369,12 @@ function display_login_form()
                     markerX.setAttribute("x1", null);
                     markerX.setAttribute("x2", null);
                   }
+
+                  xAxisX = spSeismograph.shadowRoot.querySelector('svg g g.axis.axis--x');
+                  xTicks = xAxisX.querySelectorAll('g.tick text');
+
+                  Attach_TimeStamp_Events(xTicks);
+
                 });
 
                 svgElement.addEventListener('mouseleave', () => {
@@ -1328,6 +1385,8 @@ function display_login_form()
 
                 markerX.addEventListener('click', function(event) {
                   const clickEvent = new MouseEvent('click', {
+                    // view: window,
+                    // bubbles: true,
                     cancelable: true,
                     clientX: event.clientX, // Pass custom X position
                   });
@@ -1345,15 +1404,9 @@ function display_login_form()
                   // console.log('clickX:', clickX);
                   // console.log('clientX:', event.clientX, ' | ', 'svgRect.left:', canvasRect.left);
                   // console.log('canvasWidth:', canvasWidth);
+                  xAxisX = spSeismograph.shadowRoot.querySelector('svg g g.axis.axis--x');
+                  xTicks = xAxisX.querySelectorAll('g.tick text');
 
-                  var xTicks = xAxisX.querySelectorAll('g.tick text');
-
-                  // Error masihhh
-                  // xTicks.forEach(function(tick) {
-                  //   tick.addEventListener("mouseover", TimeStamp_Ticker_hover);
-                  //   tick.addEventListener("click", TimeStamp_Ticker_click);
-                  // });
-                  // Error masihhh
 
                   const startTimeX = xTicks[0].__data__; // Date object from the first tick
                   const endTimeX = xTicks[xTicks.length - 1].__data__; // Date object from the last tick
@@ -1363,14 +1416,11 @@ function display_login_form()
                   const timeAtClick = currentStartX + (clickX / canvasWidth) * (currentEndX - currentStartX);
 
                   const UnixTimeStamps = timeAtClick;
-                  const TimeXFormated = formatFulll(new Date(UnixTimeStamps));
-                  const DateXFormated = formatYYYMMDD(new Date(UnixTimeStamps));
-                  const DateTime_utcX = seisplotjs3.util.isoToDateTime(DateXFormated + 'T' + TimeXFormated + 'Z');
 
                   // console.log('UnixTimeStamps:', UnixTimeStamps, ' | ', 'TimeXFormated:', TimeXFormated, ' | ', 'DateXFormated:', DateXFormated, ' | ', 'DateTime_utcX:', DateTime_utcX);
 
                   if (Selector_Start_OR_End_Picks) {
-                    Picked_By_Waveform_Click(Selector_Start_OR_End_Picks, DateXFormated, TimeXFormated, UnixTimeStamps, DateTime_utcX);
+                    Picked_This_TimeeX(Selector_Start_OR_End_Picks, UnixTimeStamps);
                   }
 
                 });
@@ -1394,6 +1444,12 @@ function display_login_form()
           console.log('Error plotting mseed:', error);
           OOOOPS_picking('Error plotting mseed:', error);
         }
+      }
+
+
+      // Function Change Time For Pick
+      window.Convert_To_Seisplot_Time = function(FormatAs_TZ) {
+        return seisplotjs3.util.isoToDateTime(FormatAs_TZ);
       }
     </script>
 
@@ -1453,6 +1509,8 @@ function display_login_form()
 
         Reset_Form_PickersParameter();
 
+
+
         $("#input_starttime").prop("disabled", true);
         $("#input_endtime").prop("disabled", true);
 
@@ -1501,39 +1559,21 @@ function display_login_form()
         // Detect key press when mouse is inside SVG
         document.addEventListener('keydown', (event) => {
           if (isMouseIn_forSED && event.key.toLowerCase() === 's') {
-            Selector_Start_OR_End_Picks = "picking_start_Time";
             $('#Picks_StartTime').click();
-            if (ShadowRoot_markerX.length > 0) {
-              ShadowRoot_markerX.forEach(function(elmnt) {
-                elmnt.style.stroke = "#39b54a";
-                elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
-                // elmnt.style.strokeWidth = "1"; // its cammelCase wich the Capital become - dashed ==> stroke-width is unchange so no need
-              });
-            }
           }
           if (isMouseIn_forSED && event.key.toLowerCase() === 'e') {
-            Selector_Start_OR_End_Picks = "picking_end_Time";
             $('#Picks_EndTime').click();
-            if (ShadowRoot_markerX.length > 0) {
-              ShadowRoot_markerX.forEach(function(elmnt) {
-                elmnt.style.stroke = "#ff1d25";
-                elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
-              });
-            }
           }
+          if (isMouseIn_forSED && event.key.toLowerCase() === 'q') {
+            $('#Quit_PickMode').click();
+          }
+
           if (isMouseIn_forSED && event.key.toLowerCase() === 'd') {
-            Selector_Start_OR_End_Picks = "";
-            if (ShadowRoot_markerX.length > 0) {
-              ShadowRoot_markerX.forEach(function(elmnt) {
-                elmnt.style.stroke = "#7d7d7d";
-                elmnt.style.strokeDasharray = "5, 4"; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
-              });
-            }
-
             $('#Btn_Erase_Time_Picks').click();
-
           }
+
         });
+
 
 
       });
@@ -1542,6 +1582,10 @@ function display_login_form()
 
 
     <script type="text/javascript">
+      var styling_startTIme = cssX($("#Dummy_ElementStlyle_hov_START"));
+      var styling_endTIme = cssX($("#Dummy_ElementStlyle_hov_END"));
+
+
       function Init_Digitizer_Params() {
         Object.entries(Selected_Digitizer_Parameter).forEach(([Names, ArrayParams]) => {
           const itemHtmlX = `<label class="btn waves-effect waves-light purple-gradient-mee btn-rounded form-check-label">
@@ -1609,28 +1653,30 @@ function display_login_form()
         // Clear existing options except the first one
         $select.find('option:not(:first)').remove();
 
+        const sortedByKeys = Object.keys(data).sort()
+          .reduce((acc, key) => {
+            acc[key] = data[key];
+            return acc;
+          }, {});
+
         // Iterate over the response data and append options
-        $.each(data, function(index, item) {
+        $.each(sortedByKeys, function(index, item) {
           $select.append($('<option>', {
-            value: item,
-            text: index
+            value: index,
+            text: index,
+            "orig_val": item
           }));
         });
 
         // Refresh or initialize the MDB Incorrect value
         if ($select.length) {
           $select.materialSelect({
+            //   destroy: true
             // validate: true,
             // validFeedback: 'Correct choice',
             // invalidFeedback: 'Wrong choice'
           });
         }
-        // $('.mdb-select').materialSelect({
-        //   destroy: true
-        // });
-        // $('.mdb-select').materialSelect();
-        // $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder","Stream Data").prop('required', true).addClass('form-control').css('background-color', '#fff');
-
       }
 
 
@@ -1782,25 +1828,55 @@ function display_login_form()
         copyTablesToClipboard_Success();
       }
 
+      $('#Picks_StartTime').click(function() {
+        Selector_Start_OR_End_Picks = "picking_start_Time";
+        if (ShadowRoot_markerX.length > 0) {
+          ShadowRoot_markerX.forEach(function(elmnt) {
+            elmnt.style.stroke = "#39b54a";
+            elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+            // elmnt.style.strokeWidth = "1"; // its cammelCase wich the Capital become - dashed ==> stroke-width is unchange so no need
+          });
+        }
+      });
+      $('#Picks_EndTime').click(function() {
+        Selector_Start_OR_End_Picks = "picking_end_Time";
+        if (ShadowRoot_markerX.length > 0) {
+          ShadowRoot_markerX.forEach(function(elmnt) {
+            elmnt.style.stroke = "#ff1d25";
+            elmnt.style.strokeDasharray = ""; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+          });
+        }
+      });
+      $('#Quit_PickMode').click(function() {
+        Selector_Start_OR_End_Picks = "";
+        if (ShadowRoot_markerX.length > 0) {
+          ShadowRoot_markerX.forEach(function(elmnt) {
+            elmnt.style.stroke = "#7d7d7d";
+            elmnt.style.strokeDasharray = "5, 4"; //// its cammelCase wich the Capital become - dashed ==> stroke-dasharray
+          });
+        }
+      });
 
       $('#Btn_Erase_Time_Picks').click(function() {
-
         Selector_Start_OR_End_Picks = "";
         TimeStamp_Selected_Start_TZ = ""; // DUmmy ajaaa formatnya 03:20:00.000
         TimeStamp_Selected_Start_MS = "";
         TimeStamp_Selected_End_TZ = ""; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
         TimeStamp_Selected_End_MS = "";
 
+        LOCK_TS_STRT_Pick = false;
+        LOCK_TS_END_Pick = false;
+
+        document.getElementById('input_starttime').value = "";
+        document.getElementById('input_endtime').value = "";
+
         marker_remove("EndX");
         marker_remove("StartX");
-
 
         // Uncheck MDB4 radio buttons by setting prop to false
         $('#Picks_StartTime').prop("checked", false).parent().removeClass('active');
         $('#Picks_EndTime').prop("checked", false).parent().removeClass('active');
-
-        document.getElementById('input_starttime').value = "";
-        document.getElementById('input_endtime').value = "";
+        $('#Quit_PickMode').prop("checked", false).parent().removeClass('active');
 
         $("#input_starttime").prop("disabled", true);
         $("#input_endtime").prop("disabled", true);
@@ -1821,8 +1897,6 @@ function display_login_form()
         }
 
       });
-
-
 
       function Init_EachStreamContainer(Channel_Selection, RawChannel_Selection) {
         // Chek if exist, if not then append
@@ -1980,29 +2054,32 @@ function display_login_form()
             }
           }
 
-
         });
 
 
       }
 
 
-      function Picked_By_Waveform_Click(Start_Or_End, The_Date, The_Hour, UnixTimeStamps, IsoDateTimeX) {
+      function Picked_This_TimeeX(Start_Or_End, UnixTimeStamps) {
+        let The_Hour = formatUnixTimestampToUTC(UnixTimeStamps, "H:i:s.L");
+        let The_TZs = formatUnixTimestampToUTC(UnixTimeStamps, "Y-m-dTH:i:s.LZ");
+        let Seisplot_Format = Convert_To_Seisplot_Time(The_TZs);
+
         if (Start_Or_End == "picking_start_Time") {
-          TimeStamp_Selected_Start_TZ = The_Date + 'T' + The_Hour + 'Z';;
+          TimeStamp_Selected_Start_TZ = The_TZs;
           TimeStamp_Selected_Start_MS = UnixTimeStamps;
           marker_remove("StartX");
-          markers_Adds('add', 'StartX', 'Start-Type', IsoDateTimeX);
+          markers_Adds('add', 'StartX', 'Start-Type', Seisplot_Format);
           $("#input_starttime").prop("disabled", false);
           $("#input_starttime").val(The_Hour);
           // Manually trigger the 'change' event
           $("#input_starttime").trigger('change');
         }
         if (Start_Or_End == "picking_end_Time") {
-          TimeStamp_Selected_End_TZ = The_Date + 'T' + The_Hour + 'Z';;
+          TimeStamp_Selected_End_TZ = The_TZs;
           TimeStamp_Selected_End_MS = UnixTimeStamps;
           marker_remove("EndX");
-          markers_Adds('add', 'EndX', 'pick', IsoDateTimeX);
+          markers_Adds('add', 'EndX', 'pick', Seisplot_Format);
           $("#input_endtime").prop("disabled", false);
           $("#input_endtime").val(The_Hour);
           // Manually trigger the 'change' event
@@ -2011,12 +2088,52 @@ function display_login_form()
       }
 
       // Picked_By_TimeStamp_Click And Hoverrrr
-      function TimeStamp_Ticker_click() {
-        console.log('Cliiiiic');
+      function Attach_TimeStamp_Events(The_xTicks) {
+        The_xTicks.forEach(function(tick) {
+          tick.addEventListener("mouseover", TimeStamp_Ticker_Hovers);
+          tick.addEventListener("mouseout", TimeStamp_Ticker_MouseOut);
+          tick.addEventListener("click", TimeStamp_Ticker_Clicks);
+        });
       }
 
-      function TimeStamp_Ticker_hover() {
-        console.log('Hoverrrr');
+      function TimeStamp_Ticker_Hovers() {
+        if (Selector_Start_OR_End_Picks == "picking_start_Time") {
+          if ($(this).hasClass('Locked_TS_Start') || $(this).hasClass('Locked_TS_End')) {} else {
+            $(this).css(styling_startTIme);
+          }
+        } else if (Selector_Start_OR_End_Picks == "picking_end_Time") {
+          if ($(this).hasClass('Locked_TS_Start') || $(this).hasClass('Locked_TS_End')) {} else {
+            $(this).css(styling_endTIme);
+          }
+        } else {}
+      }
+
+      function TimeStamp_Ticker_MouseOut() {
+        if ($(this).hasClass('Locked_TS_Start') || $(this).hasClass('Locked_TS_End')) {} else {
+          $(this).removeAttr('style');
+        }
+      }
+
+      function TimeStamp_Ticker_Clicks() {
+        if (Selector_Start_OR_End_Picks == "picking_start_Time") {
+          xTicks.forEach(function(tick) {
+            $(tick).removeClass('Locked_TS_Start');
+          });
+          LOCK_TS_STRT_Pick = true;
+          $(this).css(styling_startTIme);
+          $(this).addClass('Locked_TS_Start');
+
+          Picked_This_TimeeX(Selector_Start_OR_End_Picks, new Date(this.__data__).valueOf())
+
+        } else if (Selector_Start_OR_End_Picks == "picking_end_Time") {
+          xTicks.forEach(function(tick) {
+            $(tick).removeClass('Locked_TS_End');
+          });
+          LOCK_TS_END_Pick = true;
+          $(this).css(styling_endTIme);
+          $(this).addClass('Locked_TS_End');
+          Picked_This_TimeeX(Selector_Start_OR_End_Picks, new Date(this.__data__).valueOf())
+        } else {}
       }
       // Picked_By_TimeStamp_Click And Hoverrrr
 
@@ -2125,7 +2242,6 @@ function display_login_form()
       };
 
 
-
       // Langkah proses 3 Waktunya Pickiiing boss
       $('#Form_PickersParameters').submit(function(evnt) {
         evnt.preventDefault();
@@ -2231,21 +2347,21 @@ function display_login_form()
 
 
       $('#ch_selectors').on('change', function() {
-        const selectedOptions = $(this).find('option:selected');
+        const selectedOpt = $(this).find('option:selected');
 
         SelectedChannel_Lists = [];
         local_SelectedChannelId_Lists = [];
 
-        if (selectedOptions.length > 0) {
-          selectedOptions.each(function() {
+        if (selectedOpt.length > 0) {
+          selectedOpt.each(function() {
             if ($(this).val() != "") {
-              // $(this).text() itu hasilnya "HNE"....
-              // $(this).val() itu hasilnya "IA.MBPI.00.HNE"....
-              SelectedChannel_Lists.push($(this).text());
-              local_SelectedChannelId_Lists.push('Each_stream_' + $(this).text());
+              // $(this).text() itu hasilnya "HNE"...., tapi dari <opt>TEXT</opt>
+              // $(this).val() itu hasilnya  "HNE"....
+              // $(this).attr('orig_val') itu hasilnya "IA.MBPI.00.HNE"....
+              SelectedChannel_Lists.push($(this).val());
+              local_SelectedChannelId_Lists.push('Each_stream_' + $(this).val());
               // Draw Seismogram Container and Graph
-              // console.log($(this).text());
-              Init_EachStreamContainer($(this).text(), $(this).val());
+              Init_EachStreamContainer($(this).val(), $(this).attr('orig_val'));
             }
 
           });
@@ -2292,7 +2408,6 @@ function display_login_form()
               $(this).find('input[type="radio"').prop("disabled", false);
               $(this).find('input[type="radio"').prop("checked", false);
             });
-
 
             $('#Load_00_NoChannel_wrapper').prop("hidden", true);
           }
@@ -2406,7 +2521,6 @@ function display_login_form()
       });
 
 
-
       // AWAIT AND ASYNC Function ==================================================
       // AWAIT AND ASYNC Function ==================================================
 
@@ -2451,98 +2565,42 @@ function display_login_form()
 
 
 
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
-      // ==========================================================================================================================================================================================================================
 
+      // Copy paste CSS=====================================================
 
-
-
-
-      function Picked_By_TimeStamp_Click(Start_Or_End, The_Date, The_Hour) {
-
-        if (Start_Or_End == "start_time_hr" && current_picks == "start_pick_time") {
-
-          document.forms['pickers_param']['current_starts_date'].value = The_Date;
-          document.getElementById('input_starttime').value = The_Hour;
-
-          TimeStamp_Selected_Start_TZ = The_Hour;
-          TimeStamp_Selected_Start_MS = new Date(The_Date + ' ' + The_Hour).getTime();
-          datess_To_moment = The_Date + 'T' + The_Hour + 'Z';
-          marker_remove("StartX");
-          markers_Adds('add', 'Start', 'Start-Type', datess_To_moment);
-
-
-          $("#input_starttime").prop("disabled", false);
-
-          current_picks = "end_pick_time";
-
-          st_lockeds = document.querySelectorAll('.TimeStamp_Start_Color');
-          st_lockeds.forEach(st_locked => {
-            st_locked.classList.remove('TimeStamp_Start_Color');
-          });
-
-          start_time_class_locked = 'locked';
-
-          if (TimeStamp_Selected_End_MS && (TimeStamp_Selected_Start_MS > TimeStamp_Selected_End_MS)) {
-            TimeStamp_Selected_End_TZ = ""; // DUmmy ajaaa ini harus lebih kecil biar gak trigger function  formatnya 03:20:00.000
-            TimeStamp_Selected_End_MS = "";
-
-            // get_pickertimess("end_times_init");
-            document.getElementById('input_endtime').value = "";
-            $("#input_endtime").prop("disabled", true);
+      function cssX(a) {
+        var sheets = document.styleSheets,
+          o = {};
+        for (var i in sheets) {
+          var rules = sheets[i].rules || sheets[i].cssRules;
+          for (var r in rules) {
+            if (a.is(rules[r].selectorText)) {
+              o = $.extend(o, cssX2json(rules[r].style), cssX2json(a.attr('style')));
+            }
           }
-
-
-        };
-        if (Start_Or_End == "end_time_hr" && current_picks == "end_pick_time") {
-          document.forms['pickers_param']['current_ends_date'].value = The_Date;
-          TimeStamp_Selected_End_TZ = The_Hour;
-          TimeStamp_Selected_End_MS = new Date(The_Date + ' ' + The_Hour).getTime();
-          datess_To_moment = The_Date + 'T' + The_Hour + 'Z';
-          marker_remove("EndX");
-          markers_Adds('add', 'Ends', 'pick', datess_To_moment);
-
-          document.getElementById('input_endtime').value = The_Hour;
-          $("#input_endtime").prop("disabled", false);
-          current_picks = "start_pick_time";
-
-          end_lockeds = document.querySelectorAll('.TimeStamp_End_Color');
-          end_lockeds.forEach(end_locked => {
-            end_locked.classList.remove('TimeStamp_End_Color');
-          });
-
-          end_time_class_locked = 'locked';
-        };
-
-        if (TimeStamp_Selected_Start_MS && TimeStamp_Selected_End_MS) {
-          if (TimeStamp_Selected_Start_MS < TimeStamp_Selected_End_MS) {
-            get_domain_freq(TimeStamp_Selected_Start_TZ, TimeStamp_Selected_End_TZ);
-          }
-        };
-
+        }
+        return o;
       }
+
+      function cssX2json(csstgt) {
+        var s = {};
+        if (!csstgt) return s;
+        if (csstgt instanceof CSSStyleDeclaration) {
+          for (var i in csstgt) {
+            if ((csstgt[i]).toLowerCase) {
+              s[(csstgt[i]).toLowerCase()] = (csstgt[csstgt[i]]);
+            }
+          }
+        } else if (typeof csstgt == "string") {
+          csstgt = csstgt.split("; ");
+          for (var i in csstgt) {
+            var l = csstgt[i].split(": ");
+            s[l[0].toLowerCase()] = (l[1]);
+          }
+        }
+        return s;
+      }
+      // Copy paste CSS=====================================================
     </script>
 
 
