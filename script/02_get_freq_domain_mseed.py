@@ -4,11 +4,17 @@ import sys
 import json
 import obspy
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from scipy.signal import argrelextrema
 from obspy import UTCDateTime
 import io
 import base64
+
+# Use a non-interactive backend
+matplotlib.use('Agg')
+
+
 
 # Exception classes for specific error handling
 class InputError(Exception):
