@@ -427,14 +427,15 @@ function display_login_form()
 
     .mee_offside_footer {
       position: fixed;
-      bottom: -95px;
+      bottom: -80px;
       right: 0%;
-      margin: 0px;
-      padding: 5px;
       z-index: 9999999;
       line-height: 10px;
       font-size: 10px;
+      height: 110px;
+      transform: translate(0%, -25%);
       min-width: 100%;
+      overflow: hidden;
     }
 
 
@@ -562,32 +563,6 @@ function display_login_form()
       font-weight: 700;
     }
 
-    .Mee_Clr_Pick_Container {
-      position: absolute;
-      z-index: 99999999;
-      top: 3.5%;
-      left: 50%;
-    }
-
-    .Mee_Container_PicksOption {
-      position: absolute;
-      z-index: 99999998;
-      top: 5.5%;
-      left: 34.5%;
-      scale: 55%;
-    }
-
-    .picks_button {
-      background-color: #ffbb33;
-    }
-
-    .picks_button.disss {
-      background-color: #b7a789;
-      border: 1px solid #777474;
-      opacity: 0.2;
-    }
-
-
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -603,6 +578,48 @@ function display_login_form()
     }
 
 
+    .picks_button {
+      background-color: #ffbb33;
+    }
+
+    .picks_button.disss {
+      background-color: #b7a789;
+      border: 1px solid #777474;
+      opacity: 0.2;
+    }
+
+    .Centering_Picks {
+      position: absolute;
+      left: 59vw;
+      top: 20%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999998;
+      width: 100px;
+      height: 100px;
+    }
+
+    .Mee_Clr_Pick_Container {
+      position: relative;
+      z-index: 99999999;
+      top: -20%;
+      left: 20vw;
+      transform: translate(-50%, -50%);
+    }
+
+    .Mee_Container_PicksOption {
+      position: relative;
+      z-index: 99999998;
+      top: -37.5%;
+      left: 23.25vw;
+      scale: 45%;
+      transform: translate(-50%, -50%);
+      width: 215px;
+    }
+
 
     /* // Extra small devices (portrait phones, less than 576px)
     // No media query for `xs` since this is the default in Bootstrap */
@@ -615,19 +632,23 @@ function display_login_form()
 
     /* // Large devices (desktops, 992px and up) */
     @media (min-width: 992px) {
+      .Centering_Picks {
+        top: 17%;
+      }
+
       .Mee_Clr_Pick_Container {
-        position: absolute;
-        z-index: 99999999;
-        top: 10%;
-        left: 57.5%;
+        position: relative;
+        top: 12%;
+        left: 1.25vw;
+        transform: translate(-50%, -50%);
       }
 
       .Mee_Container_PicksOption {
-        position: absolute;
-        z-index: 99999998;
-        top: 13%;
-        left: 54%;
-        scale: 60%;
+        position: relative;
+        scale: 50%;
+        top: 0%;
+        left: 3.5vw;
+        transform: translate(-50%, -50%);
       }
     }
 
@@ -775,6 +796,18 @@ function display_login_form()
 
       return formattedDate;
     }
+
+    function MiniMizeThisApp() {
+      window.pywebview.api.minimize();
+    };
+
+    function ToggleSizeApp() {
+      window.pywebview.api.toggleFullscreen();
+    };
+
+    function closeThisApp() {
+      window.pywebview.api.close();
+    };
   </script>
 
 
@@ -865,25 +898,25 @@ function display_login_form()
         <div class="modal-dialog modal-dialog-centered modal-fluid modal-dialog-scrollable mt-0" role="document" style="backdrop-filter: blur(1px) !important;">
 
           <div class="modal-content">
-            <div class="Mee_Clr_Pick_Container">
-              <a class="btn-floating btn-sm picks_button disss m-0 p-0" id="Btn_Erase_Time_Picks"
-                data-toggle="tooltip" data-html="true" title="<u>key=(d) </u><i> Reset ALL Start-End Time Pick's</i>"
-                disabled>
-                <i class="fa-light fa-eraser"></i>
-              </a>
-            </div>
+            <div class="Centering_Picks">
+              <div class="Mee_Clr_Pick_Container">
+                <a class="btn-floating btn-sm picks_button disss m-0 p-0" id="Btn_Erase_Time_Picks" data-toggle="tooltip" data-html="true" title="<u>key=(d) </u><i> Reset ALL Start-End Time Pick's</i>" disabled>
+                  <i class="fa-light fa-eraser"></i>
+                </a>
+              </div>
 
-            <div class="Mee_Container_PicksOption">
-              <div class="btn-group btn-sm btn-block m-0 p-0" data-toggle="buttons" id="Start_OR_End_Selection">
-                <label class="btn px-2 green-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(s) </u><i> Init Start-Pick mode</i>">
-                  <input disabled class="form-check-input" type="radio" value="picking_start_Time" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StrtX
-                </label>
-                <label class="btn px-3 grey-gradient-mee form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(q) </u><i> Quit Pick mode</i>">
-                  <input disabled class="form-check-input" type="radio" value="" name="options_WhichToPicks" id="Quit_PickMode" autocomplete="off">Q
-                </label>
-                <label class="btn px-2 red-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(e) </u><i> Init End-Pick mode</i>">
-                  <input disabled class="form-check-input" type="radio" value="picking_end_Time" name="options_WhichToPicks" id="Picks_EndTime" autocomplete="off">EndX
-                </label>
+              <div class="Mee_Container_PicksOption">
+                <div class="btn-group btn-sm btn-block m-0 p-0" data-toggle="buttons" id="Start_OR_End_Selection">
+                  <label class="btn px-2 green-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(s) </u><i> Init Start-Pick mode</i>">
+                    <input disabled class="form-check-input" type="radio" value="picking_start_Time" name="options_WhichToPicks" id="Picks_StartTime" autocomplete="off">StrtX
+                  </label>
+                  <label class="btn px-1 grey-gradient-mee form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(q) </u><i> Quit Pick mode</i>">
+                    <input disabled class="form-check-input" type="radio" value="" name="options_WhichToPicks" id="Quit_PickMode" autocomplete="off">Q
+                  </label>
+                  <label class="btn px-2 red-gradient-mee btn-rounded form-check-label" data-toggle="tooltip" data-html="true" title="<u>key=(e) </u><i> Init End-Pick mode</i>">
+                    <input disabled class="form-check-input" type="radio" value="picking_end_Time" name="options_WhichToPicks" id="Picks_EndTime" autocomplete="off">EndX
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -1042,7 +1075,7 @@ function display_login_form()
 
 
 
-            <div class="p-0 m-0 mee_offside_footer">
+            <div class="p-2 m-0 mee_offside_footer">
 
 
               <div class="row justify-content-end" id="Appended_DtOption_PopUp">
@@ -1411,9 +1444,28 @@ function display_login_form()
                   const startTimeX = xTicks[0].__data__; // Date object from the first tick
                   const endTimeX = xTicks[xTicks.length - 1].__data__; // Date object from the last tick
 
-                  const currentStartX = startTimeX.getTime();
-                  const currentEndX = endTimeX.getTime();
-                  const timeAtClick = currentStartX + (clickX / canvasWidth) * (currentEndX - currentStartX);
+
+                  const distancesXX = calculateTickDistances(xAxisX.querySelectorAll('g.tick'));
+                  const Posisi_TicksX = distancesXX.POS;
+                  const Jarak_TiapTicksX = distancesXX.DIST;
+                  const Jumlah_jarakTicksX = Jarak_TiapTicksX.reduce((acc, value) => acc + value, 0);
+                  const Rataan_TicksX = Jumlah_jarakTicksX / Jarak_TiapTicksX.length;
+
+                  const Lokasi_tick1 = Posisi_TicksX[0][0];
+                  const Lokasi_tickAkhir = Posisi_TicksX[0][Posisi_TicksX[0].length - 1];
+                  const waktu_tick0 = xTicks[0].__data__.getTime();
+                  const waktu_tick1 = xTicks[1].__data__.getTime();
+                  const waktu_tickHampirAkhir = xTicks[xTicks.length - 2].__data__.getTime();
+                  const waktu_tickPalingAkhir = xTicks[xTicks.length - 1].__data__.getTime();
+
+                  const persen_JarakCanvas_keTickAwal = (Lokasi_tick1 / Rataan_TicksX) * (waktu_tick1 - waktu_tick0)
+                  const persen_JarakCanvas_keTickAkhir = ((canvasWidth - Lokasi_tickAkhir) / Rataan_TicksX) * (waktu_tickPalingAkhir - waktu_tickHampirAkhir)
+
+                  const Perbedaan_WaktuAwal = startTimeX.getTime() - persen_JarakCanvas_keTickAwal;
+                  const Perbedaan_WaktuAkhir = endTimeX.getTime() + persen_JarakCanvas_keTickAkhir;
+
+
+                  const timeAtClick = Math.round(Perbedaan_WaktuAwal + (clickX / canvasWidth) * (Perbedaan_WaktuAkhir - Perbedaan_WaktuAwal));
 
                   const UnixTimeStamps = timeAtClick;
 
@@ -2519,6 +2571,52 @@ function display_login_form()
       $('#Final_rslt_Modal').on('hidden.bs.modal', function(e) {
         $('#Chkbox_SortValues').prop('checked', false);
       });
+
+      // Calculate Click Distance (Mapping)=========================================
+
+
+      // Function to calculate tick distances
+      function calculateTickDistances(XX_Ticks_XX) {
+        const Eachticks_Distnce = {
+          POS: [],
+          DIST: []
+        };
+        const XX_TickPos_XX = Array.from(XX_Ticks_XX).map(tick => {
+          const Transfrm_XX = tick.getAttribute('transform');
+          if (Transfrm_XX && Transfrm_XX.includes('translate')) {
+            const XtranslateX = Transfrm_XX.match(/translate\(([-+]?[0-9]*\.?[0-9]+),\d+\)/);
+            return XtranslateX ? parseFloat(XtranslateX[1]) : null;
+          }
+          return null; // Return null if there's no valid transform
+        }).filter(pos => pos !== null); // Remove any null values from the array
+        Eachticks_Distnce.POS.push(XX_TickPos_XX);
+
+        for (let i = 1; i < XX_TickPos_XX.length; i++) {
+          const distancesX = XX_TickPos_XX[i] - XX_TickPos_XX[i - 1];
+          Eachticks_Distnce.DIST.push(distancesX);
+        }
+        return Eachticks_Distnce;
+      }
+
+
+
+
+      function mapValue(value, in_min, in_max, out_min, out_max) {
+        return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+      }
+
+
+      // Calculate Click Distance (Mapping)=========================================
+
+
+
+
+
+
+
+
+
+
 
 
       // AWAIT AND ASYNC Function ==================================================
